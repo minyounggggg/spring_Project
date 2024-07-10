@@ -31,7 +31,7 @@ public class MemberController {
 	
 	@Autowired
 	JavaclassProvide javaclassProvide;
-	
+	// 깃저장 ㅠ 아오ㅠㅠ
 	// 큐알 로그인할꺼면 누르면 큐알코드 발행 시킨 후 
 	
 	// 로그인 폼
