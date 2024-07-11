@@ -38,12 +38,26 @@
 			background-color : #fff;
 			z-index : 99;
 		}
-		nav .nav-login{
-			width : 1300px;
+		nav .nav-top{
 			margin : 0 auto;
+			width : 1300px;
+		}
+		nav .nav-logo{
+			float : left;
+			width : 30%;
+		}
+		nav .nav-login p{
+			margin : 0;
+		}
+		nav .nav-login{
+			float : left;
+			width : 70%;
 			font-size : 14px;
 		}
-		nav hr {margin : 10px 0 20px}
+		nav hr {
+			margin : 10px 0 20px;
+			clear : both;
+		}
 		nav .nav{
 			width : 1300px;
 			margin : 0 auto;
@@ -69,14 +83,19 @@
 </head>
 <body>
 	<nav>
-		<div class="nav-login text-right">
-			<c:if test="${empty sNickName}">
-				<a href="${ctp}/member/memberLogin">로그인</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberJoin">회원가입</a>
-			</c:if>
-			<c:if test="${!empty sNickName}"><!-- 카카오로그아웃, 네이버로그아웃 추가 -->
-				<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; 
-				<a href="${ctp}/member/memberMypage">마이페이지</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
-			</c:if>
+		<div class="nav-top">
+			<div class="nav-logo">
+				<a href="${ctp}/member/memberMain"><img src="${ctp}/resources/images/memberMain/logo.png" style="width:140px; margin-bottom:8px;"/></a>
+			</div>
+			<div class="nav-login text-right">
+				<c:if test="${empty sNickName}">
+					<a href="${ctp}/member/memberLogin">로그인</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberJoin">회원가입</a>
+				</c:if>
+				<c:if test="${!empty sNickName}"><!-- 카카오로그아웃, 네이버로그아웃 추가 -->
+					<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; 
+					<a href="${ctp}/member/memberMypage">마이페이지</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
+				</c:if>
+			</div>
 		</div>
 		<hr/>
 		<div class="nav" style="font-size:16px;font-weight:700;">
