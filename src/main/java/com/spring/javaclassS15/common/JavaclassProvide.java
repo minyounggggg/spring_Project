@@ -83,9 +83,10 @@ public class JavaclassProvide {
 		
 		// 메세지 보관함의 내용(content)에, 발신자의 필요한 정보를 추가로 담아서 전송처리한다.
 		content = content.replace("\n", "<br>");
-		content += "<br><hr><h3> 임시비밀번호는 [ "+pwd+" ] 입니다.</h3><hr><br>";
+		content += "<br><hr><h3>Enjoy With 카카오로그인 임시비밀번호는 [ "+pwd+" ] 입니다.</h3><hr><br>";
 		content += "<p>개인정보 보호를 위해 비밀번호 변경을 해주시길 바랍니다.</p>";
-		content += "<p><img src='cid:main.jpg' width='500px'></p>";		// cid:  -> 예약어, 첨부파일이 아닌 메일 본문에 이미지 집어넣기, 178번라인의ㅣ addInline로 보내줌
+		//content += "<p><img src='cid:main.jpg' width='500px'></p>";		// cid:  -> 예약어, 첨부파일이 아닌 메일 본문에 이미지 집어넣기, 178번라인의ㅣ addInline로 보내줌
+		content += "<p>========================================================================================</p>";
 		content += "<p>방문하기 : <a href='http://49.142.157.251:9090/javaclassJ15/'>javaclass</a></p>";
 		content += "<hr>";
 		messageHelper.setText(content, true);
@@ -94,8 +95,8 @@ public class JavaclassProvide {
 		// FileSystemResource file = new FileSystemResource("D:\\javaclass\\springframework\\works\\javaclassS\\src\\main\\webapp\\resources\\images\\20240621_111652_1.png");
 		
 		// request.getSession().getServletContext().getRealPath("/resources/images/main.jpg");
-		FileSystemResource file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/main.jpg"));
-		messageHelper.addInline("main.jpg", file);
+		//FileSystemResource file = new FileSystemResource(request.getSession().getServletContext().getRealPath("/resources/images/main.jpg"));
+		//messageHelper.addInline("main.jpg", file);
 		
 		// 메일 전송하기
 		mailSender.send(message);

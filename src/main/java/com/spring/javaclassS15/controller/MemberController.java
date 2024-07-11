@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -95,7 +96,6 @@ public class MemberController {
 		
 		// 카카오 로그아웃을 위한 카카오앱키를 세션에ㅔ 저장시켜둔다.
 		session.setAttribute("sAccessToken", accessToken);
-		
 		session.setAttribute("sLogin", "kakao");
 		
 		// 카카오 로그인한 회원인 경우에는 우리 회원인지를 조사한다.. (넘어온 이메일을 @기준으로 아이디와 분리해서 기존 member2테이블의 아이디와 비교한다.)
@@ -146,8 +146,8 @@ public class MemberController {
 		//memberService.setMemberInforUpdate(vo.getMid(), point);
 		
 		// 로그인 완료 후 모든 처리가 끝나면 필요한 메세지처리 후 memberMain으로 보낸다.
-		if(newMember.equals("NO")) return "redirect:/message/memberLoginOk?mid="+vo.getMid();
-		else return "redirect:/message/memberLoginNewOk?mid="+vo.getMid();
+		if(newMember.equals("NO")) return "redirect:/message/memberLoginOK?mid="+vo.getMid();	//기존회원이니까 기존 로그인 완료 alert
+		else return "redirect:/message/memberLoginNewOK?mid="+vo.getMid();	//카카오로 처음 로그인한 신규회원이니까 임시메세지 발급 메세지
 	}
 	
 	@RequestMapping(value = "/memberLogout", method = RequestMethod.GET)
@@ -200,6 +200,14 @@ public class MemberController {
 	@RequestMapping(value = "/memberMain", method = RequestMethod.GET)
 	public String memberMainGet() {
 		return "member/memberMain";
+	}
+	
+	@RequestMapping(value = "/memberMypage", method = RequestMethod.GET)
+	public String memberMypageGet(Model model, HttpSession session) {
+		String mid = (String) session.getAttribute("sMid");
+		MemberVO vo = memberService.getMemberIdCheck(mid);
+		model.addAttribute("vo", vo);
+		return "member/memberMypage";
 	}
 	
 	

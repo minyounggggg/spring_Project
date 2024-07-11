@@ -41,23 +41,6 @@
 		width : 1300px;
 		margin : 0 auto;
 	}
-	nav{
-		padding : 10px 0 20px;
-		box-shadow : 0px 5px 5px rgba(0, 0, 50, 0.1);
-		position: fixed;
-		width : 100%;
-		background-color : #fff;
-		z-index : 99;
-	}
-	nav .nav-login{
-		font-size : 14px;
-	}
-	nav hr {margin : 10px 0 20px}
-	nav .nav{
-		text-align: center;
-	    display: flex;
-	    justify-content: space-between;
-	}
 	header{
 		background-color : #fcfdff;
 		height : 500px;
@@ -138,26 +121,7 @@
 </script>
 </head>
 <body>
-	<nav>
-		<div class="nav-login inner text-right">
-			<c:if test="${empty sNickName}">
-				<a href="${ctp}/member/memberLogin">로그인</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberJoin">회원가입</a>
-			</c:if>
-			<c:if test="${!empty sNickName}">
-				<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
-			</c:if>
-		</div>
-		<hr/>
-		<div class="nav inner" style="font-size:16px;font-weight:700;">
-			<a href="#">Only-E.W</a>
-			<a href="#">동네수다</a>
-			<a href="#">제품후기</a>
-			<a href="#">온동네병원</a>
-			<a href="#">카페</a>
-			<a href="#">식당</a>
-			<a href="#">펜션&글램핑</a>
-		</div>
-	</nav>
+	<jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	<header>
 		<div class="header-sec01 inner">
 			<div class="sec1">

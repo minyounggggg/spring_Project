@@ -23,6 +23,10 @@ public class MessageController {
 			model.addAttribute("msg", mid + "님 로그인 되었습니다.");
 			model.addAttribute("url", "/member/memberMain");
 		}
+		else if(msgFlag.equals("memberLoginNewOK")) {
+			model.addAttribute("msg", mid+"님 로그인 되었습니다.\\n임시 비밀번호가 등록된 이메일로 발급되었습니다.\\n확인 후 회원정보를 변경해주세요.");
+			model.addAttribute("url", "/member/memberMain");
+		}
 		else if(msgFlag.equals("memberLoginNO")) {
 			model.addAttribute("msg", "입력하신 아이디 또는 비밀번호가 다릅니다.\\n다시 입력해주세요.");
 			model.addAttribute("url", "/member/memberLogin");

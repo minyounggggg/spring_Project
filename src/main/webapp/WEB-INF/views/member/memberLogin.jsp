@@ -17,6 +17,7 @@
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 </style>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script><!-- 카카오로그인 js파일 -->
 <script>
 	//카카오로그인(자바스크립트 앱키 등록)
 	window.Kakao.init("4bed81139daac8fd06f75e2c669b1570");
