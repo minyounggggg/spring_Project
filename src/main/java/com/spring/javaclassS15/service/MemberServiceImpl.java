@@ -1,5 +1,6 @@
 package com.spring.javaclassS15.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.dao.MemberDAO;
+import com.spring.javaclassS15.vo.MemberPetVO;
 import com.spring.javaclassS15.vo.MemberVO;
 
 @Service
@@ -57,6 +59,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void setKakaoMemberInput(String mid, String pwd, String nickName, String email) {
 		memberDAO.setKakaoMemberInput(mid, pwd, nickName, email);
+	}
+
+	@Override
+	public List<MemberPetVO> getMemberPetList(String mid) {
+		return memberDAO.getMemberPetList(mid);
 	}
 	
 }

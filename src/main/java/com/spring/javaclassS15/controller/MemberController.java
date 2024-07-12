@@ -1,5 +1,6 @@
 package com.spring.javaclassS15.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.service.MemberService;
+import com.spring.javaclassS15.vo.MemberPetVO;
 import com.spring.javaclassS15.vo.MemberVO;
 
 @Controller
@@ -206,7 +208,10 @@ public class MemberController {
 	public String memberMypageGet(Model model, HttpSession session) {
 		String mid = (String) session.getAttribute("sMid");
 		MemberVO vo = memberService.getMemberIdCheck(mid);
+		List<MemberPetVO> pVos = memberService.getMemberPetList(mid);
+		
 		model.addAttribute("vo", vo);
+		model.addAttribute("pVos", pVos);
 		return "member/memberMypage";
 	}
 	
