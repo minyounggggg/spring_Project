@@ -7,7 +7,7 @@ create table member (
 	nickName	varchar(20) not null,				/* 회원 별명(중복불허/수정가능) */
 	address   	varchar(100),								/* 주소(다음 API 활용) */
 	email		varchar(60) not null,		  	/* 이메일(아이디/비밀번호 분실시에 사용)-형식체크필수 */
-	photo		varchar(100) default 'noimage.jpg', /* 프로필(반려동물) 사진 */
+	photo		varchar(100) default 'noimage.png', /* 프로필(반려동물) 사진 */
 	userDel   	char(2)  default 'NO',			/* 회원 탈퇴신청여부(NO:현재 활동중, OK:탈퇴신청중) */
 	point		int default 100,						/* 회원 누적포인트(가입포인트100점, 1회방문시 10포인트증가, 1일 최대 50포인트까지 허용, 물건구매시 100원당 1포인트 증가 */
 	visitCnt  	int default 0,							/* 총 방문횟수 */

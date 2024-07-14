@@ -79,7 +79,6 @@
 		}
 		.pet-box{
 			width : 350px;
-			height : 200px;
 			padding : 30px;
 			margin-right : 20px;
 		}
@@ -104,9 +103,11 @@
 			display : flex;
 			justify-content: center;
 			align-items: center;
+		    border: dashed 2px #578de4;
 			width : 410px;
-			height : 260px;
+		    height: 310px;
 			margin-right : 5px;
+			cursor:pointer;
 		}
 		
 	</style>
@@ -114,7 +115,7 @@
 	<style>
 	    .swiper {
 	      width: 100%;
-	      height: 300px;
+	      height: 350px;
 	    }
 	    .swiper-slide {
 	      /* text-align: center; */
@@ -134,22 +135,24 @@
 	      object-fit: cover;
 	       */
 	    }
+	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
+	    
 	    /* 모달 css */
 		#myModal1{
     		background-color: rgba(0,0,0,0.3);
     	}
-    	#myModal1 .modal-content{
+    	#myModal1 .modal-content, #myModal2 .modal-content{
     		background-color: transparent;
     		border: none;
     	}
     	#myModal1 .modal-dialog {
 	        width : 400px;
 	    }
-	    #myModal1 .modal-header{
+	    #myModal1 .modal-header, #myModal2 .modal-header{
 	    	border: none;
 	    	margin-bottom: 10px;
 	    }
-	    #myModal1 button.close{
+	    #myModal1 button.close, #myModal2 button.close{
 	    	background-color: #fff;
 	    	border-radius: 100px;
 	    }
@@ -172,7 +175,7 @@
 			height : 180px;
 			object-fit: cover;
 		}
-		.modal-profile-box .modal-info{
+		#myModal1 .modal-profile-box .modal-info{
 			width : 100%;
 		    text-align: center;
 		}
@@ -201,14 +204,66 @@
        	    padding: 10px 5px 5px;
 		}
 		input#address:focus {outline: none;}
+		
+		#myModal2 .modal-profile-box{
+			width : 100%;
+			padding : 35px 50px;
+		}
+		.filebox .upload-name {
+		    display: inline-block;
+		    height: 40px;
+		    padding: 0 10px;
+		    vertical-align: middle;
+		    border: 1px solid #dddddd;
+		    width: 70%;
+		    color: #999999;
+		    border-radius: 3px;
+		}
+		.filebox label {
+		    display: inline-block;
+		    padding: 10px 20px;
+		    color: #fff;
+		    vertical-align: middle;
+		    background-color: #578de4;
+		    cursor: pointer;
+		    height: 40px;
+		    width: 26%;
+		    margin: 0 0 0 10px;
+		    text-align: center;
+	        border-radius: 3px;
+		}
+		.filebox input[type="file"] {
+		    position: absolute;
+		    width: 0;
+		    height: 0;
+		    padding: 0;
+		    overflow: hidden;
+		    border: 0;
+		}
 	</style>
 	
 	<script>
-		'use stript';
 		
 		function memberUpdate() {
 			
 		}
+		 
+		$("#file").on('change',function(){
+		    var fileName = $("#file").val();
+		    $(".upload-name").val(fileName);
+		});
+		/* 
+		window.onload=function(){
+			target=document.getElementById('file'); // file 아이디 선언
+			target.addEventListener('change',function(){ // change 함수
+				if(target.value.length){ // 파일 첨부인 상태일경우 파일명 출력
+					$('#originName').html(target.files[0].name);
+				}else{ //버튼 클릭후 취소(파일 첨부 없을 경우)할때 파일명값 안보이게
+					$('#originName').html("");
+				}
+			});
+		}
+		 */
 	</script>
 </head>
 <body>
@@ -279,30 +334,97 @@
 					<c:forEach var="pVo" items="${pVos}" varStatus="st">
 						<div class="swiper-slide">
 							<div class="pet-box sec-boxStyle">
-								<section class="pet-profile">
-									<img src="${ctp}/resources/data/member/${pVo.petPhoto}"/>
-								</section>
-								<section class="pet-info">
-									<p style="font-size:26px;font-weight:700;color:#444;margin:0 0 5px">${pVo.petName} <span style="font-size:16px;font-weight:400;color:#444;">· ${pVo.petGender}</span></p>
-									<p style="font-size:18px;"><img src="${ctp}/resources/images/memberMypage/birthday-icon.png" style="width:24px;margin:0 5px 5px 0;"/>${pVo.petBirthday}</p>
-								</section>
-								<hr style="clear:both;margin-top:40px"/>
+								<div class="pet-box-margin">
+									<section class="pet-profile">
+										<img src="${ctp}/resources/data/member/${pVo.petPhoto}"/>
+									</section>
+									<section class="pet-info">
+										<p style="font-size:24px;font-weight:700;color:#444;margin:0 0 5px">${pVo.petName} <span style="font-size:16px;font-weight:400;color:#444;">· ${pVo.petGender}</span></p>
+										<p style="font-size:16px;margin:0 0 30px;"><img src="${ctp}/resources/images/memberMypage/birthday-icon.png" style="width:22px;margin:0 5px 5px 0;"/>${pVo.petBirthday}</p>
+									</section>
+								</div>
 								<section>
+									<hr style="clear:both;"/>
+									<p style="font-size:14px;margin:0 0 5px;color:#777;"><img src="${ctp}/resources/images/memberMypage/speech-balloon.png" style="width:20px;margin:0 5px 5px 0;">우리 애기는 ...</p>
 									<p>${pVo.petInfo}</p>
-									<p>${pVo.playWith}</p>
+									<p style="font-size:14px;margin:0 0 5px;color:#777;"><img src="${ctp}/resources/images/memberMypage/person-running.png" style="width:20px;margin:0 5px 5px 0;">함께하고싶은 동네 생활이 있어요!</p>
+									<p style="margin:0">${pVo.playWith}</p>
 								</section>
 							</div>
 						</div>
 					</c:forEach>
 					<div class="swiper-slide">
-						<section class="pet-insertBox sec-boxStyle">
-							<p><img src="${ctp}/resources/images/memberMypage/add.png" style="width:30px;margin-right:10px;border-radius:100px;background-color:#fff;"/></p>
-							<p>반려동물 프로필 추가하기</p>
+						<section class="pet-insertBox sec-boxStyle" data-toggle="modal" data-target="#myModal2">
+							<div><img src="${ctp}/resources/images/memberMypage/add.png" style="width:30px;margin-right:10px;border-radius:100px;background-color:#fff;"/></div>
+							<div>반려동물 프로필 추가하기</div>
 						</section>
 					</div>
 				</div>
 				<div class="swiper-scrollbar"></div>
 			</div>
+			
+			
+			<!-- The Modal 반려동물 insert 모달-->
+			<div class="modal fade" id="myModal2">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<!-- Modal body -->
+						<div class="modal-profile-box sec-boxStyle">
+							<section class="modal-profile">
+								<img src="${ctp}/resources/data/member/${vo.photo}"/>
+							</section>
+							<!-- 
+							<div class="form-group">
+								회원 사진(파일용량:2MByte이내) :
+								<input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/>
+								<div><img id="photoDemo" width="100px"/></div>
+							</div>
+							 -->
+							<div class="filebox">
+							    <input class="upload-name" id="originName" value="첨부파일" placeholder="첨부파일" />
+							    <label for="file">파일찾기</label> 
+							    <input type="file" id="file" />
+							</div>
+							
+							<section class="modal-info">
+								<p style="font-size:14px;color:#444;margin:0;"><span style="color:#578de4;">*</span> 이름을 알려주세요!</p>
+								<input type="text" id="petName" name="petName" class="modal-petName form-control" />
+								<div class="form-group">
+									<div class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio" class="form-check-input" name="gender" value="남아" checked>남아
+										</label>
+									</div>
+									<div class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio" class="form-check-input" name="gender" value="여아">여아
+										</label>
+									</div>
+									<div class="form-check-inline">
+										<label class="form-check-label">
+											<input type="radio" class="form-check-input" name="gender" value="중성화">중성화
+										</label>
+									</div>
+								</div>
+								<p style="font-size:14px;color:#444;margin:0;"><span style="color:#578de4;">*</span> 생일을 알려주세요! (추정날짜도 좋아요♥)</p>
+								<div class="form-group">
+									<input type="date" id="petBirthday" name="petBirthday" value="<%=java.time.LocalDate.now() %>" class="modal-petBirthday form-control"/>
+								</div>
+								<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
+								<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
+								<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함꼐하고싶은 동네생활이 있나요?</p>
+								<input type="text" id="playWith" name="playWith" class="modal-playWith form-control" />
+								<button type="button" class="btn btn-primary form-control mt-4" onclick="petInsert()">등록하기</button>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 		  
 			<!-- Swiper JS -->
 			<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
