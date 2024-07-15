@@ -167,7 +167,6 @@
 			width : 100%;
 		    overflow:hidden;
 	        text-align: center;
-            margin-bottom: 20px;
 		}
 		.modal-profile-box .modal-profile img{
 			border-radius : 100px;
@@ -210,39 +209,51 @@
 			padding : 35px 50px;
 		}
 		
-		.filebox .upload-name {
-		    display: inline-block;
-		    height: 40px;
-		    padding: 0 10px;
-		    vertical-align: middle;
-		    border: 1px solid #dddddd;
-		    width: 78%;
-		    color: #999999;
+		/* 사진파일업로드 css */
+		.file_cus label {display: block; width: 100%; margin: 15px 0 20px; font-size: 0; cursor: pointer;}
+		input[type="file"] {overflow: hidden;position: absolute;width: 1px;height: 1px;margin: -1px;font-size: initial;clip: rect(0 0 0 0);}
+		.file_name {
+			overflow: hidden; display: inline-block;
+			vertical-align: middle; width: calc(100% - 108px);
+			height: 40px; padding:0 12px; border: 1px solid #ddd;
+			border-radius:4px; font-size: 14px; line-height: 38px;
+			color: #111; white-space: nowrap; text-overflow: ellipsis;
 		}
-		.filebox label {
-		    display: inline-block;
-		    padding: 10px 20px;
+		.file_btn {
+			display: inline-block; vertical-align: middle;
+			width: 100px; height: 40px; margin-left: 8px;
+			background: #578de4; border-radius:4px; font-size: 14px;
+			font-weight: 500; line-height: 40px; color: #fff; text-align: center;
+		}
+		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
+
+		.petInsertOkBtn {
+		    background-color: #578de4;
+		    border-color: #578de4;
+		    margin-top: 25px;
+		    padding: 10px 0 10px;
+		    width : 100%;
+		    border-radius: 3px;
+		    border: none;
 		    color: #fff;
-		    vertical-align: middle;
-		    background-color: #999999;
-		    cursor: pointer;
-		    height: 40px;
-		    margin-left: 10px;
 		}
-		.filebox input[type="file"] {
-		    position: absolute;
-		    width: 0;
-		    height: 0;
-		    padding: 0;
-		    overflow: hidden;
-		    border: 0;
-		}
-		
+		.petInsertOkBtn:hover {background-color: #3478db;}
 	</style>
 	
 	<script>
 		
-		
+		// 파일선택시 파일명 출력
+		$(window).on('load', function() {
+		    fileCus();
+		})
+	
+		function fileCus() {
+		    $(".file_cus input[type=file]").on("change", function() {
+		        const fileName = $(this).val().split("\\").pop();
+		        $(this).siblings(".file_name").text(fileName || "사진을 선택해주세요.");
+		    });
+		}
+
 		// 선택된 사진 미리보기
 	    function imgCheck(e) {
 	    	if(e.files && e.files[0]) {
@@ -349,7 +360,7 @@
 							<div class="pet-box sec-boxStyle">
 								<div class="pet-box-margin">
 									<section class="pet-profile">
-										<img src="${ctp}/resources/data/member/${pVo.petPhoto}"/>
+										<img src="${ctp}/resources/data/memberPet/${pVo.petPhoto}"/>
 									</section>
 									<section class="pet-info">
 										<p style="font-size:24px;font-weight:700;color:#444;margin:0 0 5px">${pVo.petName} <span style="font-size:16px;font-weight:400;color:#444;">· ${pVo.petGender}</span></p>
@@ -386,16 +397,24 @@
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<!-- Modal body -->
-						<form name="petInsertForm" method="post" action="memberMypagePetInsert">
+						<form name="petInsertForm" method="post" action="memberMypagePetInsert" enctype="multipart/form-data">
 							<div class="modal-profile-box sec-boxStyle">
 								<section class="modal-profile">
-									<img id="photoDemo" src="${ctp}/resources/data/member/noimage-pet.png"/>
+									<img id="photoDemo" src="${ctp}/resources/data/memberPet/noimage-pet.png"/>
 								</section>
-								
+								<!-- 
 								<div  class="form-group">
 							      회원 사진(파일용량:2MByte이내) :
 							      <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/>
 							    </div>
+							     -->
+							    <div class="file_cus">
+								    <label>
+								        <input type="file" name="fName" id="file" onchange="imgCheck(this)">
+								        <span class="file_name">사진을 선택해주세요.</span>
+								        <span class="file_btn">사진선택</span>
+								    </label>
+								</div>
 								
 								<section class="modal-info">
 									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 이름을 알려주세요!</p>
@@ -403,17 +422,17 @@
 									<div class="form-group">
 										<div class="form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" class="form-check-input" name="gender" value="남아" checked>남아
+												<input type="radio" class="form-check-input" name="petGender" value="남아" checked>남아
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" class="form-check-input" name="gender" value="여아">여아
+												<input type="radio" class="form-check-input" name="petGender" value="여아">여아
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" class="form-check-input" name="gender" value="중성화">중성화
+												<input type="radio" class="form-check-input" name="petGender" value="중성화">중성화
 											</label>
 										</div>
 									</div>
@@ -425,8 +444,9 @@
 									<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
 									<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함께하고싶은 동네생활이 있나요?</p>
 									<input type="text" id="playWith" name="playWith" class="modal-playWith form-control" />
-									<button type="button" class="btn btn-primary form-control mt-4" onclick="petInsert()">등록하기</button>
+									<button type="button" class="petInsertOkBtn" onclick="petInsert()">등록하기</button>
 								</section>
+								<input type="hidden" name="petWith" value="${sMid}"/>
 							</div>
 						</form>
 					</div>
