@@ -42,7 +42,20 @@ public class MemberServiceImpl implements MemberService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return sFileName;
+	}
+	
+	@Override
+	public String fileUploadPet(MultipartFile fName, String mid) {
+		UUID uid = UUID.randomUUID();
+		String oFileName = fName.getOriginalFilename();
+		String sFileName = mid + "_" + uid.toString().substring(0,8) + "_" + oFileName;
 		
+		try {
+			javaclassProvide.writeFile(fName, sFileName, "memberPet");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return sFileName;
 	}
 
@@ -64,6 +77,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<MemberPetVO> getMemberPetList(String mid) {
 		return memberDAO.getMemberPetList(mid);
+	}
+
+	@Override
+	public int setMemberPetInsertOK(MemberPetVO petVO, String mid) {
+		return memberDAO.setMemberPetInsertOK(petVO, mid);
 	}
 	
 }

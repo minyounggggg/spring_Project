@@ -51,6 +51,14 @@ public class MessageController {
 			model.addAttribute("msg", "로그아웃이 정상적으로 완료되었습니다.");
 			model.addAttribute("url", "/member/memberMain");
 		}
+		else if(msgFlag.equals("petInsertOK")) {
+			model.addAttribute("msg", "반려동물 등록이 완료되었습니다.");
+			model.addAttribute("url", "/member/memberMypage");
+		}
+		else if(msgFlag.equals("petInsertNO")) {
+			model.addAttribute("msg", "반려동물 등록 오류! 다시 시도해주세요.");
+			model.addAttribute("url", "/member/memberMypage");
+		}
 		
 		
 		

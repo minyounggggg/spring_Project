@@ -14,6 +14,8 @@ public interface MemberService {
 	public MemberVO getmemberNickCheck(String nickName);
 
 	public String fileUpload(MultipartFile fName, String mid);
+	
+	public String fileUploadPet(MultipartFile fName, String mid);
 
 	public int setMemberJoinOK(MemberVO vo);
 
@@ -22,5 +24,7 @@ public interface MemberService {
 	public void setKakaoMemberInput(String mid, String pwd, String nickName, String email);
 
 	public List<MemberPetVO> getMemberPetList(String mid);
+
+	public int setMemberPetInsertOK(MemberPetVO petVO, String mid);
 
 }

@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.service.MemberService;
@@ -213,6 +214,19 @@ public class MemberController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("pVos", pVos);
 		return "member/memberMypage";
+	}
+	
+	@RequestMapping(value = "/memberMypagePetInsert", method = RequestMethod.POST)
+	public String memberMypagePetInsertPost(MemberPetVO petVO, MultipartFile fName, HttpSession session) {
+		String mid = (String) session.getAttribute("sMid");
+		System.out.println("petVO : " + petVO);
+		System.out.println("mid : " + mid);
+		if(!fName.getOriginalFilename().equals(""))petVO.setPetPhoto(memberService.fileUploadPet(fName, mid));
+		else petVO.setPetPhoto("noimage-pet.png");
+		
+		int res = memberService.setMemberPetInsertOK(petVO, mid);
+		if(res != 0) return "redirect:/message/petInsertOK";
+		else return "redirect:/message/petInsertNO";
 	}
 	
 	
