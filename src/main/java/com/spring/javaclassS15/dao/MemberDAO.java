@@ -21,4 +21,6 @@ public interface MemberDAO {
 
 	public List<MemberPetVO> getMemberPetList(@Param("mid") String mid);
 
+	public int setMemberPetInsertOK(@Param("petVO") MemberPetVO petVO, @Param("mid") String mid);
+
 }

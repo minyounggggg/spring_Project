@@ -27,5 +27,9 @@
 	<insert id="setKakaoMemberInput">
 		insert into member (mid, pwd, nickName, email) values (#{mid}, #{pwd}, #{nickName}, #{email});
 	</insert>
+	
+	<insert id="setMemberPetInsertOK">
+		insert into memberPet values (default, #{mid}, #{petVO.petName}, #{petVO.petGender}, #{petVO.petBirthday}, #{petVO.petPhoto}, #{petVO.petInfo}, #{petVO.playWith});
+	</insert>
 
 </mapper>

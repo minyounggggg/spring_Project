@@ -209,28 +209,25 @@
 			width : 100%;
 			padding : 35px 50px;
 		}
+		
 		.filebox .upload-name {
 		    display: inline-block;
 		    height: 40px;
 		    padding: 0 10px;
 		    vertical-align: middle;
 		    border: 1px solid #dddddd;
-		    width: 70%;
+		    width: 78%;
 		    color: #999999;
-		    border-radius: 3px;
 		}
 		.filebox label {
 		    display: inline-block;
 		    padding: 10px 20px;
 		    color: #fff;
 		    vertical-align: middle;
-		    background-color: #578de4;
+		    background-color: #999999;
 		    cursor: pointer;
 		    height: 40px;
-		    width: 26%;
-		    margin: 0 0 0 10px;
-		    text-align: center;
-	        border-radius: 3px;
+		    margin-left: 10px;
 		}
 		.filebox input[type="file"] {
 		    position: absolute;
@@ -240,30 +237,46 @@
 		    overflow: hidden;
 		    border: 0;
 		}
+		
 	</style>
 	
 	<script>
 		
-		function memberUpdate() {
+		
+		// 선택된 사진 미리보기
+	    function imgCheck(e) {
+	    	if(e.files && e.files[0]) {
+	    		let reader = new FileReader();
+	    		reader.onload = function(e) {
+	    			document.getElementById("photoDemo").src = e.target.result;
+	    		}
+	    		reader.readAsDataURL(e.files[0]);
+	    	}
+	    }
+
+		// 반려동물 insert
+		function petInsert() {
+			let petName = document.getElementById("petName").value.trim();
 			
-		}
-		 
-		$("#file").on('change',function(){
-		    var fileName = $("#file").val();
-		    $(".upload-name").val(fileName);
-		});
-		/* 
-		window.onload=function(){
-			target=document.getElementById('file'); // file 아이디 선언
-			target.addEventListener('change',function(){ // change 함수
-				if(target.value.length){ // 파일 첨부인 상태일경우 파일명 출력
-					$('#originName').html(target.files[0].name);
-				}else{ //버튼 클릭후 취소(파일 첨부 없을 경우)할때 파일명값 안보이게
-					$('#originName').html("");
+			let fName = document.getElementById("file").value;
+			if(fName.trim() != "") {
+				let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
+				let maxSize = 1024 * 1024 * 5;
+				let fileSize = document.getElementById("file").files[0].size;
+				
+				if(ext != 'jpg' && ext != 'gif' && ext != 'png') {
+					alert("그림파일만 업로드 가능합니다.");
+					return false;
 				}
-			});
+				else if(fileSize > maxSize) {
+					alert("업로드할 파일의 최대용량은 5MByte입니다.");
+					return false;
+				}
+			}
+			
+			petInsertForm.submit();
 		}
-		 */
+		   
 	</script>
 </head>
 <body>
@@ -304,19 +317,19 @@
 					</div>
 					
 					<!-- Modal body -->
-							<div class="modal-profile-box sec-boxStyle">
-								<section class="modal-profile">
-									<img src="${ctp}/resources/data/member/${vo.photo}"/>
-								</section>
-								<section class="modal-info">
-									<p style="font-size:18px;font-weight:600;color:#888;margin:0"><span style="color:#578de4;">ID _</span> ${vo.mid}</p>
-									<p style="font-size:18px;font-weight:600;color:#888;margin:0 0 5px"><span style="color:#578de4;">E-mail _</span> ${vo.email}</p>
-									<p style="font-size:12px;color:#555;">* 아이디와 이메일은 서비스 이용과정 인증 절차 등으로 인해 직접 삭제하거나 변경이 불가능합니다.</p>
-									<input type="text" id="nickName" name="nickName" class="modal-nick" value="${vo.nickName}"/>
-									<input type="text" id="address" name="address" class="modal-address" value="${vo.address}"/>
-									<button type="button" class="btn btn-primary form-control" onclick="memberUpdate()">수정하기</button>
-								</section>
-							</div>
+					<div class="modal-profile-box sec-boxStyle">
+						<section class="modal-profile">
+							<img src="${ctp}/resources/data/member/${vo.photo}"/>
+						</section>
+						<section class="modal-info">
+							<p style="font-size:18px;font-weight:600;color:#888;margin:0"><span style="color:#578de4;">ID _</span> ${vo.mid}</p>
+							<p style="font-size:18px;font-weight:600;color:#888;margin:0 0 5px"><span style="color:#578de4;">E-mail _</span> ${vo.email}</p>
+							<p style="font-size:12px;color:#555;">* 아이디와 이메일은 서비스 이용과정 인증 절차 등으로 인해 직접 삭제하거나 변경이 불가능합니다.</p>
+							<input type="text" id="nickName" name="nickName" class="modal-nick" value="${vo.nickName}"/>
+							<input type="text" id="address" name="address" class="modal-address" value="${vo.address}"/>
+							<button type="button" class="btn btn-primary form-control" onclick="memberUpdate()">수정하기</button>
+						</section>
+					</div>
 					<!-- 
 					Modal footer
 					<div class="modal-footer">
@@ -373,54 +386,49 @@
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<!-- Modal body -->
-						<div class="modal-profile-box sec-boxStyle">
-							<section class="modal-profile">
-								<img src="${ctp}/resources/data/member/${vo.photo}"/>
-							</section>
-							<!-- 
-							<div class="form-group">
-								회원 사진(파일용량:2MByte이내) :
-								<input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/>
-								<div><img id="photoDemo" width="100px"/></div>
+						<form name="petInsertForm" method="post" action="memberMypagePetInsert">
+							<div class="modal-profile-box sec-boxStyle">
+								<section class="modal-profile">
+									<img id="photoDemo" src="${ctp}/resources/data/member/noimage-pet.png"/>
+								</section>
+								
+								<div  class="form-group">
+							      회원 사진(파일용량:2MByte이내) :
+							      <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border"/>
+							    </div>
+								
+								<section class="modal-info">
+									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 이름을 알려주세요!</p>
+									<input type="text" id="petName" name="petName" class="modal-petName form-control" />
+									<div class="form-group">
+										<div class="form-check-inline">
+											<label class="form-check-label">
+												<input type="radio" class="form-check-input" name="gender" value="남아" checked>남아
+											</label>
+										</div>
+										<div class="form-check-inline">
+											<label class="form-check-label">
+												<input type="radio" class="form-check-input" name="gender" value="여아">여아
+											</label>
+										</div>
+										<div class="form-check-inline">
+											<label class="form-check-label">
+												<input type="radio" class="form-check-input" name="gender" value="중성화">중성화
+											</label>
+										</div>
+									</div>
+									<p style="font-size:14px;color:#444;margin:0;"><span style="color:#578de4;">*</span> 생일을 알려주세요! (추정날짜도 좋아요♥)</p>
+									<div class="form-group">
+										<input type="date" id="petBirthday" name="petBirthday" value="<%=java.time.LocalDate.now() %>" class="modal-petBirthday form-control"/>
+									</div>
+									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
+									<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
+									<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함께하고싶은 동네생활이 있나요?</p>
+									<input type="text" id="playWith" name="playWith" class="modal-playWith form-control" />
+									<button type="button" class="btn btn-primary form-control mt-4" onclick="petInsert()">등록하기</button>
+								</section>
 							</div>
-							 -->
-							<div class="filebox">
-							    <input class="upload-name" id="originName" value="첨부파일" placeholder="첨부파일" />
-							    <label for="file">파일찾기</label> 
-							    <input type="file" id="file" />
-							</div>
-							
-							<section class="modal-info">
-								<p style="font-size:14px;color:#444;margin:0;"><span style="color:#578de4;">*</span> 이름을 알려주세요!</p>
-								<input type="text" id="petName" name="petName" class="modal-petName form-control" />
-								<div class="form-group">
-									<div class="form-check-inline">
-										<label class="form-check-label">
-											<input type="radio" class="form-check-input" name="gender" value="남아" checked>남아
-										</label>
-									</div>
-									<div class="form-check-inline">
-										<label class="form-check-label">
-											<input type="radio" class="form-check-input" name="gender" value="여아">여아
-										</label>
-									</div>
-									<div class="form-check-inline">
-										<label class="form-check-label">
-											<input type="radio" class="form-check-input" name="gender" value="중성화">중성화
-										</label>
-									</div>
-								</div>
-								<p style="font-size:14px;color:#444;margin:0;"><span style="color:#578de4;">*</span> 생일을 알려주세요! (추정날짜도 좋아요♥)</p>
-								<div class="form-group">
-									<input type="date" id="petBirthday" name="petBirthday" value="<%=java.time.LocalDate.now() %>" class="modal-petBirthday form-control"/>
-								</div>
-								<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
-								<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
-								<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함꼐하고싶은 동네생활이 있나요?</p>
-								<input type="text" id="playWith" name="playWith" class="modal-playWith form-control" />
-								<button type="button" class="btn btn-primary form-control mt-4" onclick="petInsert()">등록하기</button>
-							</section>
-						</div>
+						</form>
 					</div>
 				</div>
 			</div>
