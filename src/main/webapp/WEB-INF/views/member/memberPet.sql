@@ -6,9 +6,9 @@ create table memberPet (
 	petName       	varchar(10) not null,				/* 반려동물 이름 */
 	petGender       varchar(5) not null,				/* 반려동물 성별 */
 	petBirthday     varchar(20) not null,				/* 반려동물 생일 */
-	petPhoto		varchar(100) default 'noimage.jpg', /* 반려동물 사진 */
+	petPhoto		varchar(100) default 'noimage-pet.png', /* 반려동물 사진 */
 	petInfo			varchar(100), 						/* 반려동물 소개 */
-			varchar(100), 						/* 하고싶은 동네 생활 */
+	playWith		varchar(100), 						/* 하고싶은 동네 생활 */
 	primary key (idx),
 	foreign key(petWith) references member(mid)
 	on update cascade
