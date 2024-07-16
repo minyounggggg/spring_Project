@@ -219,8 +219,6 @@ public class MemberController {
 	@RequestMapping(value = "/memberMypagePetInsert", method = RequestMethod.POST)
 	public String memberMypagePetInsertPost(MemberPetVO petVO, MultipartFile fName, HttpSession session) {
 		String mid = (String) session.getAttribute("sMid");
-		System.out.println("petVO : " + petVO);
-		System.out.println("mid : " + mid);
 		if(!fName.getOriginalFilename().equals("")) petVO.setPetPhoto(memberService.fileUploadPet(fName, mid));
 		else petVO.setPetPhoto("noimage-pet.png");
 		

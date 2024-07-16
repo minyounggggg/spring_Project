@@ -41,7 +41,7 @@
 			margin-bottom : 20px;
 		}
 		.profile-box{
-			width : 69%;
+			width : 65%;
 			margin-right : 1%;
 			float : left;
 			padding : 30px;
@@ -64,7 +64,7 @@
 			width : 80%;
 		}
 		.point-box{
-			width : 30%;
+			width : 34%;
 			float : left;
 			padding : 30px;
 			height : 180px;
@@ -141,18 +141,18 @@
 		#myModal1{
     		background-color: rgba(0,0,0,0.3);
     	}
-    	#myModal1 .modal-content, #myModal2 .modal-content{
+    	#myModal1 .modal-content, #myModal2 .modal-content, #myModal3 .modal-content{
     		background-color: transparent;
     		border: none;
     	}
     	#myModal1 .modal-dialog {
 	        width : 400px;
 	    }
-	    #myModal1 .modal-header, #myModal2 .modal-header{
+	    #myModal1 .modal-header, #myModal2 .modal-header, #myModal3 .modal-header{
 	    	border: none;
 	    	margin-bottom: 10px;
 	    }
-	    #myModal1 button.close, #myModal2 button.close{
+	    #myModal1 button.close, #myModal2 button.close, #myModal3 button.close{
 	    	background-color: #fff;
 	    	border-radius: 100px;
 	    }
@@ -204,7 +204,7 @@
 		}
 		input#address:focus {outline: none;}
 		
-		#myModal2 .modal-profile-box{
+		#myModal2 .modal-profile-box, #myModal3 .modal-profile-box{
 			width : 100%;
 			padding : 35px 50px;
 		}
@@ -265,9 +265,25 @@
 	    	}
 	    }
 
+		// 선택된 사진 미리보기 update
+	    function updateImgCheck(e) {
+	    	if(e.files && e.files[0]) {
+	    		let reader = new FileReader();
+	    		reader.onload = function(e) {
+	    			document.getElementById("petPhotoUpdate").src = e.target.result;
+	    		}
+	    		reader.readAsDataURL(e.files[0]);
+	    	}
+	    }
+
 		// 반려동물 insert
 		function petInsert() {
-			let petName = document.getElementById("petName").value.trim();
+			let petName = document.getElementById("petName").value;
+			if(petName.trim() == ""){
+				alert("반려동물의 이름을 입력해주세요!");
+				petInsertForm.petName.focus();
+				return false;
+			}
 			
 			let fName = document.getElementById("file").value;
 			if(fName.trim() != "") {
@@ -286,6 +302,41 @@
 			}
 			
 			petInsertForm.submit();
+		}
+		
+		//반려동물 수정 (모달창)
+		function petUpdate(petPhoto, petName, petGender, petBirthday, petInfo, playWith) {
+			$("#myModal3 #petPhotoUpdate").attr("src","${ctp}/resources/data/memberPet/"+petPhoto);
+			$("#myModal3 #petNameUpdate").val(petName);
+			
+			if(petGender == "남아") $("#myModal3 #petGender1").prop("checked", true);
+			else if(petGender == "여아") $("#myModal3 #petGender2").prop("checked", true);
+			else $("#myModal3 #petGender3").prop("checked", true);
+			
+			$("#myModal3 #petBirthdayUpdate").val(petBirthday);
+			$("#myModal3 #petInfoUpdate").val(petInfo);
+			$("#myModal3 #playWithUpdate").val(playWith);
+		}
+		
+		
+		// 부트스트랩 모달 close버튼 눌러서 닫을때 form내용 리셋 처리
+		//$('.modal').on('hidden.bs.modal', function (e) {
+		//	$(this).find('form')[0].reset()
+		//})
+		
+		//$('.close').on('hidden.bs.modal', function (e) {
+			// 모달 종료 시,
+		//	document.forms['petInsertForm'].reset(); // 폼의 전체 값 초기화 처리
+		//})
+		
+		//var myModalEl = document.getElementById('myModal2');
+		//myModalEl.addEventListener('hidden.bs.modal', function (event) {
+		//	$(this).find('form')[0].reset()
+		//})
+		
+		
+		function petUpdate() {
+			
 		}
 		   
 	</script>
@@ -364,7 +415,9 @@
 									</section>
 									<section class="pet-info">
 										<p style="font-size:24px;font-weight:700;color:#444;margin:0 0 5px">${pVo.petName} <span style="font-size:16px;font-weight:400;color:#444;">· ${pVo.petGender}</span></p>
-										<p style="font-size:16px;margin:0 0 30px;"><img src="${ctp}/resources/images/memberMypage/birthday-icon.png" style="width:22px;margin:0 5px 5px 0;"/>${pVo.petBirthday}</p>
+										<p style="font-size:16px;margin:0 0 30px;"><img src="${ctp}/resources/images/memberMypage/birthday-icon.png" style="width:22px;margin:0 5px 5px 0;"/>
+											${pVo.petBirthday} · <button style="border: solid 1px #444;color: #444;border-radius: 100px;padding: 1px 10px;font-size: 12px;" onclick="petUpdate('${pVo.petPhoto}','${pVo.petName}','${pVo.petGender}','${pVo.petBirthday}','${pVo.petInfo}','${pVo.playWith}')" data-toggle="modal" data-target="#myModal3">수정하기</button>
+										</p>
 									</section>
 								</div>
 								<section>
@@ -418,7 +471,7 @@
 								
 								<section class="modal-info">
 									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 이름을 알려주세요!</p>
-									<input type="text" id="petName" name="petName" class="modal-petName form-control" />
+									<input type="text" id="petName" name="petName" class="modal-petName form-control" required />
 									<div class="form-group">
 										<div class="form-check-inline">
 											<label class="form-check-label">
@@ -443,8 +496,69 @@
 									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
 									<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
 									<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함께하고싶은 동네생활이 있나요?</p>
+									<!-- 키워드 임의로 설정해 놓고 그중 고르기 -->
 									<input type="text" id="playWith" name="playWith" class="modal-playWith form-control" />
 									<button type="button" class="petInsertOkBtn" onclick="petInsert()">등록하기</button>
+								</section>
+								<input type="hidden" name="petWith" value="${sMid}"/>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- The Modal 반려동물 update 모달-->
+			<div class="modal fade" id="myModal3">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<!-- Modal body -->
+						<form name="petUpdateForm" method="post" action="memberMypagePetUpdate" enctype="multipart/form-data">
+							<div class="modal-profile-box sec-boxStyle">
+								<section class="modal-profile">
+									<img id="petPhotoUpdate" />
+								</section>
+							    <div class="file_cus">
+								    <label>
+								        <input type="file" name="updateFName" id="updateFile" onchange="updateImgCheck(this)">
+								        <span class="file_name">사진을 선택해주세요.</span>
+								        <span class="file_btn">사진선택</span>
+								    </label>
+								</div>
+								<section class="modal-info">
+									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 이름을 알려주세요!</p>
+									<input type="text" id="petNameUpdate" name="petNameUpdate" class="modal-petName form-control" required />
+									<div class="form-group">
+										<div class="form-check-inline">
+											<label class="form-check-label">
+												<input type="radio" class="form-check-input" name="petGenderUpdate" id="petGender1" value="남아" />남아
+											</label>
+										</div>
+										<div class="form-check-inline">
+											<label class="form-check-label">
+												<input type="radio" class="form-check-input" name="petGenderUpdate" id="petGender2" value="여아" />여아
+											</label>
+										</div>
+										<div class="form-check-inline">
+											<label class="form-check-label">
+												<input type="radio" class="form-check-input" name="petGenderUpdate" id="petGender3" value="중성화" />중성화
+											</label>
+										</div>
+									</div>
+									<p style="font-size:14px;color:#444;margin:0;"><span style="color:#578de4;">*</span> 생일을 알려주세요! (추정날짜도 좋아요♥)</p>
+									<div class="form-group">
+										<input type="date" id="petBirthdayUpdate" name="petBirthdayUpdate" value="<%=java.time.LocalDate.now() %>" class="modal-petBirthday form-control"/>
+									</div>
+									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
+									<input type="text" id="petInfoUpdate" name="petInfoUpdate" class="modal-petInfo form-control" />
+									<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함께하고싶은 동네생활이 있나요?</p>
+									<!-- 키워드 임의로 설정해 놓고 그중 고르기 -->
+									<input type="text" id="playWithUpdate" name="playWithUpdate" class="modal-playWith form-control" />
+									<button type="button" class="petUpdateOkBtn" onclick="petUpdate()">수정하기</button>
 								</section>
 								<input type="hidden" name="petWith" value="${sMid}"/>
 							</div>
