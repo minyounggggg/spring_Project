@@ -6,7 +6,7 @@ create table memberPet (
 	petName       	varchar(10) not null,				/* 반려동물 이름 */
 	petGender       varchar(5) default '남아' not null,	/* 반려동물 성별 */
 	petBirthday     varchar(10) not null,				/* 반려동물 생일 */
-	petPhoto		varchar(100) default 'noimage-pet.png', /* 반려동물 사진 */
+	petPhoto		varchar(100) default 'noimage-pet.png', /* 반려동물 사진 */		/*vo에 저장된이름*/
 	petInfo			varchar(100), 						/* 반려동물 소개 */
 	playWith		varchar(100), 						/* 하고싶은 동네 생활 */
 	primary key (idx),
