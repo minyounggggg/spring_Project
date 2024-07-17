@@ -83,5 +83,37 @@ public class MemberServiceImpl implements MemberService {
 	public int setMemberPetInsertOK(MemberPetVO petVO, String mid) {
 		return memberDAO.setMemberPetInsertOK(petVO, mid);
 	}
-	
+
+	@Override
+	public int setMemberMypagePetUpdateOK(MemberPetVO petVO, int idx) {
+		return memberDAO.setMemberMypagePetUpdateOK(petVO, idx);
+	}
+
+	@Override
+	public MemberPetVO getPetPhoto(int idx) {
+		return memberDAO.getPetPhoto(idx);
+	}
+/*
+	@Override
+	public void imgDelete(String petPhoto) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();	  //ServletRequestAttributes 로 형변환 후 사용
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/");	//이거 맑 펫 사진 경로 
+		
+		int position = 28;
+		String nextImg = content.substring(content.indexOf("src=\"/") + position);
+		boolean sw = true;
+		
+		while(sw) {
+			String imgFile = nextImg.substring(0, nextImg.indexOf("\""));
+			
+			String origFilePath = realPath + "board/" + imgFile;  //원본파일 경로명
+			
+			fileDelete(origFilePath);	//board폴더의 그림파일을 삭제힌다.
+			
+			if(nextImg.indexOf("src=\"/") == -1) sw = false;
+			else nextImg = nextImg.substring(nextImg.indexOf("src=\"/") + position);
+		}
+		
+	}
+	*/
 }

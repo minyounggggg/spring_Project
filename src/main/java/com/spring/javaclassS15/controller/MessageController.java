@@ -59,6 +59,14 @@ public class MessageController {
 			model.addAttribute("msg", "반려동물 등록 오류! 다시 시도해주세요.");
 			model.addAttribute("url", "/member/memberMypage");
 		}
+		else if(msgFlag.equals("petUpdateOK")) {
+			model.addAttribute("msg", "반려동물 정보수정이 완료되었습니다.");
+			model.addAttribute("url", "/member/memberMypage");
+		}
+		else if(msgFlag.equals("petUpdateNO")) {
+			model.addAttribute("msg", "반려동물 정보수정 오류! 다시 시도해주세요.");
+			model.addAttribute("url", "/member/memberMypage");
+		}
 		
 		
 		

@@ -227,5 +227,24 @@ public class MemberController {
 		else return "redirect:/message/petInsertNO";
 	}
 	
-	
+	@RequestMapping(value = "/memberMypagePetUpdate", method = RequestMethod.POST)
+	public String memberMypagePetUpdatePost(MemberPetVO petVO, MultipartFile updateFName, HttpSession session, int idx) {
+		String mid = (String) session.getAttribute("sMid");
+		if(!updateFName.getOriginalFilename().equals("")) petVO.setPetPhoto(memberService.fileUploadPet(updateFName, mid));
+		else petVO.setPetPhoto(petVO.getPetPhoto());
+		
+		int res = memberService.setMemberMypagePetUpdateOK(petVO, idx);
+		if(res != 0) return "redirect:/message/petUpdateOK";
+		else return "redirect:/message/petUpdateNO";
+	}
+/*
+	@RequestMapping(value = "/petDeleteOK", method = RequestMethod.GET)
+	public String petDeleteOKGet(int idx) {
+		
+		MemberPetVO petVO = memberService.getPetPhoto(idx);
+		if(petVO.getPetPhoto() != "noimage-pet.png") memberService.imgDelete(petVO.getPetPhoto());
+		
+		return "member/memberMypage";
+	}
+	*/
 }

@@ -27,4 +27,10 @@ public interface MemberService {
 
 	public int setMemberPetInsertOK(MemberPetVO petVO, String mid);
 
+	public int setMemberMypagePetUpdateOK(MemberPetVO petVO, int idx);
+
+	public MemberPetVO getPetPhoto(int idx);
+
+	//public void imgDelete(String petPhoto);
+
 }

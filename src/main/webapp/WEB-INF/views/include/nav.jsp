@@ -84,7 +84,7 @@
 <body>
 	<nav>
 		<div class="nav-top">
-			<div class="nav-logo">
+			<div class="nav-logo"><!-- 홈컨트롤러 home부분 memberMain.jsp main.jsp로 바꾸고 수정해놓기 -->
 				<a href="${ctp}/member/memberMain"><img src="${ctp}/resources/images/memberMain/logo.png" style="width:140px; margin-bottom:8px;"/></a>
 			</div>
 			<div class="nav-login text-right">
