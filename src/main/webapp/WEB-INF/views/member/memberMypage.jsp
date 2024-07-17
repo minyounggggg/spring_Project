@@ -208,7 +208,37 @@
 			width : 100%;
 			padding : 35px 50px;
 		}
-		
+		/* 체크박스 */
+		input[type="checkbox"] {
+			appearance: none;
+		}
+		input[type="checkbox"] + label{
+		    border: solid 1px #ced4da;
+		    border-radius: 50px;
+	        padding: 8px 20px;
+		    margin: 5px 5px 0 0;
+	        color: #a1a1a1;
+		}
+		input[id="playWith1"]:checked + label{
+			/* content:'같이산책'; */
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		input[id="playWith2"]:checked + label{
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		input[id="playWith3"]:checked + label{
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		/* 
+		input[id="playWith1"]:checked + label::after{
+			content:'같이산책';
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		 */
 		/* 사진파일업로드 css */
 		.file_cus label {display: block; width: 100%; margin: 15px 0 20px; font-size: 0; cursor: pointer;}
 		input[type="file"] {overflow: hidden;position: absolute;width: 1px;height: 1px;margin: -1px;font-size: initial;clip: rect(0 0 0 0);}
@@ -227,7 +257,7 @@
 		}
 		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
 
-		.petInsertOkBtn {
+		.petInsertOkBtn, .petUpdateOkBtn {
 		    background-color: #578de4;
 		    border-color: #578de4;
 		    margin-top: 25px;
@@ -238,6 +268,7 @@
 		    color: #fff;
 		}
 		.petInsertOkBtn:hover {background-color: #3478db;}
+		.petUpdateOkBtn:hover {background-color: #3478db;}
 	</style>
 	
 	<script>
@@ -335,9 +366,9 @@
 		//})
 		
 		
-		function petUpdate() {
+		//function petUpdate() {
 			
-		}
+		//}
 		   
 	</script>
 </head>
@@ -496,8 +527,19 @@
 									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
 									<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
 									<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함께하고싶은 동네생활이 있나요?</p>
+									<!-- <input type="text" id="playWith" name="playWith" class="modal-playWith form-control" /> -->
 									<!-- 키워드 임의로 설정해 놓고 그중 고르기 -->
-									<input type="text" id="playWith" name="playWith" class="modal-playWith form-control" />
+									<div class="form-group">
+										<div class="check-box">
+											<input type="checkbox" class="check-box-input" value="같이산책" id="playWith1" name="playWith"/>
+											<label for="playWith1">같이산책</label>
+											<input type="checkbox" class="check-box-input" value="동네친구" id="playWith2" name="playWith"/>
+											<label for="playWith2">동네친구</label>
+											<input type="checkbox" class="check-box-input" value="동네모임" id="playWith3" name="playWith"/>
+											<label for="playWith3">동네모임</label>
+										</div>
+									</div>
+									
 									<button type="button" class="petInsertOkBtn" onclick="petInsert()">등록하기</button>
 								</section>
 								<input type="hidden" name="petWith" value="${sMid}"/>
