@@ -51,6 +51,40 @@
 <script>
 	'use strict';
 	
+	function addressSearch() {
+		let searchString = document.getElementById("address").value;
+		if(searchString.trim()==""){
+			alert("검색어를 입력하세요");
+			document.getElementById("address").focus();
+			return false;
+		}
+		//https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C
+		//https://species.nibr.go.kr/endangeredspecies/rehome/survey/popup_gov_area2.jsp
+		let search = "https://species.nibr.go.kr/endangeredspecies/rehome/survey/popup_gov_area2.jsp";
+		let searchSelector = "div.tblwrap.mar_t20";
+		
+		$.ajax({
+			url : "${ctp}/member/memberAddressSearchOK",
+			type : "post",
+			data : {search:search, searchSelector : searchSelector},
+			success : function (vos) {
+				if(vos != ""){
+					let str = '';
+					for(let i=0; i<vos.length; i++) {
+						str += vos[i] + "<br/>";
+					}
+					$("#demo").html(str);
+				}
+				else $("#demo").html("검색된 자료가 없습니다.");
+			},
+			error : function () {
+				alert("전송오류~!");
+			}
+		});
+		
+	}
+	
+	
 	let idCheckSw = 0;
     let nickCheckSw = 0;
 	
@@ -66,7 +100,7 @@
 	    
 	    let email1 = myform.email1.value.trim();
 	    let email2 = myform.email2.value.trim();
-	    let email = email1 + "@" + email2;
+	    let email = email1 + email2;
 	    /* 
 	    let tel1 = myform.tel1.value.trim();
 	    let tel2 = myform.tel2.value.trim();
@@ -286,53 +320,18 @@
 			          </div>
 			        </div>
 			    </div>
-	          <!-- 
+			    
 			    <div class="form-group">
-			      <div class="input-group mb-3">
-			        <div class="input-group-prepend">
-			          <span class="input-group-text">전화번호 :</span> &nbsp;&nbsp;
-			            <select name="tel1" class="custom-select">
-			              <option value="010" selected>010</option>
-			              <option value="02">02</option>
-			              <option value="031">"031"</option>
-			              <option value="032">032</option>
-			              <option value="041">041</option>
-			              <option value="042">042</option>
-			              <option value="043">043</option>
-			              <option value="051">051</option>
-			              <option value="052">052</option>
-			              <option value="061">061</option>
-			              <option value="062">062</option>
-			            </select>-
-			        </div>
-			        <input type="text" name="tel1" size=3 maxlength=3 class="form-control" required/>-
-			        <input type="text" name="tel2" size=4 maxlength=4 class="form-control" required/>-
-			        <input type="text" name="tel3" size=4 maxlength=4 class="form-control" required/>
-			      </div>
-			    </div>
-             -->
-             <!-- 
-			    <div class="form-group">주소는 시군구동 까지만 입력받아서 같은 동네 사람들끼리 검색? (청주시/상당구/용암동)
-			      <label for="address">주소 <span style="color:#DB4455"><b>*</b></span></label>
-			      <div class="input-group mb-1">
-			        <input type="text" name="postcode" id="sample6_postcode" placeholder="우편번호" class="form-control" required>
-			        <div class="input-group-append">
-			          <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="btn btn-secondary">
-			        </div>
-			      </div>
-			      <input type="text" name="roadAddress" id="sample6_address" size="50" placeholder="주소" class="form-control mb-1" required>
-			      <div class="input-group mb-1">
-			        <input type="text" name="detailAddress" id="sample6_detailAddress" placeholder="상세주소" class="form-control"> &nbsp;&nbsp;
-			        <div class="input-group-append">
-			          <input type="text" name="extraAddress" id="sample6_extraAddress" placeholder="참고항목" class="form-control">
-			        </div>
-			      </div>
-			    </div>
-			     -->
-			     <div class="form-group">
 				    <label for="address">활동지역 <span style="color:#DB4455"><b>*</b></span></label>
-				    <input type="text" class="form-control" id="address" placeholder="주소를 입력해주세요." name="address" required />
+				    <div class="input-group mb-1">
+					    <input type="text" class="form-control" id="address" placeholder="주소를 입력해주세요." name="address" required />
+					    <div class="input-group-prepend">
+					    	<input type="button" value="주소검색" id="addressSearchBtn" class="btn btn-secondary" onclick="addressSearch()" />	
+					    </div>
+					</div>
+					<div id="demo"></div>
 			    </div>
+			    
 			    <hr/>
 			    <div class="btnSec"><button type="button" onclick="fCheck()" class="btn btn-primary form-control mb-2">가입하기</button></div>
 			</section>

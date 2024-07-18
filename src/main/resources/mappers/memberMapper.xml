@@ -17,6 +17,11 @@
 	<select id="getMemberPetList" resultType="com.spring.javaclassS15.vo.MemberPetVO">
 		select * from memberPet where petWith = #{mid};
 	</select>
+
+	<select id="getMemberPetPhoto" resultType="com.spring.javaclassS15.vo.MemberPetVO">
+		select * from memberPet where idx = #{idx};
+	</select>
+	
 	
 	
 	
@@ -31,5 +36,17 @@
 	<insert id="setMemberPetInsertOK">
 		insert into memberPet values (default, #{mid}, #{petVO.petName}, #{petVO.petGender}, #{petVO.petBirthday}, #{petVO.petPhoto}, #{petVO.petInfo}, #{petVO.playWith});
 	</insert>
+	
+	
+	
+	<update id="setMemberMypagePetUpdateOK">
+		update memberPet set petName=#{petVO.petName}, petGender=#{petVO.petGender}, petBirthday=#{petVO.petBirthday}, petPhoto=#{petVO.petPhoto}, petInfo=#{petVO.petInfo}, playWith=#{petVO.playWith} where idx=#{idx};
+	</update>
+	
+	
+	
+	<delete id="setMemberPetDeleteOK">
+		delete from memberPet where idx=#{idx};
+	</delete>
 
 </mapper>
