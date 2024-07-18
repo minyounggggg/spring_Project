@@ -252,7 +252,7 @@
 		}
 		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
 
-		.petInsertOkBtn, .petUpdateOkBtn {
+		.memberUpdateBtn, .petInsertOkBtn, .petUpdateOkBtn {
 		    background-color: #578de4;
 		    border-color: #578de4;
 		    margin-top: 25px;
@@ -269,6 +269,7 @@
 		    margin-top: 10px;
 		    color: #999;
 		}
+		.memberUpdateBtn:hover {background-color: #3478db;}
 		.petInsertOkBtn:hover {background-color: #3478db;}
 		.petUpdateOkBtn:hover {background-color: #3478db;}
 	</style>
@@ -283,7 +284,7 @@
 		function fileCus() {
 		    $(".file_cus input[type=file]").on("change", function() {
 		        const fileName = $(this).val().split("\\").pop();
-		        $(this).siblings(".file_name").text(fileName || "사진을 선택해주세요.");
+		        $(this).siblings(".file_name").text(fileName || "사진을 선택해주세요!!");
 		    });
 		}
 
@@ -361,10 +362,14 @@
 		}
 		
 		
+		
+		
+		
+		
 		// 부트스트랩 모달 close버튼 눌러서 닫을때 form내용 리셋 처리
-		//$('.modal').on('hidden.bs.modal', function (e) {
-		//	$(this).find('form')[0].reset()
-		//})
+		
+		
+		
 		
 		//$('.close').on('hidden.bs.modal', function (e) {
 			// 모달 종료 시,
@@ -407,8 +412,25 @@
 		//반려동물 삭제 처리 Delete
 		function petDelete() {
 			let idx = document.getElementById("idx").value;
+			let petPhoto = document.getElementById("petPhotoH").value;
 			let ans = confirm("해당 데이터를 삭제하시겠습니까?");
-			if(ans) location.href = "petDeleteOK?idx="+idx;
+			if(ans) {
+				$.ajax({
+					url : "${ctp}/member/memberPetDelete",
+					type : "post",
+					data : {idx:idx, petPhoto:petPhoto},
+					success : function(res) {
+						if(res != "0") {
+							alert("반려동물의 정보가 삭제되었습니다.");
+							location.reload();
+						}
+						else alert("삭제오류! 다시 시도해주세요.");
+					},
+					error : function() {
+						alert("전송오류");
+					}
+				});
+			}
 		}
 		   
 	</script>
@@ -461,7 +483,7 @@
 							<p style="font-size:12px;color:#555;">* 아이디와 이메일은 서비스 이용과정 인증 절차 등으로 인해 직접 삭제하거나 변경이 불가능합니다.</p>
 							<input type="text" id="nickName" name="nickName" class="modal-nick" value="${vo.nickName}"/>
 							<input type="text" id="address" name="address" class="modal-address" value="${vo.address}"/>
-							<button type="button" class="btn btn-primary form-control" onclick="memberUpdate()">수정하기</button>
+							<button type="button" class="memberUpdateBtn" onclick="memberUpdate()">수정하기</button>
 						</section>
 					</div>
 					<!-- 
@@ -541,7 +563,7 @@
 							    <div class="file_cus">
 								    <label>
 								        <input type="file" name="fName" id="file" onchange="imgCheck(this)">
-								        <span class="file_name">사진을 선택해주세요.</span>
+								        <span class="file_name" id="file_name">사진을 선택해주세요.</span>
 								        <span class="file_btn">사진선택</span>
 								    </label>
 								</div>
@@ -613,7 +635,7 @@
 							    <div class="file_cus">
 								    <label>
 								        <input type="file" name="updateFName" id="updateFile" onchange="updateImgCheck(this)">
-								        <span class="file_name">사진을 선택해주세요.</span>
+								        <span class="file_name" id="updateFile_name">사진을 선택해주세요.</span>
 								        <span class="file_btn">사진선택</span>
 								    </label>
 								</div>
@@ -701,5 +723,23 @@
 		</div>
 		
 	</div>
+	
+<script> 
+	$('#myModal2').on('hidden.bs.modal', function (e) {
+		 console.log('modal close');
+		$(this).find('form')[0].reset();
+		$(this).find('#photoDemo').attr('src', '${ctp}/resources/data/memberPet/noimage-pet.png');
+		$(this).find('#file_name').text('사진을 선택해주세요.');
+	});
+	
+	$('#myModal3').on('hidden.bs.modal', function (e) {
+		$(this).find('form')[0].reset();
+		$(this).find('#playWithUpdate1').prop("checked", false);
+		$(this).find('#playWithUpdate2').prop("checked", false);
+		$(this).find('#playWithUpdate3').prop("checked", false);
+		$(this).find('#updateFile_name').text('사진을 선택해주세요.');
+	});
+</script>
+
 </body>
 </html>

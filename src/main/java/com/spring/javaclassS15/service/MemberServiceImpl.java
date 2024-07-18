@@ -1,10 +1,15 @@
 package com.spring.javaclassS15.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
@@ -90,30 +95,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberPetVO getPetPhoto(int idx) {
-		return memberDAO.getPetPhoto(idx);
+	public MemberPetVO getMemberPetPhoto(int idx) {
+		return memberDAO.getMemberPetPhoto(idx);
 	}
-/*
+
 	@Override
-	public void imgDelete(String petPhoto) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();	  //ServletRequestAttributes 로 형변환 후 사용
-		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/");	//이거 맑 펫 사진 경로 
-		
-		int position = 28;
-		String nextImg = content.substring(content.indexOf("src=\"/") + position);
-		boolean sw = true;
-		
-		while(sw) {
-			String imgFile = nextImg.substring(0, nextImg.indexOf("\""));
-			
-			String origFilePath = realPath + "board/" + imgFile;  //원본파일 경로명
-			
-			fileDelete(origFilePath);	//board폴더의 그림파일을 삭제힌다.
-			
-			if(nextImg.indexOf("src=\"/") == -1) sw = false;
-			else nextImg = nextImg.substring(nextImg.indexOf("src=\"/") + position);
-		}
-		
+	public int setMemberPetDeleteOK(int idx) {
+		return memberDAO.setMemberPetDeleteOK(idx);
 	}
-	*/
+	
 }

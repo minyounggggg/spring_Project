@@ -1,5 +1,7 @@
 package com.spring.javaclassS15.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -64,6 +71,7 @@ public class MemberController {
 		if(vo != null && passwordEncoder.matches(pwd, vo.getPwd())) {
 			session.setAttribute("sMid", mid);
 			session.setAttribute("sNickName", vo.getNickName());
+			session.setAttribute("sLevel", vo.getLevel());
 			
 			if(idSave.equals("on")) {
 				Cookie cookieMid = new Cookie("cMid", mid);
@@ -139,6 +147,7 @@ public class MemberController {
 		// 1. 세션처리
 		session.setAttribute("sMid", vo.getMid());
 		session.setAttribute("sNickName", vo.getNickName());
+		session.setAttribute("sLevel", vo.getLevel());
 		
 		// 3. 기타처리(DB에처리해야할것들 (반뭉카운트, 포인트,,, 등))
 		// 방문포인트 : 1회방문시 point 10점할당, 1일 최대 50점까지 할당가능
@@ -162,6 +171,26 @@ public class MemberController {
 	@RequestMapping(value = "/memberJoin", method = RequestMethod.GET)
 	public String memberJoinGet() {
 		return "member/memberJoin";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/memberAddressSearchOK", method = RequestMethod.POST)
+	public ArrayList<String> memberAddressSearchOKPost(String search, String searchSelector) throws IOException {
+		Connection conn = Jsoup.connect(search);
+		
+		Document document = conn.get();
+		
+		Elements selects = document.select(searchSelector);
+		
+		ArrayList<String> vos = new ArrayList<String>();
+		
+		int i=0;
+		for (Element select : selects) {
+			i++;
+			vos.add(i + " : " + select.html());
+		}
+		
+		return vos;
 	}
 	
 	@RequestMapping(value = "/memberJoin", method = RequestMethod.POST)
@@ -230,21 +259,25 @@ public class MemberController {
 	@RequestMapping(value = "/memberMypagePetUpdate", method = RequestMethod.POST)
 	public String memberMypagePetUpdatePost(MemberPetVO petVO, MultipartFile updateFName, HttpSession session, int idx) {
 		String mid = (String) session.getAttribute("sMid");
-		if(!updateFName.getOriginalFilename().equals("")) petVO.setPetPhoto(memberService.fileUploadPet(updateFName, mid));
+		if(!updateFName.getOriginalFilename().equals("")) {
+			if(!petVO.getPetPhoto().equals("noimage-pet.png")) {		// 새로등록하려고 하는 사진이있는데 기본프로필이 아니면 기존 db에있는 사진을 지운 후 update
+				javaclassProvide.deleteFile(petVO.getPetPhoto(), "memberPet");
+			}
+			petVO.setPetPhoto(memberService.fileUploadPet(updateFName, mid));
+		}
 		else petVO.setPetPhoto(petVO.getPetPhoto());
 		
 		int res = memberService.setMemberMypagePetUpdateOK(petVO, idx);
 		if(res != 0) return "redirect:/message/petUpdateOK";
 		else return "redirect:/message/petUpdateNO";
 	}
-/*
-	@RequestMapping(value = "/petDeleteOK", method = RequestMethod.GET)
-	public String petDeleteOKGet(int idx) {
+
+	@ResponseBody
+	@RequestMapping(value = "/memberPetDelete", method = RequestMethod.POST)
+	public String memberPetDeletePost(int idx, String petPhoto) {
+		if(!petPhoto.equals("noimage-pet.png")) javaclassProvide.deleteFile(petPhoto, "memberPet");
 		
-		MemberPetVO petVO = memberService.getPetPhoto(idx);
-		if(petVO.getPetPhoto() != "noimage-pet.png") memberService.imgDelete(petVO.getPetPhoto());
-		
-		return "member/memberMypage";
+		return memberService.setMemberPetDeleteOK(idx)+ "";
 	}
-	*/
+	
 }

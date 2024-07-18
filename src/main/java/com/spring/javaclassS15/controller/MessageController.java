@@ -51,6 +51,10 @@ public class MessageController {
 			model.addAttribute("msg", "로그아웃이 정상적으로 완료되었습니다.");
 			model.addAttribute("url", "/member/memberMain");
 		}
+		else if(msgFlag.equals("memberNo")) {
+			model.addAttribute("msg", "로그인 후 이용해주시기 바랍니다.");
+			model.addAttribute("url", "/member/memberLogin");
+		}
 		else if(msgFlag.equals("petInsertOK")) {
 			model.addAttribute("msg", "반려동물 등록이 완료되었습니다.");
 			model.addAttribute("url", "/member/memberMypage");
@@ -65,6 +69,14 @@ public class MessageController {
 		}
 		else if(msgFlag.equals("petUpdateNO")) {
 			model.addAttribute("msg", "반려동물 정보수정 오류! 다시 시도해주세요.");
+			model.addAttribute("url", "/member/memberMypage");
+		}
+		else if(msgFlag.equals("petDeleteOK")) {
+			model.addAttribute("msg", "반려동물의 정보가 삭제되었습니다.");
+			model.addAttribute("url", "/member/memberMypage");
+		}
+		else if(msgFlag.equals("petDeleteNO")) {
+			model.addAttribute("msg", "반려동물 정보삭제 오류! 다시 시도해주세요.");
 			model.addAttribute("url", "/member/memberMypage");
 		}
 		

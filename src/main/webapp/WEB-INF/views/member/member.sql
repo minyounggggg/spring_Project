@@ -13,11 +13,12 @@ create table member (
 	visitCnt  	int default 0,							/* 총 방문횟수 */
 	startDate 	datetime default now(),			/* 최초 가입일 */
 	lastDate  	datetime default now(),			/* 마지막 접속일 */
+	level  		int default 1,
 	primary key (idx),
 	unique(mid)
 );
 
-insert into member values (default, 'admin', '1234', '관리맨', '충북 청주시 상당구 용암동','admin@admin.com',default,default,default,default,default,default);
+insert into member values (default, 'admin', '1234', '관리맨', '충북 청주시 상당구 용암동','admin@admin.com',default,default,default,default,default,default,default);
 
 desc member;
 

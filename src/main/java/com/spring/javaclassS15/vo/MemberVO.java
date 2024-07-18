@@ -23,4 +23,5 @@ public class MemberVO {
 	private int visitCnt;
 	private String startDate;
 	private String lastDate;
+	private int level;
 }

@@ -25,6 +25,8 @@ public interface MemberDAO {
 
 	public int setMemberMypagePetUpdateOK(@Param("petVO") MemberPetVO petVO, @Param("idx") int idx);
 
-	public MemberPetVO getPetPhoto(@Param("idx") int idx);
+	public MemberPetVO getMemberPetPhoto(@Param("idx") int idx);
+
+	public int setMemberPetDeleteOK(@Param("idx") int idx);
 
 }
