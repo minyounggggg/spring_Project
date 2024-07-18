@@ -58,10 +58,12 @@
 			document.getElementById("address").focus();
 			return false;
 		}
+		//https://search.naver.com/search.naver?nso=&page="+page+"&query="+searchString+"&sm=tab_pge&start="+(page*15+1)+"&where=web
 		//https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C
+		//https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%95%95%EA%B5%AC%EC%A0%95
 		//https://species.nibr.go.kr/endangeredspecies/rehome/survey/popup_gov_area2.jsp
-		let search = "https://species.nibr.go.kr/endangeredspecies/rehome/survey/popup_gov_area2.jsp";
-		let searchSelector = "div.tblwrap.mar_t20";
+		let search = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query="+searchString;
+		let searchSelector = "div.m8nnz";
 		
 		$.ajax({
 			url : "${ctp}/member/memberAddressSearchOK",
