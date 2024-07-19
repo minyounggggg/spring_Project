@@ -29,29 +29,96 @@
 		padding : 30px 0;
 	}
 	.joinForm{
-		width : 1300px;
+		width : 1200px;
 		border-radius : 30px;
 		background-color : #f9f9f9;
 		box-shadow : 8px 15px 10px rgba(0, 0, 50, 0.1);
-		height: 700px;
+		height: 670px;
 	}
 	.sec01{
 		/* background-image : url("${ctp}/resources/images/memberLogin/testBG.jpg"); */
+		background-color : #999;
+		height: 670px;
+		border-radius : 30px 0 0 30px;
+		
 		float : left;
 		width : 50%;
 		padding : 30px;
 	}
 	.sec02{
 		/* background : url("${ctp}/resources/images/memberLogin/testBG.jpg"); */
+		
 		float : left;
 		width : 50%;
-		padding : 30px;
+		padding : 60px 60px 50px;
 	}
+	input::placeholder{color:#ddd !important;font-size: 14px !important;}
+	input#mid, #pwd, #nickName, #address, #email1, #email2{
+	    border-radius: 50px;
+        height: 40px;
+        padding: 0 22px;
+	    font-size: 15px;
+	    color: #333;
+	}
+	#email1{border-radius: 50px 0 0 50px;}
+	#email2{border-radius: 0 50px 50px 0;}
+	label{
+		padding-left: 15px;
+	    color: #666;
+	    font-size: 14px;
+	}
+	span#addressTxt:hover {
+	    cursor: pointer;
+	    color: #578de4;
+    }
+    .idCheckBtnNO, .nickCheckBtnNO, .memberJoinNOBtn{
+	    padding: 15px 0;
+	    width : 100%;
+	    border-radius: 50px;
+	    border: none;
+	    color: #fff;
+    }
+	.idCheckBtnNO, .nickCheckBtnNO{
+    	background-color: #777;
+	    padding: 7px 20px;
+	    margin-left: 10px;
+    	font-size: 13px;
+    	width : 140px;
+    }
+    .memberJoinNOBtn{
+    	background-color: #ddd;
+	    font-size: 18px;
+    	font-weight: 600;
+	}
+    
+	.idCheckBtnOK, .nickCheckBtnOK, .addressSearchBtn, .memberJoinOKBtn{
+	    background-color: #578de4;
+	    padding: 15px 0;
+	    width : 100%;
+	    border-radius: 50px;
+	    border: none;
+	    color: #fff;
+	}
+	.idCheckBtnOK, .nickCheckBtnOK, .addressSearchBtn{
+	    padding: 7px 20px;
+	    margin-left: 10px;
+    	font-size: 13px;
+    	width : 140px;
+	}
+	.memberJoinOKBtn{
+	    font-size: 18px;
+    	font-weight: 600;
+	}
+	.idCheckBtnOK:hover {background-color: #3478db;}
+	.memberJoinOKBtn:hover {background-color: #3478db;}
+	
 </style>
 <script>
 	'use strict';
 	
 	function addressSearch() {
+		$('#spinnerIcon').show();		
+		
 		let searchString = document.getElementById("address").value;
 		if(searchString.trim()==""){
 			alert("검색어를 입력하세요");
@@ -75,25 +142,30 @@
 					for(let i=0; i<vos.length; i++) {
 						str += vos[i] + "<br/>";
 					}
-					$("#demo").html(str);
+					$("#demo").html('<span id="addressTxt"><span style="color:#578de4;">⦁ &nbsp;&nbsp;</span>'+str+'</span>');
+					$('#addressTxt').click(function() {
+						$('#address').val(str.substring(20, str.indexOf('</')));
+						$('#addressTxt').hide();
+					});
 				}
-				else $("#demo").html("검색된 자료가 없습니다.");
+				else $("#demo").html("<span style='color:#666;font-size:14px;'>※ 검색된 자료가 없습니다.<br/>(지역을 좀 더 자세히 적어주세요. (ex.서울특별시 강남구 압구정동...))</span>");
+				$('#spinnerIcon').hide();
 			},
 			error : function () {
 				alert("전송오류~!");
 			}
 		});
-		
 	}
+	
 	
 	
 	let idCheckSw = 0;
     let nickCheckSw = 0;
 	
 	function fCheck() {
-		let regMid = /^[a-zA-Z0-9_]{4,20}$/;			// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
+		let regMid = /^[a-zA-Z0-9_]{4,16}$/;			// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
 	    let regNickName = /^[가-힣a-zA-Z0-9_]{1,6}$/;		// 닉네임은 한글, 영문대소문자, 숫자, 밑줄만 가능
-	    let regPwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{1,10}$/;	// 대소문자 + 숫자 + 특수문자가 *각각 1개 이상 + 1~10자리
+	    let regPwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{4,20}$/;	// 대소문자 + 숫자 + 특수문자가 *각각 1개 이상 + 1~10자리
 	    
 	    let mid = myform.mid.value.trim();
 	    let pwd = myform.pwd.value.trim();
@@ -118,12 +190,12 @@
 	     */
 	    // c:if 써서 정규식 코드와 문자열이 틀리면 빨간표시 맞게 적으면 초록색으로 체크표시뜨게 해보깅
 	    if(!regMid.test(mid)){
-	    	alert("아이디는 4~20자리 영문 대/소문자와 숫자와 밑줄만 가능합니다.");
+	    	alert("아이디는 4~16자리 영문 대/소문자와 숫자와 밑줄만 가능합니다.");
 	    	myform.mid.focus();
 	    	return false;
 	    }
 	    else if(!regPwd.test(pwd)){
-	    	alert("비밀번호는 대소문자, 숫자, 특수문자가 *각각 1개 이상 포함된 1~10자리로 작성해주세요.");
+	    	alert("비밀번호는 대소문자, 숫자, 특수문자가 *각각 1개 이상 포함된 4~20자리로 작성해주세요.");
 	    	myform.mid.focus();
 	    	return false;
 	    }
@@ -152,11 +224,11 @@
 		 */
 		if(idCheckSw == 0){
 			alert("아이디 중복체크 버튼을 눌러주세요.");
-			document.getElementById("midBtn").focus();
+			document.getElementById("idCheckBtnNO").focus();
 		}
-		else if(nickNameBtn == 0){
+		else if(nickCheckSw == 0){
 			alert("닉네임 중복체크 버튼을 눌러주세요.");
-			document.getElementById("nickNameBtn").focus();
+			document.getElementById("nickCheckBtnNO").focus();
 		}
 		else {
 			myform.email.value = email;
@@ -187,7 +259,11 @@
 						myform.mid.focus();
 						return false;
 					}
-					else alert("사용가능한 아이디입니다.")
+					else {
+						alert("사용가능한 아이디입니다.");
+						$('#idCheckBtnOK').show();
+						$('#idCheckBtnNO').hide();
+					}
 				},
 				error : function() {
 					alert("전송오류");
@@ -216,7 +292,11 @@
 						myform.nickName.focus();
 						return false;
 					}
-					else alert("사용가능한 닉네임입니다.")
+					else {
+						alert("사용가능한 닉네임입니다.");
+						$('#nickCheckBtnOK').show();
+						$('#nickCheckBtnNO').hide();
+					}
 				},
 				error : function() {
 					alert("전송오류");
@@ -225,10 +305,78 @@
 		}
 	}
 	
+	$(function () {
+		$("#mid").on("keydown", function() {
+			idCheckSw = 0;
+			$('#idCheckBtnOK').hide();
+			$('#idCheckBtnNO').show();
+		});
+		
+		$("#nickName").on("keydown", function() {
+			nickCheckSw = 0;
+			$('#nickCheckBtnOK').hide();
+			$('#nickCheckBtnNO').show();
+		});
+		
+	});
+	
+	$(function() {
+		let pwd = myform.pwd.value.trim();
+		let email1 = myform.email1.value.trim();
+		let address = myform.address.value.trim();
+		
+		$('#memberJoinNOBtn').prop('disabled', true);
+		$('#mid').on('input', function() {
+			if(idCheckSw != 0 && nickCheckSw != 0 && pwd != "" && email1 != "" && address != ""){
+				$('#memberJoinNOBtn').prop('disabled', false);
+			}
+			else $('#memberJoinNOBtn').prop('disabled', true);
+		});
+		
+	});
+	
+	/* 
+	
+	$('button').prop('disabled', true);
+    $('input[type=text]').on('input', function() {
+        if ($(this).val() !== '') {
+            $('button').prop('disabled', false);
+        }
+        else {
+            $('button').prop('disabled', true);
+        }
+    });
+	
+	*/
+	
+	/* 
 	$(function() {
 		$("#mid").on("blur", () => {idCheckSw = 0;});
 		$("#nickName").on("blur", () => {nickCheckSw = 0;});
 	});
+	  */
+	 /* 
+	 function() {
+		 $("#mid").on("blur"){
+			 {idCheckSw = 0;};
+			 $('#idCheckBtnOK').hide();
+			 $('#idCheckBtnNO').show();
+		 }
+	}
+	  */
+	  /* 
+	$(function() {
+		let pwd = myform.pwd.value.trim();
+		let email1 = myform.email1.value.trim();
+		let address = myform.address.value.trim();
+		if(idCheckSw != 0 && nickCheckSw != 0 && pwd != "" && email1 != "" && address != ""){
+			$('#memberJoinOKBtn').show();
+			$('#memberJoinNOBtn').hide();
+		}
+	});
+	
+	 */
+	
 	/* 
 	function imgCheck(e) {
 		if(e.files && e.files[0]){
@@ -250,7 +398,7 @@
 				<!-- 반려동물 커뮤니티 사이트, 커플 일정 공유 캘린더 --><!-- 커플 일정공유 캘린더, 친구맺어진 사람들끼리만 공유, 한쪽이 수정중이면 다른 한쪽은 수정불가 -->
 				<!-- 반려동물이용 시설, 내가 찜한 목록 -->
 				<!-- 산책인증 챌린지 -->
-				회원가입
+				회원가입img
 				<%-- 
 				<div  class="form-group">
 				    프로필 사진 (귀여운 내 짝꿍을 자랑해보세요!)(파일용량:2MByte이내) :
@@ -285,33 +433,35 @@
 			</section>
 			<section class="sec02">
 			    <div class="form-group">
-				    <label for="mid">아이디 <span style="color:#DB4455"><b>*</b></span></label>
+				    <label for="mid"><span style="color:#578de4"><b>* </b></span>아이디<span style="color:#888;font-size:10px;"> (4~16자리 영문 대/소문자와 숫자, 밑줄만 가능)</span></label>
 				    <div class="input-group mb-1">
-					    <input type="text" class="form-control" name="mid" id="mid" placeholder="아이디를 입력하세요." required autofocus/>
+					    <input type="text" class="form-control" name="mid" id="mid" placeholder="아이디를 입력해주세요." required autofocus/>
 					    <div class="input-group-prepend">
-					    	<input type="button" value="아이디 중복체크" id="midBtn" class="btn btn-secondary" onclick="idCheck()" />	
+					    	<input type="button" value="아이디 중복체크" id="idCheckBtnNO" class="idCheckBtnNO" onclick="idCheck()" />	
+					    	<input type="button" value="아이디 중복체크" id="idCheckBtnOK" class="idCheckBtnOK" style="display:none;" onclick="idCheck()" />	
 					    </div>
 					</div>
 			    </div>
 			    <div class="form-group">
-				    <label for="pwd">비밀번호 <span style="color:#DB4455"><b>*</b></span></label>
-				    <input type="password" class="form-control" id="pwd" placeholder="비밀번호를 입력하세요." name="pwd" required />
+				    <label for="pwd"><span style="color:#578de4"><b>* </b></span>비밀번호<span style="color:#888;font-size:10px;"> (4~20자리 영문 대문자, 소문자, 숫자, 특수문자가 *각각 1개 이상 포함된 조합)</span></label>
+				    <input type="password" class="form-control" id="pwd" placeholder="비밀번호를 입력해주세요." name="pwd" required />
 			    </div>
 			    <div class="form-group">
-				    <label for="nickName">별명 <span style="color:#DB4455"><b>*</b></span></label>
+				    <label for="nickName"><span style="color:#578de4"><b>* </b></span>활동명<span style="color:#888;font-size:10px;"> (한글, 영문 대/소문자, 숫자, 밑줄만 가능)</span></label>
 				    <div class="input-group mb-1">
-					    <input type="text" class="form-control" id="nickName" placeholder="별명을 입력하세요." name="nickName" required />
+					    <input type="text" class="form-control" id="nickName" placeholder="활동명을 입력해주세요." name="nickName" required />
 					    <div class="input-group-prepend">
-					    	<input type="button" id="nickNameBtn" value="닉네임 중복체크" class="btn btn-secondary" onclick="nickCheck()"/>
+					    	<input type="button" id="nickCheckBtnNO" value="활동명 중복체크" class="nickCheckBtnNO" onclick="nickCheck()"/>
+					    	<input type="button" id="nickCheckBtnOK" value="활동명 중복체크" class="nickCheckBtnOK" style="display:none;" onclick="nickCheck()"/>
 					    </div>
 				    </div>
 			    </div>
 			    <div class="form-group">
-			      <label for="email1">Email address <span style="color:#DB4455"><b>*</b></span></label>
+			      <label for="email1"><span style="color:#578de4"><b>* </b></span>Email</label>
 			        <div class="input-group mb-3">
-			          <input type="text" class="form-control" placeholder="Email을 입력하세요." id="email1" name="email1" required />
+			          <input type="text" class="form-control" placeholder="Email을 입력해주세요." id="email1" name="email1" required />
 			          <div class="input-group-append">
-			            <select name="email2" class="custom-select">
+			            <select name="email2" id="email2" class="custom-select">
 			              <option value="@naver.com" selected>@naver.com</option>
 			              <option value="@hanmail.net">@hanmail.net</option>
 			              <option value="@hotmail.com">@hotmail.com</option>
@@ -324,18 +474,21 @@
 			    </div>
 			    
 			    <div class="form-group">
-				    <label for="address">활동지역 <span style="color:#DB4455"><b>*</b></span></label>
+				    <label for="address"><span style="color:#578de4"><b>* </b></span>활동지역<span style="color:#888;font-size:10px;"> (ex.압구정, 사창동, 군위읍, 죽암리 ...)</span></label>
 				    <div class="input-group mb-1">
-					    <input type="text" class="form-control" id="address" placeholder="주소를 입력해주세요." name="address" required />
+					    <input type="text" class="form-control" id="address" placeholder="동네를 입력해주세요. (ex.압구정, 사창동, 군위읍, 죽암리 ...)" name="address" required />
 					    <div class="input-group-prepend">
-					    	<input type="button" value="주소검색" id="addressSearchBtn" class="btn btn-secondary" onclick="addressSearch()" />	
+					    	<input type="button" value="주소검색" id="addressSearchBtn" class="addressSearchBtn" onclick="addressSearch()" />	
 					    </div>
 					</div>
-					<div id="demo"></div>
+					<div id="demo" style="height:70px;padding:10px 22px;"><span id="spinnerIcon" class="spinner-border text-primary" style="display:none;width:20px;height:20px;border:2px solid currentcolor;border-right-color: transparent;"></span></div>
 			    </div>
 			    
-			    <hr/>
-			    <div class="btnSec"><button type="button" onclick="fCheck()" class="btn btn-primary form-control mb-2">가입하기</button></div>
+			    <div class="btnSec">
+			    	<!-- <button type="button" onclick="fCheck()" class="memberJoinOKBtn" id="memberJoinOKBtn" style="display: none;">가입하기</button> -->
+			    	<button type="button" onclick="fCheck()" class="memberJoinNOBtn" id="memberJoinNOBtn">가입하기</button>
+			    	<!-- <a href="#" class="btn memberJoinNOBtn disabled" id="memberJoinNOBtn">가입아직</a> -->
+			    </div>
 			</section>
 			<input type="hidden" name="email"/>
 			<!-- <input type="hidden" name="tel"/> -->
@@ -343,5 +496,14 @@
 			<!-- <input type="hidden" name="fName" id="file"/> -->
 	  	</form>
 	</div>
+	
+	<script>
+		$('#addressSearchBtn').click(function() {
+			$('#address').val('');
+		});
+		
+		
+	</script>
+	
 </body>
 </html>
