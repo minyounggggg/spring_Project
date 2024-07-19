@@ -184,10 +184,8 @@ public class MemberController {
 		
 		ArrayList<String> vos = new ArrayList<String>();
 		
-		int i=0;
 		for (Element select : selects) {
-			i++;
-			vos.add(i + " : " + select.html());
+			vos.add(select.html());
 		}
 		
 		return vos;

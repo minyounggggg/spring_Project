@@ -176,10 +176,10 @@
 			</section>
 			<section style="margin-bottom:30px">
 			<!-- 임시 이미지 교체하기 (후기 이모지 혹은 검색 키워드 적어놓은 이모지 카드 나열해놓기) -->
-				<img src="${ctp}/resources/images/memberMain/imsi01.png" style="width:25%"/>
-				<img src="${ctp}/resources/images/memberMain/imsi02.png" style="width:25%"/>
-				<img src="${ctp}/resources/images/memberMain/imsi03.png" style="width:25%"/>
-				<img src="${ctp}/resources/images/memberMain/imsi03.png" style="width:24%"/>
+				<img src="${ctp}/resources/images/memberMain/imsi011.png" style="width:25%"/>
+				<img src="${ctp}/resources/images/memberMain/imsi021.png" style="width:25%"/>
+				<img src="${ctp}/resources/images/memberMain/imsi031.png" style="width:25%"/>
+				<img src="${ctp}/resources/images/memberMain/imsi031.png" style="width:24%"/>
 			</section>
 			<section class="secStyle sec02-contentBox">
 				<p>sec03</p>

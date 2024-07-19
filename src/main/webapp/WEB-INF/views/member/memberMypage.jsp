@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>memberMypage</title>
+	<link rel="icon" href="${ctp}/resources/favicon/love.png">
 	<jsp:include page="/WEB-INF/views/include/bs4.jsp" />
 	
 	<!-- swiper link -->
