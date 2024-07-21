@@ -41,15 +41,43 @@
 	
 </script>
 <style>
+	* {font-family: 'Noto Sans KR', sans-serif; }
+	a {text-decoration: none; color: inherit;}
+	a:link{text-decoration: none;}
 	body{
 		display : flex;
 		justify-content: center;
-		align-items: center;
+		/* align-items: center; */
 		/* height: 100vh; */
 		background-color : #eee;
-		padding-top : 150px;
+		/* padding-top : 150px; */
+	}
+	nav{
+		padding : 15px 0 10px;
+		box-shadow : 0px 5px 5px rgba(0, 0, 50, 0.1);
+		position: fixed;
+		width : 100%;
+		background-color : #fff;
+		z-index : 99;
+	}
+	nav .nav-top{
+		margin : 0 auto;
+		width : 1300px;
+	}
+	nav .nav-logo{
+		float : left;
+		width : 30%;
+	}
+	nav .nav-login p{
+		margin : 0;
+	}
+	nav .nav-login{
+		float : left;
+		width : 70%;
+		font-size : 14px;
 	}
 	.loginForm{
+		margin-top: 140px;
 		display : flex;
 		width : 1000px;
 		border-radius : 30px;
@@ -60,7 +88,7 @@
 		background-color : #999999;
 		float : left;
 		width : 50%;
-		height: 500px;
+		/* height: 500px; */
 		border-radius : 30px 0 0 30px;
 	}
 	.sec02{
@@ -69,13 +97,54 @@
 		background-color : #f9f9f9;
 		float : left;
 		width : 50%;
-		height: 500px;
+		/* height: 500px; */
 		border-radius : 0 30px 30px 0;
-		padding : 30px;
+		padding : 50px 60px;
 	}
+	.loginBtn, .joinBtn{
+		background-color: #578de4;
+	    padding: 12px 0;
+    	margin-bottom: 10px;
+	    width : 100%;
+	    border-radius: 50px;
+	    border: none;
+	    color: #fff;
+    	font-size: 16px;
+	}
+	.loginBtn:hover {background-color: #3478db;}
+	.joinBtn:hover {background-color: #3478db;}
+	.kakaologinBtn{
+		background-color: #fee500;
+	    padding: 12px 0;
+    	margin-bottom: 10px;
+	    width : 100%;
+	    border-radius: 50px;
+	    border: none;
+	    color: #181600;
+    	font-size: 16px;
+    	font-weight: 800;
+	}
+	.kakaologinBtn:hover {background-color: #ffd800;color: #181600;}
+	
 </style>
 </head>
 <body>
+	<nav>
+		<div class="nav-top">
+			<div class="nav-logo"><!-- 홈컨트롤러 home부분 memberMain.jsp main.jsp로 바꾸고 수정해놓기 -->
+				<a href="${ctp}/member/memberMain"><img src="${ctp}/resources/images/memberMain/logo.png" style="width:140px; margin-bottom:5px;"/></a>
+			</div>
+			<div class="nav-login text-right">
+				<c:if test="${empty sNickName}">
+					<a href="${ctp}/member/memberLogin">로그인</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberJoin">회원가입</a>
+				</c:if>
+				<c:if test="${!empty sNickName}"><!-- 카카오로그아웃, 네이버로그아웃 추가 -->
+					<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; 
+					<a href="${ctp}/member/memberMypage">마이페이지</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
+				</c:if>
+			</div>
+		</div>
+	</nav>
 	<div class="loginForm">
 		<section class="sec01">
 			<%-- <img src="${ctp}/resources/images/memberLogin/login_bg_02.png" /> --%>
@@ -88,9 +157,11 @@
 		    	<input type="text" name="mid" id="mid" placeholder="User ID" autofocus required class="form-control mb-1" style="height:45px"/>
 		       	<input type="checkbox" name="idSave" id="idSave" checked class="mb-3 ml-2"/> 아이디 저장
 			    <input type="password" name="pwd" placeholder="Password" required class="form-control mb-4" style="height:45px"/>
-			    <button type="submit" class="btn btn-primary form-control mb-2">로그인</button>
-				<button type="button" onclick="location.href='${ctp}/member/memberJoin';" class="btn btn-primary form-control mb-2">회원가입</button>
-				<a href="javascript:kakaoLogin()"><img src="${ctp}/resources/images/kakao_login_medium_wide.png"/></a>
+			    <button type="submit" class="loginBtn">로그인</button>
+				<button type="button" onclick="location.href='${ctp}/member/memberJoin';" class="joinBtn">회원가입</button>
+				<button type="button" onclick="kakaoLogin()" class="kakaologinBtn">카카오 로그인</button>
+				<!-- <a href="javascript:kakaoLogin()" class="kakaologinBtn">카카오 로그인</a> -->
+				<%-- <a href="javascript:kakaoLogin()"><img src="${ctp}/resources/images/kakao_login_medium_wide.png"/></a> --%>
 		  	</form>
 		</section>
 	</div>

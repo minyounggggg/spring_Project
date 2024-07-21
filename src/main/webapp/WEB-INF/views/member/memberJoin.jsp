@@ -19,14 +19,40 @@
 </style>
 
 <style>
-	*{font-family: 'Noto Sans KR', sans-serif; }
+	* {font-family: 'Noto Sans KR', sans-serif; }
+	a {text-decoration: none; color: inherit;}
+	a:link{text-decoration: none;}
 	body{
 		display : flex;
 		justify-content: center;
-		align-items: center;
+		/* align-items: center; */
 		/* height: 100vh; */
 		background-color : #eee;
-		padding : 30px 0;
+		/* padding : 110px 0 0; */
+	}
+	nav{
+		padding : 15px 0 10px;
+		box-shadow : 0px 5px 5px rgba(0, 0, 50, 0.1);
+		position: fixed;
+		width : 100%;
+		background-color : #fff;
+		z-index : 99;
+	}
+	nav .nav-top{
+		margin : 0 auto;
+		width : 1300px;
+	}
+	nav .nav-logo{
+		float : left;
+		width : 30%;
+	}
+	nav .nav-login p{
+		margin : 0;
+	}
+	nav .nav-login{
+		float : left;
+		width : 70%;
+		font-size : 14px;
 	}
 	.joinForm{
 		width : 1200px;
@@ -34,6 +60,7 @@
 		background-color : #f9f9f9;
 		box-shadow : 8px 15px 10px rgba(0, 0, 50, 0.1);
 		height: 670px;
+	    margin-top: 140px;
 	}
 	.sec01{
 		/* background-image : url("${ctp}/resources/images/memberLogin/testBG.jpg"); */
@@ -53,7 +80,7 @@
 		padding : 60px 60px 50px;
 	}
 	input::placeholder{color:#ddd !important;font-size: 14px !important;}
-	input#mid, #pwd, #nickName, #address, #email1, #email2{
+	input#mid, #pwd, #nickName, #address, #addressPick, #email1, #email2{
 	    border-radius: 50px;
         height: 40px;
         padding: 0 22px;
@@ -61,9 +88,9 @@
 	    color: #333;
 	}
 	#email1{border-radius: 50px 0 0 50px;}
-	#email2{border-radius: 0 50px 50px 0;}
+	#email2{border-radius: 0 50px 50px 0;padding: 0px 25px 0px 15px;}
 	label{
-		padding-left: 15px;
+		padding-left: 5px;
 	    color: #666;
 	    font-size: 14px;
 	}
@@ -71,14 +98,14 @@
 	    cursor: pointer;
 	    color: #578de4;
     }
-    .idCheckBtnNO, .nickCheckBtnNO, .memberJoinNOBtn{
+    .idCheckBtnNO, .nickCheckBtnNO, .addressReSearchBtn, .memberJoinNOBtn{
 	    padding: 15px 0;
 	    width : 100%;
 	    border-radius: 50px;
 	    border: none;
 	    color: #fff;
     }
-	.idCheckBtnNO, .nickCheckBtnNO{
+	.idCheckBtnNO, .nickCheckBtnNO, .addressReSearchBtn{
     	background-color: #777;
 	    padding: 7px 20px;
 	    margin-left: 10px;
@@ -109,22 +136,26 @@
 	    font-size: 18px;
     	font-weight: 600;
 	}
-	.idCheckBtnOK:hover {background-color: #3478db;}
+	.idCheckBtnNO:hover {background-color: #666;}
+	.nickCheckBtnNO:hover {background-color: #666;}
+	.addressReSearchBtn:hover {background-color: #666;}
+	.addressSearchBtn:hover {background-color: #3478db;}
 	.memberJoinOKBtn:hover {background-color: #3478db;}
 	
 </style>
 <script>
 	'use strict';
 	
+	let addressSw = 0;
+	
 	function addressSearch() {
-		$('#spinnerIcon').show();		
-		
 		let searchString = document.getElementById("address").value;
 		if(searchString.trim()==""){
 			alert("검색어를 입력하세요");
 			document.getElementById("address").focus();
 			return false;
 		}
+		$('#spinnerIcon').show();
 		//https://search.naver.com/search.naver?nso=&page="+page+"&query="+searchString+"&sm=tab_pge&start="+(page*15+1)+"&where=web
 		//https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C
 		//https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%95%95%EA%B5%AC%EC%A0%95
@@ -144,8 +175,21 @@
 					}
 					$("#demo").html('<span id="addressTxt"><span style="color:#578de4;">⦁ &nbsp;&nbsp;</span>'+str+'</span>');
 					$('#addressTxt').click(function() {
-						$('#address').val(str.substring(20, str.indexOf('</')));
+						$('.address').val(str.substring(20, str.indexOf('</')));
 						$('#addressTxt').hide();
+						$('#addressSearchBtn').hide();
+						$('#addressReSearchBtn').show();
+						$('#address').hide();
+						$('#addressPick').show();
+						addressSw = 1;
+					});
+					$('#addressReSearchBtn').click(function() {
+						$('#address').show();
+						$('#address').val('');
+						$('#addressPick').hide();
+						$('#addressSearchBtn').show();
+						$('#addressReSearchBtn').hide();
+						addressSw = 0;
 					});
 				}
 				else $("#demo").html("<span style='color:#666;font-size:14px;'>※ 검색된 자료가 없습니다.<br/>(지역을 좀 더 자세히 적어주세요. (ex.서울특별시 강남구 압구정동...))</span>");
@@ -164,30 +208,52 @@
 	
 	function fCheck() {
 		let regMid = /^[a-zA-Z0-9_]{4,16}$/;			// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
-	    let regNickName = /^[가-힣a-zA-Z0-9_]{1,6}$/;		// 닉네임은 한글, 영문대소문자, 숫자, 밑줄만 가능
-	    let regPwd = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{4,20}$/;	// 대소문자 + 숫자 + 특수문자가 *각각 1개 이상 + 1~10자리
+	    let regNickName = /^[가-힣a-zA-Z0-9_]{2,6}$/;		// 닉네임은 한글, 영문대소문자, 숫자, 밑줄만 가능
+	    let regPwd = /(?=.*\d)(?=.*[a-zA-ZS]).{4,20}/; 	// 문자, 숫자 1개이상 포함, 8자리 이상
+	    let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; 	// 이메일 형식 ex) abc123@defgh456.ijk
+	    // " -" ," _"," ." 세개의 문자 입력을 허용하며 도메인 주소 " ."  이전에 "@" 가 나와야 하고, 도메인 주소 "."   이후에 2-3 문자는 와야된다. 
 	    
 	    let mid = myform.mid.value.trim();
 	    let pwd = myform.pwd.value.trim();
 	    let nickName = myform.nickName.value.trim();
-	   //let address = myform.address.value;
+	    let address = myform.address.value;
+	    let addressPick = myform.addressPick.value;
 	    
 	    let email1 = myform.email1.value.trim();
 	    let email2 = myform.email2.value.trim();
 	    let email = email1 + email2;
-	    /* 
-	    let tel1 = myform.tel1.value.trim();
-	    let tel2 = myform.tel2.value.trim();
-	    let tel3 = myform.tel3.value.trim();
-	    let tel = tel1 + "-" + tel2 + "-" + tel3;
 	    
-	    // 주소 (시군구 sl)
-	    let postcode = myform.postcode.value.trim();
-	    let roadAddress = myform.roadAddress.value.trim();
-	    let detailAddress = myform.detailAddress.value.trim();
-	    let extraAddress = myform.extraAddress.value.trim();
-	    let address = postcode + "/" + roadAddress + "/" + detailAddress + "/" + extraAddress;
-	     */
+	    if(mid == ""){
+	    	alert("아이디를 입력해주세요.");
+	    	myform.mid.focus();
+	    	return false;
+	    }
+	    else if(pwd == ""){
+	    	alert("비밀번호를 입력해주세요.");
+	    	myform.pwd.focus();
+	    	return false;
+	    }
+	    else if(nickName == ""){
+	    	alert("활동명을 입력해주세요.");
+	    	myform.nickName.focus();
+	    	return false;
+	    }
+	    else if(email == ""){
+	    	alert("이메일을 입력해주세요.");
+	    	myform.email.focus();
+	    	return false;
+	    }
+	    else if(address == ""){
+	    	alert("주소를 입력해주세요.");
+	    	document.getElementById('address').focus();
+	    	return false;
+	    }
+	    else if(addressPick == ""){
+	    	alert("주소를 검색해 활동지역을 선택해주세요.");
+	    	document.getElementById('addressSearchBtn').focus();
+	    	return false;
+	    }
+	    
 	    // c:if 써서 정규식 코드와 문자열이 틀리면 빨간표시 맞게 적으면 초록색으로 체크표시뜨게 해보깅
 	    if(!regMid.test(mid)){
 	    	alert("아이디는 4~16자리 영문 대/소문자와 숫자와 밑줄만 가능합니다.");
@@ -195,33 +261,23 @@
 	    	return false;
 	    }
 	    else if(!regPwd.test(pwd)){
-	    	alert("비밀번호는 대소문자, 숫자, 특수문자가 *각각 1개 이상 포함된 4~20자리로 작성해주세요.");
+	    	alert("비밀번호는 4~20자리 영문 대/소문자와 숫자 1개이상 포함하여 작성해주세요.");
 	    	myform.mid.focus();
 	    	return false;
 	    }
 	    else if(!regNickName.test(nickName)){
-	    	alert("닉네임은 한글, 영문 대/소문자, 숫자, 밑줄만 가능합니다.");
+	    	alert("닉네임은 4~6자 이하 한글, 영문 대/소문자, 숫자, 밑줄만 가능합니다.");
 	    	myform.mid.focus();
 	    	return false;
 	    }
-	    // 이메일, 전화번호 형식 체크도하기
-	    /* 
-	    let fName = document.getElementById("file").value;
-		if(fName.trim() != "") {
-			let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
-			let maxSize = 1024 * 1024 * 5;
-			let fileSize = document.getElementById("file").files[0].size;
-			
-			if(ext != 'jpg' && ext != 'gif' && ext != 'png') {
-				alert("그림파일만 업로드 가능합니다.");
-				return false;
-			}
-			else if(fileSize > maxSize) {
-				alert("업로드할 파일의 최대용량은 5MByte입니다.");
-				return false;
-			}
-		}
-		 */
+	    else if(!regEmail.test(email)){
+	    	alert("올바른 이메일 형식으로 입력해주세요.");
+	    	myform.email1.focus();
+	    	return false;
+	    }
+	    
+	    
+	    
 		if(idCheckSw == 0){
 			alert("아이디 중복체크 버튼을 눌러주세요.");
 			document.getElementById("idCheckBtnNO").focus();
@@ -229,6 +285,10 @@
 		else if(nickCheckSw == 0){
 			alert("닉네임 중복체크 버튼을 눌러주세요.");
 			document.getElementById("nickCheckBtnNO").focus();
+		}
+		else if(addressSw == 0){
+			alert("주소를 검색해 활동지역을 선택해주세요.");
+			document.getElementById("addressSearchBtn").focus();
 		}
 		else {
 			myform.email.value = email;
@@ -391,6 +451,22 @@
 </script>
 </head>
 <body>
+	<nav>
+		<div class="nav-top">
+			<div class="nav-logo"><!-- 홈컨트롤러 home부분 memberMain.jsp main.jsp로 바꾸고 수정해놓기 -->
+				<a href="${ctp}/member/memberMain"><img src="${ctp}/resources/images/memberMain/logo.png" style="width:140px; margin-bottom:5px;"/></a>
+			</div>
+			<div class="nav-login text-right">
+				<c:if test="${empty sNickName}">
+					<a href="${ctp}/member/memberLogin">로그인</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberJoin">회원가입</a>
+				</c:if>
+				<c:if test="${!empty sNickName}"><!-- 카카오로그아웃, 네이버로그아웃 추가 -->
+					<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; 
+					<a href="${ctp}/member/memberMypage">마이페이지</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
+				</c:if>
+			</div>
+		</div>
+	</nav>
 	<div class="joinForm">
 		<form name="myform" method="post">
 			<section class="sec01">
@@ -399,41 +475,12 @@
 				<!-- 반려동물이용 시설, 내가 찜한 목록 -->
 				<!-- 산책인증 챌린지 -->
 				회원가입img
-				<%-- 
-				<div  class="form-group">
-				    프로필 사진 (귀여운 내 짝꿍을 자랑해보세요!)(파일용량:2MByte이내) :
-				    <input type="file" name="fName" id="file" onchange="imgCheck(this)" class="form-control-file border mb-3"/>
-				    <img id="demoImg" width="200px"/>
-				    <hr/>
-			    </div>
-			    <div class="form-group">
-				    <label for="name">반려동물 이름 <span style="color:#DB4455"><b>*</b></span></label>
-				    <input type="text" class="form-control" id="petName" placeholder="반려동물의 이름을 입력해주세요." name="petName" required />
-			    </div>
-			    <div class="form-group">
-			      <div class="form-check-inline">
-			        <span class="input-group-text">성별 :</span> &nbsp; &nbsp;
-			        <label class="form-check-label">
-			          <input type="radio" class="form-check-input" name="gender" value="남자" checked>남아
-			        </label>
-			      </div>
-			      <div class="form-check-inline">
-			        <label class="form-check-label">
-			          <input type="radio" class="form-check-input" name="gender" value="여자">여아
-			        </label>
-			      </div>
-			    </div>
-			    <div class="form-group">
-				    <label for="birthday">반려동물 생일</label>
-				    <input type="date" name="petBirthday" id="petBirthday" value="<%=java.time.LocalDate.now() %>" class="form-control"/>
-			    </div>
-			     --%>
 			    
 			    <!-- 특이사항 적을지 말지? -->
 			</section>
 			<section class="sec02">
 			    <div class="form-group">
-				    <label for="mid"><span style="color:#578de4"><b>* </b></span>아이디<span style="color:#888;font-size:10px;"> (4~16자리 영문 대/소문자와 숫자, 밑줄만 가능)</span></label>
+				    <label for="mid"><span style="color:#578de4"><b>* </b></span>아이디<span style="color:#888;font-size:12px;"> (4~16자 영문 대/소문자와 숫자, 밑줄만 가능)</span></label>
 				    <div class="input-group mb-1">
 					    <input type="text" class="form-control" name="mid" id="mid" placeholder="아이디를 입력해주세요." required autofocus/>
 					    <div class="input-group-prepend">
@@ -443,11 +490,11 @@
 					</div>
 			    </div>
 			    <div class="form-group">
-				    <label for="pwd"><span style="color:#578de4"><b>* </b></span>비밀번호<span style="color:#888;font-size:10px;"> (4~20자리 영문 대문자, 소문자, 숫자, 특수문자가 *각각 1개 이상 포함된 조합)</span></label>
+				    <label for="pwd"><span style="color:#578de4"><b>* </b></span>비밀번호<span style="color:#888;font-size:12px;"> (4~20자 영문 대/소문자와 숫자 1개이상 포함)</span></label>
 				    <input type="password" class="form-control" id="pwd" placeholder="비밀번호를 입력해주세요." name="pwd" required />
 			    </div>
 			    <div class="form-group">
-				    <label for="nickName"><span style="color:#578de4"><b>* </b></span>활동명<span style="color:#888;font-size:10px;"> (한글, 영문 대/소문자, 숫자, 밑줄만 가능)</span></label>
+				    <label for="nickName"><span style="color:#578de4"><b>* </b></span>활동명<span style="color:#888;font-size:12px;"> (4~6자 한글, 영문 대/소문자, 숫자, 밑줄만 가능)</span></label>
 				    <div class="input-group mb-1">
 					    <input type="text" class="form-control" id="nickName" placeholder="활동명을 입력해주세요." name="nickName" required />
 					    <div class="input-group-prepend">
@@ -474,19 +521,21 @@
 			    </div>
 			    
 			    <div class="form-group">
-				    <label for="address"><span style="color:#578de4"><b>* </b></span>활동지역<span style="color:#888;font-size:10px;"> (ex.압구정, 사창동, 군위읍, 죽암리 ...)</span></label>
+				    <label for="address"><span style="color:#578de4"><b>* </b></span>활동지역<span style="color:#888;font-size:12px;"> (ex.압구정, 사창동, 군위읍, 죽암리 ...)</span></label>
 				    <div class="input-group mb-1">
-					    <input type="text" class="form-control" id="address" placeholder="동네를 입력해주세요. (ex.압구정, 사창동, 군위읍, 죽암리 ...)" name="address" required />
+					    <input type="text" class="form-control address" id="address" placeholder="동네를 입력해주세요. (ex.압구정, 사창동, 군위읍, 죽암리 ...)" name="address" required />
+					    <input type="text" class="form-control address" id="addressPick" placeholder="동네를 입력해주세요. (ex.압구정, 사창동, 군위읍, 죽암리 ...)" name="addressPick" required readonly style="display:none;"/>
 					    <div class="input-group-prepend">
 					    	<input type="button" value="주소검색" id="addressSearchBtn" class="addressSearchBtn" onclick="addressSearch()" />	
+					    	<input type="button" value="다시검색" id="addressReSearchBtn" class="addressReSearchBtn" style="display:none;" />	
 					    </div>
 					</div>
-					<div id="demo" style="height:70px;padding:10px 22px;"><span id="spinnerIcon" class="spinner-border text-primary" style="display:none;width:20px;height:20px;border:2px solid currentcolor;border-right-color: transparent;"></span></div>
+					<div id="demo" style="height:70px;padding:10px 10px;"><span id="spinnerIcon" class="spinner-border text-primary" style="display:none;width:20px;height:20px;border:2px solid currentcolor;border-right-color: transparent;"></span></div>
 			    </div>
 			    
 			    <div class="btnSec">
-			    	<!-- <button type="button" onclick="fCheck()" class="memberJoinOKBtn" id="memberJoinOKBtn" style="display: none;">가입하기</button> -->
-			    	<button type="button" onclick="fCheck()" class="memberJoinNOBtn" id="memberJoinNOBtn">가입하기</button>
+			    	<button type="button" onclick="fCheck()" class="memberJoinOKBtn" id="memberJoinOKBtn">가입하기</button>
+			    	<!-- <button type="button" onclick="fCheck()" class="memberJoinNOBtn" id="memberJoinNOBtn">가입하기</button> -->
 			    	<!-- <a href="#" class="btn memberJoinNOBtn disabled" id="memberJoinNOBtn">가입아직</a> -->
 			    </div>
 			</section>
@@ -501,8 +550,6 @@
 		$('#addressSearchBtn').click(function() {
 			$('#address').val('');
 		});
-		
-		
 	</script>
 	
 </body>
