@@ -210,6 +210,8 @@
 			width : 100%;
 			padding : 35px 50px;
 		}
+		input[type="text"] {border-radius: 50px; padding: 10px 20px;}
+		input[type="date"] {border-radius: 50px; padding: 10px 20px;}
 		/* 체크박스 */
 		input[type="checkbox"] {
 			appearance: none;
@@ -239,16 +241,16 @@
 		.file_cus label {display: block; width: 100%; margin: 15px 0 20px; font-size: 0; cursor: pointer;}
 		input[type="file"] {overflow: hidden;position: absolute;width: 1px;height: 1px;margin: -1px;font-size: initial;clip: rect(0 0 0 0);}
 		.file_name {
-			overflow: hidden; display: inline-block;
+			overflow: hidden; display: inline-block; border-radius: 50px !important;
 			vertical-align: middle; width: calc(100% - 108px);
 			height: 40px; padding:0 12px; border: 1px solid #ddd;
-			border-radius:4px; font-size: 14px; line-height: 38px;
+			font-size: 14px; line-height: 38px;
 			color: #111; white-space: nowrap; text-overflow: ellipsis;
 		}
 		.file_btn {
 			display: inline-block; vertical-align: middle;
-			width: 100px; height: 40px; margin-left: 8px;
-			background: #578de4; border-radius:4px; font-size: 14px;
+			width: 100px; height: 40px; margin-left: 8px; border-radius: 50px;
+			background: #578de4;font-size: 14px;
 			font-weight: 500; line-height: 40px; color: #fff; text-align: center;
 		}
 		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
@@ -575,17 +577,17 @@
 									<div class="form-group">
 										<div class="form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" class="form-check-input" name="petGender" value="남아" checked>남아
+												<input type="radio" class="form-check-input" name="petGender" value="남아" checked><span style="font-size:14px">남아</span>
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" class="form-check-input" name="petGender" value="여아">여아
+												<input type="radio" class="form-check-input" name="petGender" value="여아"><span style="font-size:14px">여아</span>
 											</label>
 										</div>
 										<div class="form-check-inline">
 											<label class="form-check-label">
-												<input type="radio" class="form-check-input" name="petGender" value="중성화">중성화
+												<input type="radio" class="form-check-input" name="petGender" value="중성화"><span style="font-size:14px">중성화</span>
 											</label>
 										</div>
 									</div>
