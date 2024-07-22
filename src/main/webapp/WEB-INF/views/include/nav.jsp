@@ -101,7 +101,7 @@
 		<div class="nav" style="font-size:16px;font-weight:700;">
 			<a href="#">Only-E.W</a>
 			<a href="#">동네수다</a>
-			<a href="#">제품후기</a>
+			<a href="${ctp}/review/productReview">제품후기</a>
 			<a href="#">온동네병원</a>
 			<a href="#">카페</a>
 			<a href="#">식당</a>

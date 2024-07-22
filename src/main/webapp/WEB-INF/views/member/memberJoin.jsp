@@ -292,6 +292,7 @@
 		}
 		else {
 			myform.email.value = email;
+			myform.photo.value = 'noimage.png';
 			
 			myform.submit();
 		}
@@ -540,9 +541,7 @@
 			    </div>
 			</section>
 			<input type="hidden" name="email"/>
-			<!-- <input type="hidden" name="tel"/> -->
-			<!-- <input type="hidden" name="address"/> -->
-			<!-- <input type="hidden" name="fName" id="file"/> -->
+			<input type="hidden" name="photo"/>
 	  	</form>
 	</div>
 	
