@@ -79,6 +79,14 @@ public class MessageController {
 			model.addAttribute("msg", "반려동물 정보삭제 오류! 다시 시도해주세요.");
 			model.addAttribute("url", "/member/memberMypage");
 		}
+		else if(msgFlag.equals("productReviewInsertOK")) {
+			model.addAttribute("msg", "제품 후기가 등록 되었습니다.");
+			model.addAttribute("url", "/review/productReview");
+		}
+		else if(msgFlag.equals("productReviewInsertNO")) {
+			model.addAttribute("msg", "제품 후기 등록 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/review/productReview");
+		}
 		
 		
 		

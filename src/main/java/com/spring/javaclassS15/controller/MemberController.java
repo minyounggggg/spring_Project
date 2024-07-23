@@ -71,6 +71,7 @@ public class MemberController {
 		if(vo != null && passwordEncoder.matches(pwd, vo.getPwd())) {
 			session.setAttribute("sMid", mid);
 			session.setAttribute("sNickName", vo.getNickName());
+			session.setAttribute("sPhoto", vo.getPhoto());
 			session.setAttribute("sLevel", vo.getLevel());
 			
 			if(idSave.equals("on")) {
@@ -147,6 +148,7 @@ public class MemberController {
 		// 1. 세션처리
 		session.setAttribute("sMid", vo.getMid());
 		session.setAttribute("sNickName", vo.getNickName());
+		session.setAttribute("sPhoto", vo.getPhoto());
 		session.setAttribute("sLevel", vo.getLevel());
 		
 		// 3. 기타처리(DB에처리해야할것들 (반뭉카운트, 포인트,,, 등))
