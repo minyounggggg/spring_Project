@@ -708,13 +708,9 @@
 			      scrollbar: {
 				          el: ".swiper-scrollbar",
 				          hide: true
-					  }
-			  /* 
-			      pagination: {
-				          el: ".swiper-pagination",
-				          clickable: true
-				        }
-			   */
+					  },
+				  observer: true,
+				  observeParents: true,
 				  });
 			</script>
 		  <%-- 
@@ -743,6 +739,6 @@
 		$(this).find('#updateFile_name').text('사진을 선택해주세요.');
 	});
 </script>
-
+<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>

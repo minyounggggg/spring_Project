@@ -25,7 +25,7 @@
 		* {font-family: 'Noto Sans KR', sans-serif;}
 		a {text-decoration: none; color: inherit;}
 		a:link {text-decoration: none;}
-		p {margin:0;}
+		/* p {margin:0;} */
 		.inner {width : 1300px; margin : 0 auto; padding-top:150px;}
 		.sec-boxStyle{
 			background-color : #f9f9f9;
@@ -48,7 +48,7 @@
 			box-shadow : 5px 5px 5px rgba(0, 0, 50, 0.1);
 			padding : 30px 45px;
 			width : 630px;
-			display: inline-block;
+			/* display: inline-block; */
 			float : left;
 			margin : 10px;
 			cursor: pointer;
@@ -524,8 +524,8 @@
 		</div>
 	</div>
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
-		<section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="width:90px;cursor:pointer;"/></section>
-		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:90px;"/></a></section>
+		<section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
+		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>
 	
 	
@@ -694,5 +694,6 @@
         });
 		  */
 	</script>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>
