@@ -19,6 +19,7 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	
 	@Autowired
 	JavaclassProvide javaclassProvide;
+	
 
 	@Override
 	public List<ProductReviewVO> getProductReview() {
@@ -26,10 +27,10 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 
 	@Override
-	public void setproductReviewPhoto(MultipartHttpServletRequest pdPhoto) {
+	public int setproductReviewInsert(MultipartHttpServletRequest pdPhoto, ProductReviewVO vo) {
 		try {
 			List<MultipartFile> fileList = pdPhoto.getFiles("fName");
-			String oFileNames = "";
+			//String oFileNames = "";
 			String sFileNames = "";
 			int fileSizes = 0;
 			
@@ -40,23 +41,26 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 				
 				javaclassProvide.writeFile(file, sFileName, "productReview");	//오버라이드니까 예외더처리 throw말고  try catch
 				
-				oFileNames += oFileName + "/";
+				//oFileNames += oFileName + "/";
 				sFileNames += sFileName + "/";
 				fileSizes += file.getSize();
 			}
-			oFileNames = oFileNames.substring(0, oFileNames.length()-1);
+			//oFileNames = oFileNames.substring(0, oFileNames.length()-1);
 			sFileNames = sFileNames.substring(0, sFileNames.length()-1);
 			
-			System.out.println("원본파일 : " + oFileNames);
+			//System.out.println("원본파일 : " + oFileNames);
 			System.out.println("저장파일 : " + sFileNames);
 			System.out.println("총사이즈 : " + fileSizes);
 			
+			vo.setProductPhoto(sFileNames);
+			System.out.println("vo : " + vo);
+			
 			} catch (IOException e) {e.printStackTrace();}
-		//return sFileName;
+		return productReviewDAO.setproductReviewInsert(vo);
 	}
 
 	@Override
-	public int setproductReviewInsert(ProductReviewVO vo) {
-		return productReviewDAO.setproductReviewInsert(vo);
+	public ProductReviewVO getproductReviewContent(int idx) {
+		return productReviewDAO.getproductReviewContent(idx);
 	}
 }

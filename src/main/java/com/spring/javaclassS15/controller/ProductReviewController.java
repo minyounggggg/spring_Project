@@ -43,13 +43,19 @@ public class ProductReviewController {
 	@RequestMapping(value = "/productReviewInsert", method = RequestMethod.POST)
 	public String productReviewInsertPost(ProductReviewVO vo, MultipartHttpServletRequest pdPhoto) {
 		System.out.println("pdPhoto : " + pdPhoto);
-		productReviewService.setproductReviewPhoto(pdPhoto);
 		
-		int res = productReviewService.setproductReviewInsert(vo);
-		
+		int res = productReviewService.setproductReviewInsert(pdPhoto, vo);
+		System.out.println("vo : " + vo);
 		if(res != 0) return "redirect:/message/productReviewInsertOK";
 		else return "redirect:/message/productReviewInsertNO";
 	}
 	
+	// 제품리뷰 content view
+	@RequestMapping(value = "/productReviewContent", method = RequestMethod.GET)
+	public String productReviewContentGet(int idx, Model model) {
+		ProductReviewVO vo = productReviewService.getproductReviewContent(idx);
+		model.addAttribute("vo", vo);
+		return "review/productReviewContent";
+	}
 	
 }

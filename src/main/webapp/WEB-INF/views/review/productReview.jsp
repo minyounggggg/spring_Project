@@ -51,6 +51,7 @@
 			display: inline-block;
 			float : left;
 			margin : 10px;
+			cursor: pointer;
 		}
 		.sec02 .reviewNickName{
 			font-size: 18px;
@@ -302,22 +303,7 @@
 	      height: 150px;
 	    }
 	    .swiper-slide {
-	      /* text-align: center; */
-	      /* font-size: 18px; */
 	      width: 140px;
-	      /* 
-	      display: flex;
-	      justify-content: center;
-	      align-items: center;
-	       */
-	    }
-	    .swiper-slide img {
-	    /* 
-	      display: block;
-	      width: 100%;
-	      height: 100%;
-	      object-fit: cover;
-	       */
 	    }
 	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
 	</style>
@@ -338,7 +324,6 @@
 		
 		$(document).ready(function() {
 			$("#file").on("change", function(e) {
-				//imgFiles = [];
 				$(".swiper-wrapper").empty();
 				
 				let files = e.target.files;
@@ -358,7 +343,7 @@
 						$(".swiper-wrapper").append(str);
 						idx++;
 					}
-					reader.readAsDataURL(f);				// readAsDataURL는 예약어
+					reader.readAsDataURL(f);	// readAsDataURL는 예약어
 				});
 			});
 		});
@@ -379,7 +364,7 @@
 			let petHeart = productReviewInsertForm.petHeart.value;
 			let goodPoint = productReviewInsertForm.goodPoint.value;
 			let badPoint = productReviewInsertForm.badPoint.value;
-			let pdPhoto = productReviewInsertForm.pdPhoto.value;
+			let file = productReviewInsertForm.file.value;
 			let repurchase = productReviewInsertForm.repurchase.value;
 			/* 
 			if(petCategory==""){
@@ -426,6 +411,15 @@
 			else if(repurchase==""){
 				alert("제품의 재구매 여부를 체크해주세요!");
 				productReviewInsertForm.repurchase.focus;
+				return false;
+			}
+			
+			if(imgFiles.length<1){
+				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
+				return false;
+			}
+			else if(file == ""){
+				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
 				return false;
 			}
 			
@@ -476,7 +470,7 @@
 		</div>
 		<div class="sec02">
 			<c:forEach var="reviewVo" items="${reviewVos}" varStatus="st">
-				<div class="reviewSec">
+				<div class="reviewSec" onclick="location.href='productReviewContent?idx=${reviewVo.idx}';">
 					<section class="reviewSecInfo">
 						<p><img src="${ctp}/resources/data/member/${reviewVo.photo}" style="width:60px;"/>
 						<span class="reviewNickName">${reviewVo.nickName} · </span>
@@ -514,7 +508,10 @@
 					<section class="productInfo">
 						<p class="productBrand" style="color:#578de4;font-size:17px;font-weight: 700;margin:0 0 0 1px;">${reviewVo.brand}</p>
 						<p class="productName" style="font-size:25px;font-weight:600;color:#333;">${reviewVo.productName}</p>
-						<img src="${ctp}/resources/data/productReview/${reviewVo.productPhoto}" style="width:120px;border-radius:15px;margin: 0 10px 20px 0;"/>
+						<c:set var="productPhotos" value="${fn:split(reviewVo.productPhoto, '/')}"/>
+						<c:forEach var="productPhoto" items="${productPhotos}">
+							<img src="${ctp}/resources/data/productReview/${productPhoto}" style="width:120px;height:120px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
+						</c:forEach>
 					</section>
 					
 					<hr style="clear:both;"/>
@@ -681,5 +678,21 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		$('#insertModal').on('hidden.bs.modal', function (e) {
+			$(this).find('form')[0].reset();
+			$(this).find('#file_name').text('제품 사진을 선택해주세요.');
+			$(this).find('.swiper-wrapper').html('<div class="swiper-slide"><img id="photoDemo" src="${ctp}/resources/data/productReview/productNoimage.png"/></div>');
+			$(this).find('#file').empty();
+			console.log(file.value);
+		});
+		/* 
+		$(document).ready(function() {
+          $('#insertModal').on('hidden.bs.modal', function() {
+        	  $('input#file').val('');
+            });
+        });
+		  */
+	</script>
 </body>
 </html>

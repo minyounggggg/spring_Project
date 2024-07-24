@@ -10,8 +10,8 @@ public interface ProductReviewService {
 
 	List<ProductReviewVO> getProductReview();
 
-	void setproductReviewPhoto(MultipartHttpServletRequest pdPhoto);
+	int setproductReviewInsert(MultipartHttpServletRequest pdPhoto, ProductReviewVO vo);
 
-	int setproductReviewInsert(ProductReviewVO vo);
+	ProductReviewVO getproductReviewContent(int idx);
 
 }

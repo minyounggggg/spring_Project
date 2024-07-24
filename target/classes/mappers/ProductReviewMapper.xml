@@ -5,6 +5,11 @@
 	<select id="getProductReview" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
 		select * from productReview order by idx desc;
 	</select>
+
+	<select id="getproductReviewContent" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
+		select * from productReview where idx = #{idx};
+	</select>
+	
 	
 	
 	

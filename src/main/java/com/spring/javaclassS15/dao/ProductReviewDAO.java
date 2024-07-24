@@ -12,4 +12,6 @@ public interface ProductReviewDAO {
 
 	int setproductReviewInsert(@Param("vo") ProductReviewVO vo);
 
+	ProductReviewVO getproductReviewContent(@Param("idx") int idx);
+	
 }

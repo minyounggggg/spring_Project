@@ -13,7 +13,7 @@ create table productReview (
 	petHeart 			int not null default 1,		/* 반려동물 선호도 */
 	goodPoint 			text not null,				/* 좋은점 */
 	badPoint 			text not null,				/* 아쉬운점 */
-	productPhoto 		varchar(100) not null,		/* 제품사진 */
+	productPhoto 		varchar(500) not null,		/* 제품사진 */
 	repurchase 			char(2) not null,			/* 재구매 여부 OK, NO, Um */
 	readNum 			int default 0,				/* 조회수 */
 	uploadDate 			datetime default now(),		/* 제품 리뷰 업로드 일자 */
