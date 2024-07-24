@@ -9,6 +9,9 @@
 	<title>productReview.jsp</title>
 	<jsp:include page="/WEB-INF/views/include/bs4.jsp" />
 	<link rel="icon" href="${ctp}/resources/favicon/love.png">
+	
+	<!-- swiper link -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 	<!-- 구글폰트 -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +27,11 @@
 		a:link {text-decoration: none;}
 		p {margin:0;}
 		.inner {width : 1300px; margin : 0 auto; padding-top:150px;}
+		.sec-boxStyle{
+			background-color : #f9f9f9;
+			border-radius : 30px;
+			box-shadow : 5px 5px 5px rgba(0, 0, 50, 0.1);
+		}
 		.sec01{padding-bottom:40px;}
 		.sec01 .petCategory{
 			float : left;
@@ -38,11 +46,12 @@
 			background-color : #f9f9f9;
 			border-radius : 30px;
 			box-shadow : 5px 5px 5px rgba(0, 0, 50, 0.1);
-			padding : 30px 55px;
+			padding : 30px 45px;
 			width : 630px;
 			display: inline-block;
 			float : left;
 			margin : 10px;
+			cursor: pointer;
 		}
 		.sec02 .reviewNickName{
 			font-size: 18px;
@@ -68,7 +77,7 @@
 		.sec02 .productInfo{float:left;width:50%;}
 		.sec02 .HeartPoint{float:left;width:50%;}
 		.sec02 .memberHeart, .sec02 .petHeart {
-		    border: solid 2px #FF2121;
+		    border: solid 1px #FF2121;
 		    border-radius: 50px;
 		    padding: 1px 10px;
 		    width: fit-content;
@@ -82,7 +91,351 @@
 		    padding: 3px 15px;
 		}
 		.sec02 .badtxt{background-color: #99999933; color: #999999;}
+		
+		/* 모달 css */
+		/* 
+		@media (min-width: 576px) {
+		    .modal-dialog {
+		        max-width: 710px;
+		    }
+		}
+		 */
+    	#insertModal .modal-content{
+    		background-color: transparent;
+    		border: none;
+    	}
+    	
+    	#insertModal .modal-dialog {
+	        max-width: 710px;
+	    }
+	     
+	    #myModal1 .modal-header, #insertModal .modal-header, #myModal3 .modal-header{
+	    	border: none;
+	    	margin-bottom: 10px;
+	    }
+	    #myModal1 button.close, #insertModal button.close, #myModal3 button.close{
+	    	background-color: #fff;
+	    	border-radius: 100px;
+	    }
+	    
+		#insertModal .modal-profile-box{
+			width : 710px;
+			padding : 35px 50px;
+			/* height : 180px; */
+		}
+		.modal-profile-box .modal-profile{
+			/* box-shadow : 5px 10px 8px rgba(0, 0, 50, 0.1); */
+			width : 100%;
+		    overflow:hidden;
+	        /* text-align: center; */
+		}
+		.modal-profile-box .swiper-slide img{
+			border-radius : 20px;
+			width : 130px;
+			height : 130px;
+			object-fit: cover;
+			margin-right : 5px;
+		}
+		#myModal1 .modal-profile-box .modal-info{
+			width : 100%;
+		    text-align: center;
+		}
+		input#nickName {
+		    border: none;
+		    border-bottom: solid 1px #578de4;
+		    background-color: transparent;
+		    font-size: 24px;
+		    font-weight: 700;
+		    color: #444;
+        	width: 100%;
+       	    text-align: right;
+       	    padding: 0 5px 0;
+		}
+		/* input:focus {outline: 2px solid #d50000;} */ /* outline 테두리 속성 수정 */
+		input#nickName:focus {outline: none;} /* outline 테두리 없애기 */
+		input#address {
+		    border: none;
+		    border-bottom: solid 1px #578de4;
+		    background-color: transparent;
+		    font-size: 18px;
+		    font-weight: 500;
+		    color: #444;
+        	width: 100%;
+       	    text-align: right;
+       	    padding: 10px 5px 5px;
+		}
+		input#address:focus {outline: none;}
+		
+		input[type="text"] {border-radius: 50px; padding: 10px 20px;}
+		input[type="date"] {border-radius: 50px; padding: 10px 20px;}
+		
+		/* 반려동물 종류 체크박스 */
+		#check-box input[type="checkbox"] {
+			appearance: none;
+		}
+		#check-box input[type="checkbox"] + label{
+		    border: solid 1px #ced4da;
+		    border-radius: 50px;
+	        padding: 8px 20px;
+		    margin: 5px 5px 0 0;
+	        color: #a1a1a1;
+		}
+		#check-box input[type="checkbox"]:checked + label{
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		
+		/* 제품종류 라디오박스 */
+		#radio-box input[type="radio"] {
+			appearance: none;
+		}
+		#radio-box input[type="radio"] + label{
+		    border: solid 1px #ced4da;
+		    border-radius: 50px;
+	        padding: 8px 20px;
+		    margin: 5px 5px 0 0;
+	        color: #a1a1a1;
+		}
+		#radio-box input[type=radio]:checked + label{
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		
+		/* 재구매의사 라디오박스 */
+		#repurchaseRadio-box input[type="radio"] {
+			appearance: none;
+		}
+		#repurchaseRadio-box label{
+		    border: solid 1px #ced4da;
+		    border-radius: 50px;
+	        padding: 8px 20px;
+		    margin: 5px 5px 0 0;
+	        color: #a1a1a1;
+		}
+		#repurchaseRadio-box input[type=radio]:checked + label{
+			border: solid 1px #578de4;
+			color: #578de4;
+		}
+		
+		/* 하트 스타일 설정하기 */
+    	#HeartInsert fieldset{
+    		direction : rtl;
+    		padding : 10px 0;
+    	}
+    	#HeartInsert input[type=radio] {
+    		display : none;
+    	}
+    	#HeartInsert label {
+    		font-size : 1.6em;
+    		color : transparent;
+    		text-shadow : 0 0 0 #f0f0f0;
+    	}
+    	#HeartInsert label:hover{
+    		color: #EB403D;
+    	}
+    	#HeartInsert label:hover ~ label{
+    		color: #EB403D;
+    	}
+    	#HeartInsert input[type=radio]:checked ~ label{
+    		color: #EB403D;
+    	}
+    	span.HeartInsertBar {
+		    border-radius: 50px;
+		    border: solid 1px #EB403D;
+		    padding: 10px 20px 5px;
+		    margin-left: 12px;
+		}
+		
+		textarea#goodPoint, #badPoint {
+		    margin-top: 5px;
+		    border-radius: 10px;
+		}
+		span.petBox-playWith {
+		    border: solid 1px #578de4;
+		    border-radius: 50px;
+		    padding: 8px 20px;
+		    color: #578de4;
+		    margin: 5px 5px 0 0;
+		}
+		
+		/* 사진파일업로드 css */
+		.file_cus label {display: block; width: 100%; margin: 15px 0 15px; font-size: 0; cursor: pointer;}
+		input[type="file"] {overflow: hidden;position: absolute;width: 1px;height: 1px;margin: -1px;font-size: initial;clip: rect(0 0 0 0);}
+		.file_name {
+			overflow: hidden; display: inline-block; border-radius: 50px !important;
+			vertical-align: middle; width: calc(100% - 108px);
+			height: 40px; padding:0 12px; border: 1px solid #ddd;
+			font-size: 14px; line-height: 38px;
+			color: #111; white-space: nowrap; text-overflow: ellipsis;
+		}
+		.file_btn {
+			display: inline-block; vertical-align: middle;
+			width: 100px; height: 40px; margin-left: 8px; border-radius: 50px;
+			background: #578de4;font-size: 14px;
+			font-weight: 500; line-height: 40px; color: #fff; text-align: center;
+		}
+		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
+
+		.memberUpdateBtn, .petInsertOkBtn, .petUpdateOkBtn {
+		    background-color: #578de4;
+		    border-color: #578de4;
+		    margin-top: 25px;
+		    padding: 10px 0 10px;
+		    width : 100%;
+		    border-radius: 50px;
+		    border: none;
+		    color: #fff;
+		}
+		button.petDeleteBtn {
+		    width: 100%;
+		    border: none;
+		    background: transparent;
+		    margin-top: 10px;
+		    color: #999;
+		}
+		.memberUpdateBtn:hover {background-color: #3478db;}
+		.petInsertOkBtn:hover {background-color: #3478db;}
+		.petUpdateOkBtn:hover {background-color: #3478db;}
+		
+		/* swiper css */
+		.swiper {
+	      width: 100%;
+	      height: 150px;
+	    }
+	    .swiper-slide {
+	      width: 140px;
+	    }
+	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
 	</style>
+	<script>
+		// 파일선택시 파일명 출력
+		$(window).on('load', function() {
+		    fileCus();
+		})
+	
+		function fileCus() {
+		    $(".file_cus input[type=file]").on("change", function() {
+		        const fileName = $(this).val().split("\\").pop();
+		        $(this).siblings(".file_name").text(fileName || "사진을 선택해주세요!!");
+		    });
+		}
+		
+		let imgFiles = [];
+		
+		$(document).ready(function() {
+			$("#file").on("change", function(e) {
+				$(".swiper-wrapper").empty();
+				
+				let files = e.target.files;
+				let filesArr = Array.prototype.slice.call(files);
+				
+				let idx = 0;
+				filesArr.forEach(function(f) {
+					if(!f.type.match("image.*")){
+						alert("이미지파일만 업로드하실 수 있습니다.");
+						return false;
+					}
+					imgFiles.push(f);
+				
+					let reader = new FileReader();
+					reader.onload = function(e) {
+						let str = "<div class='swiper-slide' id='imgId"+idx+"'><a href='javascript:void(0);' onclick='deleteImage("+idx+")' ><img src='"+e.target.result+"' data-file='"+f.name+"' title='그림을 클릭하시면 제거됩니다.("+idx+")'/></a></div>";
+						$(".swiper-wrapper").append(str);
+						idx++;
+					}
+					reader.readAsDataURL(f);	// readAsDataURL는 예약어
+				});
+			});
+		});
+		
+		function deleteImage(idx) {
+			imgFiles.slice(idx,1);
+			
+			let imgId = "#imgId" + idx;
+			$(imgId).remove();
+		}
+		
+		function productReviewInsertOK() {
+			let petCategory = productReviewInsertForm.petCategory.value;
+			let productCategory = productReviewInsertForm.productCategory.value;
+			let brand = productReviewInsertForm.brand.value;
+			let productName = productReviewInsertForm.productName.value;
+			let memberHeart = productReviewInsertForm.memberHeart.value;
+			let petHeart = productReviewInsertForm.petHeart.value;
+			let goodPoint = productReviewInsertForm.goodPoint.value;
+			let badPoint = productReviewInsertForm.badPoint.value;
+			let file = productReviewInsertForm.file.value;
+			let repurchase = productReviewInsertForm.repurchase.value;
+			/* 
+			if(petCategory==""){
+				alert("제품을 사용한 반려동물의 종류를 선택해주세요!");
+				productReviewInsertForm.petCategory.focus;
+				return false;
+			}
+			 */
+			if(productCategory==""){
+				alert("제품의 종류를 선택해주세요!");
+				productReviewInsertForm.productCategory.focus;
+				return false;
+			}
+			else if(brand==""){
+				alert("제품의 브랜드를 작성해주세요!");
+				productReviewInsertForm.brand.focus;
+				return false;
+			}
+			else if(productName==""){
+				alert("제품명을 작성해주세요!");
+				productReviewInsertForm.productName.focus;
+				return false;
+			}
+			else if(memberHeart==""){
+				alert("제품에 대한 반려인의 만족도를 체크해주세요!");
+				productReviewInsertForm.memberHeart.focus;
+				return false;
+			}
+			else if(petHeart==""){
+				alert("제품에 대한 반려동물의 선호도를 체크해주세요!");
+				productReviewInsertForm.petHeart.focus;
+				return false;
+			}
+			else if(goodPoint==""){
+				alert("제품의 좋았던 점을 작성해주세요!");
+				productReviewInsertForm.goodPoint.focus;
+				return false;
+			}
+			else if(badPoint==""){
+				alert("제품의 아쉬웠던 점을 작성해주세요!");
+				productReviewInsertForm.badPoint.focus;
+				return false;
+			}
+			else if(repurchase==""){
+				alert("제품의 재구매 여부를 체크해주세요!");
+				productReviewInsertForm.repurchase.focus;
+				return false;
+			}
+			
+			if(imgFiles.length<1){
+				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
+				return false;
+			}
+			else if(file == ""){
+				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
+				return false;
+			}
+			
+			let imgNames = "";
+			for (let i=0; i<imgFiles.length; i++){
+				imgNames += imgFiles[i].name + "/";
+			}
+			imgNames = imgNames.substring(0, imgNames.length-1);
+			//$("#pdPhoto").val(imgNames);
+			productReviewInsertForm.pdPhoto.value = imgNames;
+			console.log(pdPhoto);
+			
+			productReviewInsertForm.submit();
+		}
+		
+	</script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/nav.jsp" />
@@ -117,7 +470,7 @@
 		</div>
 		<div class="sec02">
 			<c:forEach var="reviewVo" items="${reviewVos}" varStatus="st">
-				<div class="reviewSec">
+				<div class="reviewSec" onclick="location.href='productReviewContent?idx=${reviewVo.idx}';">
 					<section class="reviewSecInfo">
 						<p><img src="${ctp}/resources/data/member/${reviewVo.photo}" style="width:60px;"/>
 						<span class="reviewNickName">${reviewVo.nickName} · </span>
@@ -125,27 +478,23 @@
 						<span class="petCategoryVal">${reviewVo.petCategory}</span>
 						<span class="productCategoryVal">${reviewVo.productCategory}</span></p>
 					</section>
-					<section class="reviewSecMore">
+					<section class="reviewSecMore"> 
 						···
 					</section>
 					<hr style="clear:both;"/>
-					<section class="productInfo">
-						<p class="productBrand" style="color:#578de4;font-size:17px;font-weight: 700;margin:0 0 0 1px;">${reviewVo.brand}</p>
-						<p class="productName" style="font-size:25px;font-weight:600;color:#333;">${reviewVo.productName}</p>
-						<img src="${ctp}/resources/data/productReview/${reviewVo.productPhoto}" style="width:120px;border-radius:15px;margin: 0 10px 20px 0;"/>
-					</section>
+					
 					<section class="HeartPoint">
 						<section style="margin-bottom:10px;">
-							<span style="color: #636363; font-size: 14px; font-weight: 500; margin:0 5px;">반려인 </span>
+							<span style="color: #636363; font-size: 14px; font-weight: 500; margin:0 5px;">반려인 &nbsp;&nbsp;</span>
 							<span class="memberHeart">
-								<c:forEach var="i" begin="1" end="${reviewVo.memberHeart}" varStatus="iSt"><font color="#FF2121">❤︎</font></c:forEach>
+								<c:forEach var="i" begin="1" end="${reviewVo.memberHeart}" varStatus="iSt"><font color="#EB403D">❤︎</font></c:forEach>
 								<c:forEach var="i" begin="1" end="${5 - reviewVo.memberHeart}" varStatus="iSt"><font color="#FFBDBD">❤︎</font></c:forEach>
 							</span>
 						</section>
 						<section>
 							<span style="color: #636363; font-size: 14px; font-weight: 500; margin:0 5px;">반려동물 </span>
 							<span class="petHeart">
-								<c:forEach var="i" begin="1" end="${reviewVo.petHeart}" varStatus="iSt"><font color="#FF2121">❤︎</font></c:forEach>
+								<c:forEach var="i" begin="1" end="${reviewVo.petHeart}" varStatus="iSt"><font color="#EB403D">❤︎</font></c:forEach>
 								<c:forEach var="i" begin="1" end="${5 - reviewVo.petHeart}" varStatus="iSt"><font color="#FFBDBD">❤︎</font></c:forEach>
 							</span>
 						</section>
@@ -156,6 +505,15 @@
 							<p style="font-size: 14px; color: #999; margin: 10px 0 20px 9px;">제품 후기 자세히보기 ></p>
 						</section>
 					</section>
+					<section class="productInfo">
+						<p class="productBrand" style="color:#578de4;font-size:17px;font-weight: 700;margin:0 0 0 1px;">${reviewVo.brand}</p>
+						<p class="productName" style="font-size:25px;font-weight:600;color:#333;">${reviewVo.productName}</p>
+						<c:set var="productPhotos" value="${fn:split(reviewVo.productPhoto, '/')}"/>
+						<c:forEach var="productPhoto" items="${productPhotos}">
+							<img src="${ctp}/resources/data/productReview/${productPhoto}" style="width:120px;height:120px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
+						</c:forEach>
+					</section>
+					
 					<hr style="clear:both;"/>
 					<section class="reviewHeart">
 						<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.goodHeart}</span>
@@ -166,8 +524,175 @@
 		</div>
 	</div>
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
-		<section><a href="javascript:"><img src="${ctp}/resources/images/icon/insertBtn.png" style="width:90px;"/></a></section>
+		<section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="width:90px;cursor:pointer;"/></section>
 		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:90px;"/></a></section>
 	</div>
+	
+	
+	<!-- 제품후기 insert 모달-->
+	<div class="modal fade" id="insertModal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<form name="productReviewInsertForm" method="post" action="productReviewInsert" enctype="multipart/form-data">
+					<div class="modal-profile-box sec-boxStyle">
+					
+						<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물</p>
+						<div class="form-group">
+							<div class="check-box" id="check-box">
+								<input type="checkbox" class="check-box-input" value="강아지" id="petCategory1" name="petCategory"/>
+								<label for="petCategory1">강아지</label>
+								<input type="checkbox" class="check-box-input" value="고양이" id="petCategory2" name="petCategory"/>
+								<label for="petCategory2">고양이</label>
+								<input type="checkbox" class="check-box-input" value="기타동뮬" id="petCategory3" name="petCategory"/>
+								<label for="petCategory3">기타동뮬</label>
+							</div>
+						</div>
+					
+						<p style="font-size:14px;color:#444;margin:10px 0 0;">* 제품종류</p>
+						<div class="form-group">
+							<div class="radio-box" id="radio-box">
+								<input type="radio" class="check-box-input" value="사료" id="productCategory1" name="productCategory"/>
+								<label for="productCategory1">사료</label>
+								<input type="radio" class="check-box-input" value="간식" id="productCategory2" name="productCategory"/>
+								<label for="productCategory2">간식</label>
+								<input type="radio" class="check-box-input" value="장난감" id="productCategory3" name="productCategory"/>
+								<label for="productCategory3">장난감</label>
+								<input type="radio" class="check-box-input" value="영양제" id="productCategory4" name="productCategory"/>
+								<label for="productCategory4">영양제</label>
+								<input type="radio" class="check-box-input" value="용품" id="productCategory5" name="productCategory"/>
+								<label for="productCategory5">용품</label>
+								<input type="radio" class="check-box-input" value="장난감" id="productCategory6" name="productCategory"/>
+								<label for="productCategory6">장난감</label>
+							</div>
+						</div>
+						<section style="width:50%;float:left;padding-right:5px;">
+							<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 제품 브랜드</p>
+							<input type="text" id="brand" name="brand" class="modal-petName form-control" required />
+						</section>
+						<section style="width:50%;float:left;padding-left:5px;">
+							<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 제품명</p>
+							<input type="text" id="productName" name="productName" class="modal-petName form-control" required />
+						</section>
+						
+						<section id="HeartInsert" style="width:100%;clear:both;">
+							<fieldset style="border:0px;">
+								<section style="width:50%;float:left;padding-right:5px;">
+									<span class="HeartInsertBar">
+										<input type="radio" name="memberHeart" value="5" id="memberHeart1"/><label for="memberHeart1">❤︎</label>
+										<input type="radio" name="memberHeart" value="4" id="memberHeart2"/><label for="memberHeart2">❤︎</label>
+										<input type="radio" name="memberHeart" value="3" id="memberHeart3"/><label for="memberHeart3">❤︎</label>
+										<input type="radio" name="memberHeart" value="2" id="memberHeart4"/><label for="memberHeart4">❤︎</label>
+										<input type="radio" name="memberHeart" value="1" id="memberHeart5"/><label for="memberHeart5">❤︎</label>
+									</span>
+									<span style="font-size:14px;color:#444;margin:10px 0 0;"> 반려인 만족도 <span style="color:#578de4;">*</span></span>
+								</section>
+								<section style="width:50%;float:left;padding-left:5px;">
+									<span class="HeartInsertBar">
+										<input type="radio" name="petHeart" value="5" id="petHeart1"/><label for="petHeart1">❤︎</label>
+										<input type="radio" name="petHeart" value="4" id="petHeart2"/><label for="petHeart2">❤︎</label>
+										<input type="radio" name="petHeart" value="3" id="petHeart3"/><label for="petHeart3">❤︎</label>
+										<input type="radio" name="petHeart" value="2" id="petHeart4"/><label for="petHeart4">❤︎</label>
+										<input type="radio" name="petHeart" value="1" id="petHeart5"/><label for="petHeart5">❤︎</label>
+									</span>
+									<span style="font-size:14px;color:#444;margin:10px 0 0;">반려동물 선호도 <span style="color:#578de4;">*</span></span>
+								</section>
+							</fieldset>
+						</section>
+						<section style="width:50%;float:left;padding-right:5px;">
+							<p style="font-size:14px;color:#444;margin:5px 0 0;"><span style="color:#578de4;">*</span> 추천하고싶은 부분</p>
+							<textarea rows="3" name="goodPoint" id="goodPoint" class="modal-goodPoint form-control"></textarea>
+						</section>
+						<section style="width:50%;float:left;padding-left:5px;margin-bottom:15px;">
+							<p style="font-size:14px;color:#444;margin:5px 0 0;"><span style="color:#578de4;">*</span> 아쉬웠던 부분</p>
+							<textarea rows="3" name="badPoint" id="badPoint" class="modal-badPoint form-control"></textarea>
+						</section>
+						<section class="file_cus" style="clear:both;margin-top:10px;">
+						    <label>
+						        <input type="file" name="fName" id="file" multiple accept=".jpg, .gif, .png" />
+						        <span class="file_name" id="file_name"><span style="color:#578de4;">*</span> 제품 사진을 선택해주세요.</span>
+						        <span class="file_btn">사진선택</span>
+						    </label>
+						</section>
+						<%-- 
+						<section class="modal-profile">
+							<img id="photoDemo" src="${ctp}/resources/data/productReview/productNoimage.png"/>
+						</section>
+						 --%>
+						<!-- <section class="modal-profile"> -->
+						<section class="swiper-modal-box">
+							 <!-- Swiper -->
+							  <div class="swiper mySwiper">
+							    <div class="swiper-wrapper">
+							      <div class="swiper-slide">
+							      	<img id="photoDemo" src="${ctp}/resources/data/productReview/productNoimage.png"/>
+							      </div>
+							    </div>
+							    <div class="swiper-scrollbar"></div>
+							  </div>
+							
+							  <!-- Swiper JS -->
+							  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+							
+							  <!-- Initialize Swiper -->
+							  <script>
+								  var swiper = new Swiper(".mySwiper", {
+									  slidesPerView: "auto",
+								      /* spaceBetween: 40, */
+								      freeMode: true,
+								      scrollbar: {
+									          el: ".swiper-scrollbar",
+									          hide: true
+											}
+							    });
+							  </script>
+						</section>
+						
+						<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 재구매의사</p>
+						<div class="form-group">
+							<div class="radio-box" id="repurchaseRadio-box">
+								<input type="radio" class="check-box-input" value="OK" id="repurchase1" name="repurchase"/>
+								<label for="repurchase1">네</label>
+								<input type="radio" class="check-box-input" value="NO" id="repurchase2" name="repurchase"/>
+								<label for="repurchase2">아니요</label>
+								<input type="radio" class="check-box-input" value="Um" id="repurchase3" name="repurchase"/>
+								<label for="repurchase3">고민중입니다</label>
+							</div>
+						</div>
+						
+						<section class="modal-info">
+							<button type="button" class="petInsertOkBtn" onclick="productReviewInsertOK()">등록하기</button>
+						</section>
+						
+						<input type="hidden" name="mid" value="${sMid}"/>
+						<input type="hidden" name="nickName" value="${sNickName}"/>
+						<input type="hidden" name="photo" value="${sPhoto}"/>
+						<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}"/>
+						<input type="hidden" name="pdPhoto" id="pdPhoto"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		$('#insertModal').on('hidden.bs.modal', function (e) {
+			$(this).find('form')[0].reset();
+			$(this).find('#file_name').text('제품 사진을 선택해주세요.');
+			$(this).find('.swiper-wrapper').html('<div class="swiper-slide"><img id="photoDemo" src="${ctp}/resources/data/productReview/productNoimage.png"/></div>');
+			$(this).find('#file').empty();
+			console.log(file.value);
+		});
+		/* 
+		$(document).ready(function() {
+          $('#insertModal').on('hidden.bs.modal', function() {
+        	  $('input#file').val('');
+            });
+        });
+		  */
+	</script>
 </body>
 </html>

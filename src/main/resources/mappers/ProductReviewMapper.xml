@@ -6,4 +6,15 @@
 		select * from productReview order by idx desc;
 	</select>
 
+	<select id="getproductReviewContent" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
+		select * from productReview where idx = #{idx};
+	</select>
+	
+	
+	
+	
+	<insert id="setproductReviewInsert">
+		insert into productReview values(default,#{vo.mid},#{vo.nickName},#{vo.photo},#{vo.petCategory},#{vo.productCategory},#{vo.brand},#{vo.productName},#{vo.memberHeart},#{vo.petHeart},#{vo.goodPoint},#{vo.badPoint},#{vo.productPhoto},#{vo.repurchase},default,default,default,default,#{vo.hostIp});
+	</insert>
+
 </mapper>

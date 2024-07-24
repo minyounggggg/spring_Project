@@ -315,6 +315,8 @@
 
 		// 반려동물 insert
 		function petInsert() {
+			let playWith = petInsertForm.playWith.value;
+			console.log(playWith);
 			let petName = document.getElementById("petName").value;
 			if(petName.trim() == ""){
 				alert("반려동물의 이름을 입력해주세요!");
@@ -598,8 +600,6 @@
 									<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 반려동물의 간단한 소개부탁해요</p>
 									<input type="text" id="petInfo" name="petInfo" class="modal-petInfo form-control" />
 									<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물과 함께하고싶은 동네생활이 있나요?</p>
-									<!-- <input type="text" id="playWith" name="playWith" class="modal-playWith form-control" /> -->
-									<!-- 키워드 임의로 설정해 놓고 그중 고르기 -->
 									<div class="form-group">
 										<div class="check-box">
 											<input type="checkbox" class="check-box-input" value="같이산책" id="playWith1" name="playWith"/>
