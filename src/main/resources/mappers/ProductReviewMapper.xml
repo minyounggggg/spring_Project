@@ -9,6 +9,10 @@
 	<select id="getproductReviewContent" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
 		select * from productReview where idx = #{idx};
 	</select>
+
+	<select id="getPdReviewComment" resultType="com.spring.javaclassS15.vo.ReviewCommentVO">
+		select * from reviewComment where part = 'productReview' and partIdx = #{idx} order by commentCnt;
+	</select>
 	
 	
 	

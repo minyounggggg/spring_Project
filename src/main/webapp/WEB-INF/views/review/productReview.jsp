@@ -522,6 +522,11 @@
 				</div>
 			</c:forEach>	
 		</div>
+		
+		 <div style="padding:100px;clear:both;">
+		 	임시 마진 sec
+		 </div>
+		
 	</div>
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
 		<section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
@@ -694,6 +699,7 @@
         });
 		  */
 	</script>
+	
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>

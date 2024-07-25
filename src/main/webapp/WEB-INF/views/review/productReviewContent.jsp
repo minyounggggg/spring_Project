@@ -283,15 +283,16 @@
 		}
 		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
 
-		.memberUpdateBtn, .petInsertOkBtn, .petUpdateOkBtn {
+		.commentInsertBtn {
 		    background-color: #578de4;
 		    border-color: #578de4;
-		    margin-top: 25px;
 		    padding: 10px 0 10px;
-		    width : 100%;
+		    width : 110px;
 		    border-radius: 50px;
 		    border: none;
 		    color: #fff;
+		    float: right;
+		    margin-bottom : 30px;
 		}
 		button.petDeleteBtn {
 		    width: 100%;
@@ -300,14 +301,11 @@
 		    margin-top: 10px;
 		    color: #999;
 		}
-		.memberUpdateBtn:hover {background-color: #3478db;}
-		.petInsertOkBtn:hover {background-color: #3478db;}
-		.petUpdateOkBtn:hover {background-color: #3478db;}
+		.commentInsertBtn:hover {background-color: #3478db;}
 		
 		/* swiper css */
 		.swiper {
 	      width: 100%;
-	      /* height: 150px; */
 	    }
 	    .swiper-slide {
 	      width: 460px;
@@ -321,6 +319,7 @@
 	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
 	</style>
 	<script>
+		
 		
 		
 	</script>
@@ -374,58 +373,108 @@
 		</div>
 		
 		<div class="sec03">
-			<!-- <section class="productInfo"> -->
-				 <!-- Swiper -->
-				  <div class="swiper mySwiper">
-				    <div class="swiper-wrapper">
-				    <c:set var="productPhotos" value="${fn:split(vo.productPhoto, '/')}"/>
-					<c:forEach var="productPhoto" items="${productPhotos}">
-				      <div class="swiper-slide">
-				      	<img src="${ctp}/resources/data/productReview/${productPhoto}" class="clickImg" style="width:450px;height:450px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
-				      </div>
-				    </c:forEach>
-				    </div>
-				    <div class="swiper-scrollbar"></div>
-				  </div>
-			<!-- </section> -->
-			<!-- Swiper JS -->
-			 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-			 <!-- Initialize Swiper -->
-			 <script>
-			  var swiper = new Swiper(".mySwiper", {
-				  slidesPerView: "auto",
-			      /* spaceBetween: 40, */
-			      freeMode: true,
-			      scrollbar: {
-				          el: ".swiper-scrollbar",
-				          hide: true
-						}
-			   	});
-			 </script>
+		<!-- <section class="productInfo"> -->
+		<!-- Swiper -->
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				<c:set var="productPhotos" value="${fn:split(vo.productPhoto, '/')}"/>
+				<c:forEach var="productPhoto" items="${productPhotos}">
+					<div class="swiper-slide">
+						<img src="${ctp}/resources/data/productReview/${productPhoto}" class="clickImg" style="width:450px;height:450px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
+					</div>
+				</c:forEach>
+			</div>
+		  <div class="swiper-scrollbar"></div>
+		</div>
+		<!-- Swiper JS -->
+		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+		<!-- Initialize Swiper -->
+		<script>
+		var swiper = new Swiper(".mySwiper", {
+			 	slidesPerView: "auto",
+			    /* spaceBetween: 40, */
+			    freeMode: true,
+			    scrollbar: {
+			         el: ".swiper-scrollbar",
+			         hide: true
+				}
+			});
+		</script>
+		<!-- </section> -->
 		</div>
 		<hr style="clear:both;"/>
+		<!-- 좋아요 수, 댓글 수, 신고버튼 -->
 		<section class="reviewHeart">
 			<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</span>
 			<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.commentCnt}</span>
+			<span style="font-size:15px;text-align: right;"><img src="${ctp}/resources/images/icon/siren.png" style="width:25px;margin: 0 5px 5px 0;"/></span>
 		</section>
 		<hr/>
-		
-	</div>
+		<!-- 댓글 -->
+		<div class="sec04">
+			<form name="commentInsertForm">
+				<textarea rows="4" name="content" id="content" style="width:100%" placeholder="타인을 모욕하거나 비방하는 행위의 댓글은 처벌 대상이 될 수 있습니다."></textarea>
+				<button onclick="commentInsert()" class="commentInsertBtn">댓글달기</button>
+			</form>
+		</div>
+		<hr style="clear:both;"/>
+		<div class="sec05" style="clear:both;">
+			<c:forEach var="pdCommentVo" items="${pdCommentVos}" varStatus="st">
+				<div>
+					<section>
+					  	<c:if test="${pdCommentVo.commentLev >= 1}">
+							<c:forEach var="i" begin="1" end="${pdCommentVo.commentLev}">&nbsp;&nbsp;</c:forEach> └▶ 
+						</c:if>
+						<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
+						<span>${pdCommentVo.nickName}</span> · <span>${fn:substring(pdCommentVo.uploadDate, 0, 16)}</span>
+						<c:if test="${sMid == pdCommentVo.mid || sLevel == 0}">
+							[<a href="javascript:replyDelete(${pdCommentVo.idx})" title="댓글삭제">삭제</a>]
+						</c:if>
+					</section>
+					<c:if test="${pdCommentVo.commentLev == 0}">
+						<section style="padding: 30px;background-color: #ddd;border-radius: 10px;margin: 15px 0;">
+							<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
+							<span>${pdCommentVo.content}</span>
+						</section>
+					</c:if>
+					<c:if test="${pdCommentVo.commentLev >= 1}">
+						<section style="padding: 30px;background-color: #eee;border-radius: 10px;margin: 15px 0 15px 40px;">
+							<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
+							<span>${pdCommentVo.content}</span>
+						</section>
+					</c:if>
+				</div>
+				
+				<%-- 
+				<span><!-- 번호가 겹치지않게 고유번호 주깅 -->
+					<a href="javascript:replyShow(${pdCommentVo.idx})" id="replyShowBtn${pdCommentVo.idx}" class="badge badge-success">답글</a>
+					<a href="javascript:replyClose(${pdCommentVo.idx})" id="replyCloseBtn${pdCommentVo.idx}" class="badge badge-secondary replyCloseBtn">닫기</a>
+				</span>
+				<section id="replyDemo${pdCommentVo.idx}" style="display:none">
+					<table class="table table-center">
+						<tr>
+							<td style="85%" class="text-left">답글내용 : 	
+								<textarea rows="4" name="contentRe" id="contentRe${pdCommentVo.idx}" class="form-control">@${pdCommentVo.nickName}</textarea>
+							</td>
+							<td style="15%">
+								<br/>
+								<p>작성자 : ${sNickName}</p>
+								<input type="button" value="답글달기" onclick="replyCheckRe(${pdCommentVo.idx}, ${pdCommentVo.re_step}, ${pdCommentVo.re_order})" class="btn btn-success btn-sm"/>
+			 				</td>
+						</tr>
+					</table>
+				</section>
+				 --%>
+			</c:forEach>
+		</div>
+	</div><!-- inner 끝 -->
 	
-	
+	<!-- topBtn nav -->
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
 		<%-- <section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section> --%>
 		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>
 	
-	<!-- 
-	<script>
-		$('.clickImg').click(function(){
-			$(this).clone().appendTo('#productPhotoDemo');
-		});
-	</script>
-	 -->
-	 
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>
