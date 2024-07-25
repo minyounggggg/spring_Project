@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.service.ProductReviewService;
 import com.spring.javaclassS15.vo.ProductReviewVO;
+import com.spring.javaclassS15.vo.ReviewCommentVO;
 
 @Controller
 @RequestMapping("/review")
@@ -54,7 +55,11 @@ public class ProductReviewController {
 	@RequestMapping(value = "/productReviewContent", method = RequestMethod.GET)
 	public String productReviewContentGet(int idx, Model model) {
 		ProductReviewVO vo = productReviewService.getproductReviewContent(idx);
+		List<ReviewCommentVO> pdCommentVos = productReviewService.getPdReviewComment(idx);
+		
 		model.addAttribute("vo", vo);
+		model.addAttribute("pdCommentVos", pdCommentVos);
+		
 		return "review/productReviewContent";
 	}
 	

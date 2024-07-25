@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.dao.ProductReviewDAO;
 import com.spring.javaclassS15.vo.ProductReviewVO;
+import com.spring.javaclassS15.vo.ReviewCommentVO;
 
 @Service
 public class ProductReviewServiceImpl implements ProductReviewService {
@@ -62,5 +63,10 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	@Override
 	public ProductReviewVO getproductReviewContent(int idx) {
 		return productReviewDAO.getproductReviewContent(idx);
+	}
+
+	@Override
+	public List<ReviewCommentVO> getPdReviewComment(int idx) {
+		return productReviewDAO.getPdReviewComment(idx);
 	}
 }
