@@ -283,17 +283,6 @@
 		}
 		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
 
-		.commentInsertBtn {
-		    background-color: #578de4;
-		    border-color: #578de4;
-		    padding: 10px 0 10px;
-		    width : 110px;
-		    border-radius: 50px;
-		    border: none;
-		    color: #fff;
-		    float: right;
-		    margin-bottom : 30px;
-		}
 		button.petDeleteBtn {
 		    width: 100%;
 		    border: none;
@@ -301,7 +290,6 @@
 		    margin-top: 10px;
 		    color: #999;
 		}
-		.commentInsertBtn:hover {background-color: #3478db;}
 		
 		/* swiper css */
 		.swiper {
@@ -317,6 +305,27 @@
 	      object-fit: cover;
 	    }
 	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
+	    
+	    /* 댓글 css */
+	    .commentInsertBtn {
+		    background-color: #578de4;
+		    border-color: #578de4;
+		    padding: 10px 0 10px;
+		    width : 13%;
+		    border-radius: 50px;
+		    border: none;
+		    color: #fff;
+		    float: right;
+		    margin-bottom : 30px;
+		}
+		.commentInsertBtn:hover {background-color: #3478db;}
+		
+	    details > summary::marker {
+		    /* styles */
+		}
+		details > summary::-webkit-details-marker {
+		    /* styles */
+		}
 	</style>
 	<script>
 		
@@ -413,7 +422,7 @@
 		<!-- 댓글 -->
 		<div class="sec04">
 			<form name="commentInsertForm">
-				<textarea rows="4" name="content" id="content" style="width:100%" placeholder="타인을 모욕하거나 비방하는 행위의 댓글은 처벌 대상이 될 수 있습니다."></textarea>
+				<textarea name="content" id="content" style="border-radius: 50px;float: left;width: 86%;height: 45px;padding: 10px 30px;" placeholder="타인을 모욕하거나 비방하는 행위의 댓글은 처벌 대상이 될 수 있습니다."></textarea>
 				<button onclick="commentInsert()" class="commentInsertBtn">댓글달기</button>
 			</form>
 		</div>
@@ -421,9 +430,10 @@
 		<div class="sec05" style="clear:both;">
 			<c:forEach var="pdCommentVo" items="${pdCommentVos}" varStatus="st">
 				<div>
+				<%-- 
 					<section>
 					  	<c:if test="${pdCommentVo.commentLev >= 1}">
-							<c:forEach var="i" begin="1" end="${pdCommentVo.commentLev}">&nbsp;&nbsp;</c:forEach> └▶ 
+							<c:forEach var="i" begin="1" end="${pdCommentVo.commentLev}">&nbsp;&nbsp;</c:forEach> └ 
 						</c:if>
 						<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
 						<span>${pdCommentVo.nickName}</span> · <span>${fn:substring(pdCommentVo.uploadDate, 0, 16)}</span>
@@ -431,18 +441,48 @@
 							[<a href="javascript:replyDelete(${pdCommentVo.idx})" title="댓글삭제">삭제</a>]
 						</c:if>
 					</section>
+					 --%>
 					<c:if test="${pdCommentVo.commentLev == 0}">
-						<section style="padding: 30px;background-color: #ddd;border-radius: 10px;margin: 15px 0;">
-							<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
-							<span>${pdCommentVo.content}</span>
+						<section>
+							<section>
+								<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
+								<span>${pdCommentVo.nickName}</span> · <span>${fn:substring(pdCommentVo.uploadDate, 0, 16)}</span>
+								<c:if test="${sMid == pdCommentVo.mid || sLevel == 0}">
+									[<a href="javascript:replyDelete(${pdCommentVo.idx})" title="댓글삭제">삭제</a>]
+								</c:if>
+							</section>
+							<section style="padding:10px 70px 30px;">
+								<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
+								<span>${pdCommentVo.content}</span>
+							</section>
+							<details style="padding: 0 70px 20px;">
+							    <summary>Click me</summary>
+							    <div>
+							    	하히호헤호
+							    </div>	
+							</details>
+							<hr/>
 						</section>
 					</c:if>
+					
 					<c:if test="${pdCommentVo.commentLev >= 1}">
-						<section style="padding: 30px;background-color: #eee;border-radius: 10px;margin: 15px 0 15px 40px;">
-							<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
-							<span>${pdCommentVo.content}</span>
+						<section style="margin: 0 0 0 40px;background-color: #f9f9f9;padding: 20px 20px 0 40px;">
+							<section>
+								<%-- <c:forEach var="i" begin="1" end="${pdCommentVo.commentLev}">&nbsp;&nbsp;</c:forEach> └  --%>
+								<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
+								<span>${pdCommentVo.nickName}</span> · <span>${fn:substring(pdCommentVo.uploadDate, 0, 16)}</span>
+								<c:if test="${sMid == pdCommentVo.mid || sLevel == 0}">
+									[<a href="javascript:replyDelete(${pdCommentVo.idx})" title="댓글삭제">삭제</a>]
+								</c:if>
+							</section>
+							<section style="padding: 30px;">
+								<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
+								<span>${pdCommentVo.content}</span>
+							</section>
+							<hr/>
 						</section>
 					</c:if>
+					
 				</div>
 				
 				<%-- 
