@@ -127,7 +127,8 @@
 			<div class="sec1">
 				<p style="font-size:20px;font-weight:700;color:#578de4;margin-top:20px;">Enjoy With</p>
 				<p style="font-size:55px;font-weight:700;color:#578de4;">반려동물<span>과</span> 함께 <span>즐기고싶어</span></p>
-				<p style="font-size:18px;">내가없으면 얜 혼자있어야 되는데 심심심하겠다.<br/>
+				<p style="font-size:18px;margin-top: 30px;line-height: 30px;">
+				내가없으면 얜 혼자있어야 되는데 심심심하겠다.<br/>
 				나도 맨날 같이 데리고 나가서 놀고싶은데 제약이 너무 많아<br/>
 				어디 괜찮은곳 없을까? <br/>
 				항상 즐거운곳을 가거나 맛있는걸 먹으면 같이 옴뇸뇸 하고싶어잉 ~~ </p>
@@ -186,5 +187,6 @@
 			</section>
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>

@@ -25,11 +25,11 @@
 		* {font-family: 'Noto Sans KR', sans-serif;}
 		a {text-decoration: none; color: inherit;}
 		a:link {text-decoration: none;}
-		p {margin:0;}
+		/* p {margin:0;} */
 		.inner {
 			width : 1300px;
 			margin : 0 auto;
-			padding: 150px 50px 0;
+			padding: 160px 50px 100px;
 			border-left: solid 1px #ddd;
 			border-right: solid 1px #ddd;
 		}
@@ -61,7 +61,6 @@
 			color: #999;
 		}
 		.friend{
-			margin-left: 5px;
 		    border-radius: 50px;
 		    border: solid 1px #EB403D;
 		    padding: 3px 12px;
@@ -70,7 +69,7 @@
     		font-weight: 600;
 		}
 		.petCategoryVal, .productCategoryVal{
-		    margin-left: 5px;
+		    margin-left: 2px;
 		    border-radius: 50px;
 		    border: solid 1px #578de4;
 		    padding: 3px 12px;
@@ -84,7 +83,7 @@
 		    border: solid 1px #578de4;
 		    padding: 5px 18px;
 		    color: #578de4;
-		    font-size: 17px;
+		    font-size: 16px;
     		font-weight: 600;
 		}
 		.reviewSecInfo{float:left;width:80%;}
@@ -308,10 +307,16 @@
 		/* swiper css */
 		.swiper {
 	      width: 100%;
-	      height: 150px;
+	      /* height: 150px; */
 	    }
 	    .swiper-slide {
-	      width: 140px;
+	      width: 460px;
+	    }
+	    .swiper-slide img {
+	      display: block;
+	      width: 100%;
+	      height: 100%;
+	      object-fit: cover;
 	    }
 	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
 	</style>
@@ -339,8 +344,8 @@
 		<div class="sec02">
 			<section class="productInfo">
 				<section style="margin-bottom:30px;">
-					<p class="productBrand" style="color:#578de4;font-size:17px;font-weight: 700;margin:0 0 0 1px;">${vo.brand}</p>
-					<p class="productName" style="font-size:25px;font-weight:600;color:#333;">${vo.productName}
+					<p class="productBrand" style="color:#578de4;font-size:20px;font-weight: 700;margin:0 0 0 1px;">${vo.brand}</p>
+					<p class="productName" style="font-size:30px;font-weight:600;color:#333;">${vo.productName}
 					<c:if test="${vo.repurchase == 'OK'}"><span class="repurchaseOKTxt">재구매하고싶어요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 					<c:if test="${vo.repurchase == 'NO'}"><span class="repurchaseNOTxt">${vo.repurchase}</span></c:if>
 					<c:if test="${vo.repurchase == 'Um'}"><span class="repurchaseUmTxt">${vo.repurchase}</span></c:if></p>
@@ -367,26 +372,60 @@
 				</section>
 			</section>
 		</div>
+		
 		<div class="sec03">
-			<section class="productInfo">
-				<c:set var="productPhotos" value="${fn:split(vo.productPhoto, '/')}"/>
-				<c:forEach var="productPhoto" items="${productPhotos}">
-					<img src="${ctp}/resources/data/productReview/${productPhoto}" style="width:120px;height:120px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
-				</c:forEach>
-			</section>
-			<section id="productPhotoDemo"></section>
+			<!-- <section class="productInfo"> -->
+				 <!-- Swiper -->
+				  <div class="swiper mySwiper">
+				    <div class="swiper-wrapper">
+				    <c:set var="productPhotos" value="${fn:split(vo.productPhoto, '/')}"/>
+					<c:forEach var="productPhoto" items="${productPhotos}">
+				      <div class="swiper-slide">
+				      	<img src="${ctp}/resources/data/productReview/${productPhoto}" class="clickImg" style="width:450px;height:450px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
+				      </div>
+				    </c:forEach>
+				    </div>
+				    <div class="swiper-scrollbar"></div>
+				  </div>
+			<!-- </section> -->
+			<!-- Swiper JS -->
+			 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+			 <!-- Initialize Swiper -->
+			 <script>
+			  var swiper = new Swiper(".mySwiper", {
+				  slidesPerView: "auto",
+			      /* spaceBetween: 40, */
+			      freeMode: true,
+			      scrollbar: {
+				          el: ".swiper-scrollbar",
+				          hide: true
+						}
+			   	});
+			 </script>
 		</div>
 		<hr style="clear:both;"/>
 		<section class="reviewHeart">
 			<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</span>
 			<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.commentCnt}</span>
 		</section>
+		<hr/>
+		
 	</div>
+	
+	
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
-		<section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="width:90px;cursor:pointer;"/></section>
-		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:90px;"/></a></section>
+		<%-- <section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section> --%>
+		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>
 	
-	
+	<!-- 
+	<script>
+		$('.clickImg').click(function(){
+			$(this).clone().appendTo('#productPhotoDemo');
+		});
+	</script>
+	 -->
+	 
+	<jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>
