@@ -16,5 +16,9 @@ public interface ProductReviewDAO {
 	ProductReviewVO getproductReviewContent(@Param("idx") int idx);
 
 	List<ReviewCommentVO> getPdReviewComment(@Param("idx") int idx);
+
+	ReviewCommentVO getPdReviewParentCommentCheck(@Param("partIdx") int partIdx);
+
+	int setPdReviewCommentInputOK(@Param("commentVO") ReviewCommentVO commentVO);
 	
 }

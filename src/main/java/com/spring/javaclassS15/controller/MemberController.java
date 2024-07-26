@@ -245,6 +245,24 @@ public class MemberController {
 		return "member/memberMypage";
 	}
 	
+	@RequestMapping(value = "/memberUpdate", method = RequestMethod.POST)
+	public String memberUpdatePost(MemberVO vo, MultipartFile updateFName, HttpSession session) {
+		String mid = (String) session.getAttribute("sMid");
+		
+		if(!updateFName.getOriginalFilename().equals("")) {
+			if(!vo.getPhoto().equals("noimage.png")) {		// 새로등록하려고 하는 사진이있는데 기본프로필이 아니면 기존 db에있는 사진을 지운 후 update
+				javaclassProvide.deleteFile(vo.getPhoto(), "member");
+			}
+			vo.setPhoto(memberService.fileUpload(updateFName, mid));
+		}
+		else if(updateFName.getOriginalFilename().equals("")) vo.setPhoto(vo.getPhoto());
+		
+		System.out.println("컨트롤러 vo : " + vo);
+		int res = memberService.setMemberUpdateOK(vo, mid);
+		if(res != 0) return "redirect:/message/memberUpdateOK";
+		else return "redirect:/message/memberUpdateNO";
+	}
+	
 	@RequestMapping(value = "/memberMypagePetInsert", method = RequestMethod.POST)
 	public String memberMypagePetInsertPost(MemberPetVO petVO, MultipartFile fName, HttpSession session) {
 		String mid = (String) session.getAttribute("sMid");

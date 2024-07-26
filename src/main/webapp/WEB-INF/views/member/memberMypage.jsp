@@ -180,20 +180,8 @@
 			width : 100%;
 		    text-align: center;
 		}
-		input#nickName {
-		    border: none;
-		    border-bottom: solid 1px #578de4;
-		    background-color: transparent;
-		    font-size: 24px;
-		    font-weight: 700;
-		    color: #444;
-        	width: 100%;
-       	    text-align: right;
-       	    padding: 0 5px 0;
-		}
-		/* input:focus {outline: 2px solid #d50000;} */ /* outline 테두리 속성 수정 */
-		input#nickName:focus {outline: none;} /* outline 테두리 없애기 */
-		input#address {
+		/* 
+		input#nickName, input#address {
 		    border: none;
 		    border-bottom: solid 1px #578de4;
 		    background-color: transparent;
@@ -204,8 +192,28 @@
        	    text-align: right;
        	    padding: 10px 5px 5px;
 		}
+		/* 
+		input#nickName:focus {outline: none;}  outline 테두리 없애기 
 		input#address:focus {outline: none;}
-		
+		 */
+		input#nickName, #address, #addressOg, #addressPick{
+		    border-radius: 50px;
+	        height: 40px;
+	        padding: 0 22px;
+		    font-size: 15px;
+		    color: #333;
+		    width: 100%;
+		    margin-bottom : 5px;
+		}
+		label{
+			padding-left: 5px;
+		    color: #666;
+		    font-size: 14px;
+		}
+		span#addressTxt:hover {
+		    cursor: pointer;
+		    color: #578de4;
+	    }
 		#myModal2 .modal-profile-box, #myModal3 .modal-profile-box{
 			width : 100%;
 			padding : 35px 50px;
@@ -255,7 +263,7 @@
 		}
 		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
 
-		.memberUpdateBtn, .petInsertOkBtn, .petUpdateOkBtn {
+		.memberUpdateBtn, .petInsertOkBtn, .petUpdateOkBtn, .addressSearchBtn{
 		    background-color: #578de4;
 		    border-color: #578de4;
 		    margin-top: 25px;
@@ -265,6 +273,26 @@
 		    border: none;
 		    color: #fff;
 		}
+		.memberUpdateBtn, .addressSearchBtn{margin: 0;}
+		.addressReSearchBtn, .nickCheckBtnNO{
+	    	background-color: #777;
+		    padding: 10px 0px;
+	    	font-size: 13px;
+	    	width : 100%;
+	    	border-radius: 50px;
+	    	border: none;
+	    	color: #fff;
+	    }
+	    .nickCheckBtnOK{
+	    	background-color: #578de4;
+	    	padding: 10px 0px;
+	    	font-size: 13px;
+	    	border-radius: 50px;
+	    	border: none;
+	    	color: #fff;
+	    	width: 33%;
+	    	margin-left: 2%;
+	    }
 		button.petDeleteBtn {
 		    width: 100%;
 		    border: none;
@@ -275,6 +303,8 @@
 		.memberUpdateBtn:hover {background-color: #3478db;}
 		.petInsertOkBtn:hover {background-color: #3478db;}
 		.petUpdateOkBtn:hover {background-color: #3478db;}
+		.addressSearchBtn:hover {background-color: #3478db;}
+		.addressReSearchBtn:hover {background-color: #666;}
 	</style>
 	
 	<script>
@@ -302,7 +332,147 @@
 	    	}
 	    }
 
-		// 선택된 사진 미리보기 update
+		// 선택된 사진 미리보기 memberUpdate
+	    function memberUpdateImgCheck(e) {
+	    	if(e.files && e.files[0]) {
+	    		let reader = new FileReader();
+	    		reader.onload = function(e) {
+	    			document.getElementById("memberPhotoUpdate").src = e.target.result;
+	    		}
+	    		reader.readAsDataURL(e.files[0]);
+	    	}
+	    }
+		
+		// 주소검색
+	    let addressSw = 0;
+	    function addressSearch() {
+			let searchString = document.getElementById("address").value;
+			if(searchString.trim()==""){
+				alert("검색어를 입력하세요");
+				document.getElementById("address").focus();
+				return false;
+			}
+			$('#spinnerIcon').show();
+			let search = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query="+searchString;
+			let searchSelector = "div.m8nnz";
+			
+			$.ajax({
+				url : "${ctp}/member/memberAddressSearchOK",
+				type : "post",
+				data : {search:search, searchSelector : searchSelector},
+				success : function (vos) {
+					if(vos != ""){
+						let str = '';
+						for(let i=0; i<vos.length; i++) {
+							str += vos[i] + "<br/>";
+						}
+						$("#demo").html('<span id="addressTxt"><span style="color:#578de4;">⦁ &nbsp;</span>'+str+'</span>');
+						$('#addressTxt').click(function() {
+							$('.address').val(str.substring(20, str.indexOf('</')));
+							$('#addressTxt').hide();
+							$('#addressSearchBtn').hide();
+							$('#addressReSearchBtn').show();
+							$('#address').hide();
+							//$('#addressPick').show();
+							addressSw = 1;
+						});
+						$('#addressReSearchBtn').click(function() {
+							$('#address').show();
+							$('#address').val('');
+							//$('#addressPick').hide();
+							$('#addressSearchBtn').show();
+							$('#addressReSearchBtn').hide();
+							addressSw = 0;
+						});
+					}
+					else $("#demo").html("<span style='color:#666;font-size:14px;'>※ 검색된 자료가 없습니다.<br/>(지역을 좀 더 자세히 적어주세요. (ex.서울특별시 강남구 압구정동...))</span>");
+					$('#spinnerIcon').hide();
+				},
+				error : function () {
+					alert("전송오류~!");
+				}
+			});
+		}
+	    
+	    let nickCheckSw = 1;
+	    function nickCheck() {
+			let nickName = memberUpdateForm.nickName.value.trim()
+			if (nickName == ""){
+				alert("닉네임을 입력해주세요");
+				memberUpdateForm.nickName.focus();
+				return false;
+			}
+			else {
+				nickCheckSw = 1;
+				
+				$.ajax({
+					url : "${ctp}/member/memberNickCheck",
+					type : "post",
+					data : {nickName : nickName},
+					success : function (res) {
+						if(res != "0") {
+							alert("이미 사용중인 닉네임입니다!\n다시 입력해주세요.");
+							memberUpdateForm.nickName.focus();
+							return false;
+						}
+						else {
+							alert("사용가능한 닉네임입니다.");
+							$('#nickCheckBtnOK').show();
+							$('#nickCheckBtnNO').hide();
+						}
+					},
+					error : function() {
+						alert("전송오류");
+					}
+				});
+			}
+		}
+	    
+	    $(function () {
+			$("#nickName").on("keydown", function() {
+				nickCheckSw = 0;
+				$('#nickCheckBtnOK').hide();
+				$('#nickCheckBtnNO').show();
+			});
+		});
+		
+		// 멤버 수정하기
+		function memberUpdate() {
+			let nickName = document.getElementById("nickName").value;
+			if(nickName.trim() == ""){
+				alert("활동명을 입력해주세요!");
+				memberUpdateForm.nickName.focus();
+				return false;
+			}
+			
+			let fName = document.getElementById("memberUpdateFile").value;
+			
+			if(fName.trim() != "") {
+				let ext = fName.substring(fName.lastIndexOf(".")+1).toLowerCase();
+				let maxSize = 1024 * 1024 * 5;
+				let fileSize = document.getElementById("memberUpdateFile").files[0].size;
+				
+				if(ext != 'jpg' && ext != 'gif' && ext != 'png') {
+					alert("그림파일만 업로드 가능합니다.");
+					return false;
+				}
+				else if(fileSize > maxSize) {
+					alert("업로드할 파일의 최대용량은 5MByte입니다.");
+					return false;
+				}
+				$("#myModal1 #photoH").val(fName);
+			}
+			
+			else if(nickCheckSw == 0){
+				alert("닉네임 중복체크 버튼을 눌러주세요.");
+				document.getElementById("nickCheckBtnNO").focus();
+				return false;
+			}
+			
+			memberUpdateForm.submit();
+		}
+
+		// 선택된 사진 미리보기 petupdate
 	    function updateImgCheck(e) {
 	    	if(e.files && e.files[0]) {
 	    		let reader = new FileReader();
@@ -365,26 +535,6 @@
 				else if(playWiths[i] == "동네모임") $("#myModal3 #playWithUpdate3").prop("checked", true);
 			}
 		}
-		
-		
-		
-		
-		
-		
-		// 부트스트랩 모달 close버튼 눌러서 닫을때 form내용 리셋 처리
-		
-		
-		
-		
-		//$('.close').on('hidden.bs.modal', function (e) {
-			// 모달 종료 시,
-		//	document.forms['petInsertForm'].reset(); // 폼의 전체 값 초기화 처리
-		//})
-		
-		//var myModalEl = document.getElementById('myModal2');
-		//myModalEl.addEventListener('hidden.bs.modal', function (event) {
-		//	$(this).find('form')[0].reset()
-		//})
 		
 		// 반려동물 정보 수정 update
 		function petUpdateOK() {
@@ -452,7 +602,7 @@
 				<section class="info">
 					<p style="font-size:26px;font-weight:700;color:#444;margin:0 0 5px">${vo.nickName}</p>
 					<p><img src="${ctp}/resources/images/memberMypage/place.png" style="width:20px;margin-right:5px;"/>${vo.address}</p>
-					<p>안녕하세용 &nbsp;&nbsp;|&nbsp;&nbsp; <a href="javascript:memberUpdate()" data-toggle="modal" data-target="#myModal1">수정하기</a></p> 
+					<p>안녕하세용 &nbsp;&nbsp;|&nbsp;&nbsp; <button data-toggle="modal" data-target="#myModal1">수정하기</button></p> 
 				</section>
 			</div>
 			<div class="point-box sec-boxStyle">
@@ -478,19 +628,45 @@
 					</div>
 					
 					<!-- Modal body -->
-					<div class="modal-profile-box sec-boxStyle">
-						<section class="modal-profile">
-							<img src="${ctp}/resources/data/member/${vo.photo}"/>
-						</section>
-						<section class="modal-info">
-							<p style="font-size:18px;font-weight:600;color:#888;margin:0"><span style="color:#578de4;">ID _</span> ${vo.mid}</p>
-							<p style="font-size:18px;font-weight:600;color:#888;margin:0 0 5px"><span style="color:#578de4;">E-mail _</span> ${vo.email}</p>
-							<p style="font-size:12px;color:#555;">* 아이디와 이메일은 서비스 이용과정 인증 절차 등으로 인해 직접 삭제하거나 변경이 불가능합니다.</p>
-							<input type="text" id="nickName" name="nickName" class="modal-nick" value="${vo.nickName}"/>
-							<input type="text" id="address" name="address" class="modal-address" value="${vo.address}"/>
-							<button type="button" class="memberUpdateBtn" onclick="memberUpdate()">수정하기</button>
-						</section>
-					</div>
+					<form name="memberUpdateForm" method="post" action="memberUpdate" enctype="multipart/form-data">
+						<div class="modal-profile-box sec-boxStyle">
+							<section class="modal-profile">
+								<img id="memberPhotoUpdate" src="${ctp}/resources/data/member/${vo.photo}"/>
+							</section>
+							<section class="file_cus">
+							    <label>
+							        <input type="file" name="updateFName" id="memberUpdateFile" onchange="memberUpdateImgCheck(this)">
+							        <span class="file_name" id="memberUpdateFile_name">사진을 선택해주세요.</span>
+							        <span class="file_btn">사진선택</span>
+							    </label>
+							</section>
+							<section class="modal-info">
+								<p style="font-size:18px;font-weight:600;color:#888;margin:0"><span style="color:#578de4;">ID _</span> ${vo.mid}</p>
+								<p style="font-size:18px;font-weight:600;color:#888;margin:0 0 5px"><span style="color:#578de4;">E-mail _</span> ${vo.email}</p>
+								<p style="font-size:12px;color:#555;">* 아이디와 이메일은 서비스 이용과정 인증 절차 등으로 인해 직접 삭제하거나 변경이 불가능합니다.</p>
+								<section>
+									<input type="text" id="nickName" name="nickName" class="modal-nick form-control" value="${vo.nickName}" style="width: 64%;margin-right: 1%;float: left;"/>
+									<input type="button" id="nickCheckBtnNO" value="중복체크" class="nickCheckBtnNO" onclick="nickCheck()" style="display:none;width: 33%;margin-left: 2%;"/>
+						    		<input type="button" id="nickCheckBtnOK" value="중복체크" class="nickCheckBtnOK" onclick="nickCheck()"/>
+					    		</section>
+								<input type="text" id="addressOg" name="addressOg" class="address form-control" value="${vo.address}" readonly/>
+								<div class="form-group">
+								    <div class="input-group mb-1">
+									    <label for="address"><span style="color:#578de4"><b>* </b></span>활동지역<span style="color:#888;font-size:12px;"> (ex.압구정, 사창동, 군위읍, 죽암리 ...)</span></label>
+									    <input type="text" class="form-control address" id="address" placeholder="동네를 입력해주세요. (ex.압구정, 사창동, 군위읍, 죽암리 ...)" name="address" required />
+									    <!-- <input type="text" class="form-control address" id="addressPick" name="addressPick" required readonly style="display:none;"/> -->
+										<div id="demo" style="padding: 10px 5px 15px;"><span id="spinnerIcon" class="spinner-border text-primary" style="display:none;width:20px;height:20px;border:2px solid currentcolor;border-right-color: transparent;"></span></div>
+									    <div class="input-group-prepend" style="width:100%">
+									    	<input type="button" value="주소검색" id="addressSearchBtn" class="addressSearchBtn" onclick="addressSearch()" />	
+									    	<input type="button" value="다시검색" id="addressReSearchBtn" class="addressReSearchBtn" style="display:none;" />	
+									    </div>
+									</div>
+							    </div>
+								<button type="button" class="memberUpdateBtn" onclick="memberUpdate()">수정하기</button>
+							</section>
+						</div>
+						<input type="hidden" name="photo" id="photoH" value="${vo.photo}"/>
+					</form>
 					<!-- 
 					Modal footer
 					<div class="modal-footer">
@@ -739,6 +915,9 @@
 		$(this).find('#updateFile_name').text('사진을 선택해주세요.');
 	});
 </script>
+<div style="padding:50px;clear:both;">
+	임시 마진 sec
+</div>
 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
 </body>
 </html>

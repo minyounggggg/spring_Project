@@ -13,7 +13,8 @@ create table reviewComment (
   	uploadDate	datetime default now(),			/* 댓글 등록일자 */
   	primary key(idx),
   	foreign key(partIdx) references productReview(idx),
-  	foreign key(nickName) references member(nickName)
+  	foreign key(nickName) references member(nickName) on update cascade on delete restrict
+  	/* cascade를 설정해줄땐 하나 설정했으면 다 설정해주기 */
 );
 
 desc reviewComment;
@@ -30,3 +31,7 @@ insert into reviewComment values (default, 1, 5, 'productReview', '7', 'cmy1234'
 insert into reviewComment values (default, 0, 1, 'cafeReview', 23, 'cmy1234', '민영9', 'noimage.png', '맛있나요', default);
 
 select * from reviewComment where part = 'productReview' and partIdx = 7 order by commentCnt;
+
+select * from reviewComment where part = 'productReview' and partIdx = 7 order by idx desc limit 1;
+
+

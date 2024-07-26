@@ -33,4 +33,6 @@ public interface MemberService {
 
 	public int setMemberPetDeleteOK(int idx);
 
+	public int setMemberUpdateOK(MemberVO vo, String mid);
+
 }

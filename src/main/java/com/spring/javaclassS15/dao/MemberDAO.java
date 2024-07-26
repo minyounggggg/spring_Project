@@ -29,4 +29,6 @@ public interface MemberDAO {
 
 	public int setMemberPetDeleteOK(@Param("idx") int idx);
 
+	public int setMemberUpdateOK(@Param("vo") MemberVO vo, @Param("mid") String mid);
+
 }

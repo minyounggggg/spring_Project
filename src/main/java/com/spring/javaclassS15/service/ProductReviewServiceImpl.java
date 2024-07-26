@@ -69,4 +69,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	public List<ReviewCommentVO> getPdReviewComment(int idx) {
 		return productReviewDAO.getPdReviewComment(idx);
 	}
+
+	@Override
+	public ReviewCommentVO getPdReviewParentCommentCheck(int partIdx) {
+		return productReviewDAO.getPdReviewParentCommentCheck(partIdx);
+	}
+
+	@Override
+	public int setPdReviewCommentInputOK(ReviewCommentVO commentVO) {
+		return productReviewDAO.setPdReviewCommentInputOK(commentVO);
+	}
 }

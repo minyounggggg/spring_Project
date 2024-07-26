@@ -40,16 +40,6 @@
 		}
 		.sec02, .sec03{float:left; width:50%;}
 		
-		.reviewSec{
-			background-color : #f9f9f9;
-			border-radius : 30px;
-			box-shadow : 5px 5px 5px rgba(0, 0, 50, 0.1);
-			padding : 30px 45px;
-			width : 630px;
-			display: inline-block;
-			float : left;
-			margin : 10px;
-		}
 		.reviewNickName{
 			font-size: 18px;
 		    margin-left: 15px;
@@ -67,6 +57,7 @@
 		    color: #EB403D;
 		    font-size: 14px;
     		font-weight: 600;
+    		background: transparent;
 		}
 		.petCategoryVal, .productCategoryVal{
 		    margin-left: 2px;
@@ -77,7 +68,7 @@
 		    font-size: 14px;
     		font-weight: 600;
 		}
-		.repurchaseOKTxt{
+		.repurchaseOKTxt, .repurchaseNOTxt, .repurchaseUmTxt{
 			margin-left: 10px;
 		    border-radius: 50px;
 		    border: solid 1px #578de4;
@@ -106,26 +97,25 @@
 		.badtxt{background-color: #99999933; color: #999999;}
 		
 		/* 모달 css */
-
-    	#insertModal .modal-content{
+    	#updateModal .modal-content{
     		background-color: transparent;
     		border: none;
     	}
     	
-    	#insertModal .modal-dialog {
+    	#updateModal .modal-dialog {
 	        max-width: 710px;
 	    }
 	     
-	    #myModal1 .modal-header, #insertModal .modal-header, #myModal3 .modal-header{
+	    #myModal1 .modal-header, #updateModal .modal-header, #myModal3 .modal-header{
 	    	border: none;
 	    	margin-bottom: 10px;
 	    }
-	    #myModal1 button.close, #insertModal button.close, #myModal3 button.close{
+	    #myModal1 button.close, #updateModal button.close, #myModal3 button.close{
 	    	background-color: #fff;
 	    	border-radius: 100px;
 	    }
 	    
-		#insertModal .modal-profile-box{
+		#updateModal .modal-profile-box{
 			width : 710px;
 			padding : 35px 50px;
 			/* height : 180px; */
@@ -224,6 +214,45 @@
 			color: #578de4;
 		}
 		
+		/* 사진파일업로드 css */
+		.file_cus label {display: block; width: 100%; margin: 15px 0 15px; font-size: 0; cursor: pointer;}
+		input[type="file"] {overflow: hidden;position: absolute;width: 1px;height: 1px;margin: -1px;font-size: initial;clip: rect(0 0 0 0);}
+		.file_name {
+			overflow: hidden; display: inline-block; border-radius: 50px !important;
+			vertical-align: middle; width: calc(100% - 108px);
+			height: 40px; padding:0 12px; border: 1px solid #ddd;
+			font-size: 14px; line-height: 38px;
+			color: #111; white-space: nowrap; text-overflow: ellipsis;
+		}
+		.file_btn {
+			display: inline-block; vertical-align: middle;
+			width: 100px; height: 40px; margin-left: 8px; border-radius: 50px;
+			background: #578de4;font-size: 14px;
+			font-weight: 500; line-height: 40px; color: #fff; text-align: center;
+		}
+		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
+
+		.memberUpdateBtn, .productReviewUpdateBtn, .petUpdateOkBtn {
+		    background-color: #578de4;
+		    border-color: #578de4;
+		    margin-top: 25px;
+		    padding: 10px 0 10px;
+		    width : 100%;
+		    border-radius: 50px;
+		    border: none;
+		    color: #fff;
+		}
+		button.petDeleteBtn {
+		    width: 100%;
+		    border: none;
+		    background: transparent;
+		    margin-top: 10px;
+		    color: #999;
+		}
+		.memberUpdateBtn:hover {background-color: #3478db;}
+		.productReviewUpdateBtn:hover {background-color: #3478db;}
+		.petUpdateOkBtn:hover {background-color: #3478db;}
+		
 		/* 하트 스타일 설정하기 */
     	#HeartInsert fieldset{
     		direction : rtl;
@@ -265,45 +294,28 @@
 		    margin: 5px 5px 0 0;
 		}
 		
-		/* 사진파일업로드 css */
-		.file_cus label {display: block; width: 100%; margin: 15px 0 15px; font-size: 0; cursor: pointer;}
-		input[type="file"] {overflow: hidden;position: absolute;width: 1px;height: 1px;margin: -1px;font-size: initial;clip: rect(0 0 0 0);}
-		.file_name {
-			overflow: hidden; display: inline-block; border-radius: 50px !important;
-			vertical-align: middle; width: calc(100% - 108px);
-			height: 40px; padding:0 12px; border: 1px solid #ddd;
-			font-size: 14px; line-height: 38px;
-			color: #111; white-space: nowrap; text-overflow: ellipsis;
-		}
-		.file_btn {
-			display: inline-block; vertical-align: middle;
-			width: 100px; height: 40px; margin-left: 8px; border-radius: 50px;
-			background: #578de4;font-size: 14px;
-			font-weight: 500; line-height: 40px; color: #fff; text-align: center;
-		}
-		input[type="file"]:focus-visible ~ .file_btn, .file_cus:hover .file_btn {background: #3478db;}
-
-		button.petDeleteBtn {
-		    width: 100%;
-		    border: none;
-		    background: transparent;
-		    margin-top: 10px;
-		    color: #999;
-		}
-		
 		/* swiper css */
-		.swiper {
+		#productPhotoViewswiper .swiper {
 	      width: 100%;
 	    }
-	    .swiper-slide {
+	    #productPhotoViewswiper .swiper-slide {
 	      width: 460px;
 	    }
-	    .swiper-slide img {
+	    #productPhotoViewswiper .swiper-slide img {
 	      display: block;
 	      width: 100%;
 	      height: 100%;
 	      object-fit: cover;
 	    }
+	    
+	    #updateswiper .swiper {
+	      width: 100%;
+	      height: 150px;
+	    }
+	    #updateswiper .swiper-slide {
+	      width: 140px;
+	    }
+	    
 	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
 	    
 	    /* 댓글 css */
@@ -329,7 +341,84 @@
 	</style>
 	<script>
 		
+		// 파일선택시 파일명 출력
+		$(window).on('load', function() {
+		    fileCus();
+		})
+	
+		function fileCus() {
+		    $(".file_cus input[type=file]").on("change", function() {
+		        const fileName = $(this).val().split("\\").pop();
+		        $(this).siblings(".file_name").text(fileName || "사진을 선택해주세요!!");
+		    });
+		}
 		
+		let imgFiles = [];
+		
+		$(document).ready(function() {
+			$("#file").on("change", function(e) {
+				$("#updateswiper .swiper-wrapper").empty();
+				
+				let files = e.target.files;
+				let filesArr = Array.prototype.slice.call(files);
+				
+				let idx = 0;
+				filesArr.forEach(function(f) {
+					if(!f.type.match("image.*")){
+						alert("이미지파일만 업로드하실 수 있습니다.");
+						return false;
+					}
+					imgFiles.push(f);
+				
+					let reader = new FileReader();
+					reader.onload = function(e) {
+						let str = "<div class='swiper-slide' id='imgId"+idx+"'><a href='javascript:void(0);' onclick='deleteImage("+idx+")' ><img src='"+e.target.result+"' data-file='"+f.name+"' title='그림을 클릭하시면 제거됩니다.("+idx+")'/></a></div>";
+						$("#updateswiper .swiper-wrapper").append(str);
+						idx++;
+					}
+					reader.readAsDataURL(f);	// readAsDataURL는 예약어
+				});
+			});
+		});
+		
+		function deleteImage(idx) {
+			imgFiles.slice(idx,1);
+			
+			let imgId = "#imgId" + idx;
+			$(imgId).remove();
+		}
+		
+		// 댓글 입력 처리
+		function commentInsert() {
+			alert("test!!!!!!!!!");
+			let content = $("#content").val();
+			if(content.trim() == ''){
+				alert("댓글을 입력해주세요.");
+				return false;
+			}
+			
+			let query = {
+				part : 'productReview',
+				partIdx : ${vo.idx},
+				mid : "${sMid}",
+				nickName : "${sNickName}",
+				photo : "${sPhoto}",
+				content : content
+			}
+			
+			$.ajax({
+				url : "${ctp}/review/productReviewCommentInsert",
+				type : "post",
+				data : query,
+				success : function(res) {
+					if(res != "0") location.reload();
+					else alert("댓글 입력 오류! 다시 시도해주세요.");
+				},
+				error : function() {
+					alert("전송오류");
+				}
+			});
+		}
 		
 	</script>
 </head>
@@ -338,10 +427,15 @@
 	<div class="inner">
 		<div class="sec01">
 			<section class="reviewSecInfo">
-				<p><img src="${ctp}/resources/data/member/${vo.photo}" style="width:60px;"/>
+				<p><img src="${ctp}/resources/data/member/${vo.photo}" style="width:60px;height:60px;object-fit:cover;border-radius: 50px;"/>
 				<span class="reviewNickName">${vo.nickName} · </span>
 				<span class="reviewUploadDate">${(vo.uploadDate).substring(0,16)}</span>
-				<span class="friend">친구맺기</span></p>
+				<c:if test="${sMid != vo.mid}"><button class="friend">친구맺기</button></c:if>
+				<c:if test="${sMid == vo.mid}">
+					<button class="friend" data-toggle="modal" data-target="#updateModal">리뷰수정</button>
+					<button class="friend">리뷰삭제</button>
+				</c:if>
+				</p>
 			</section>
 			<section class="reviewSecMore">
 				<span class="petCategoryVal">${vo.petCategory}</span>
@@ -355,8 +449,8 @@
 					<p class="productBrand" style="color:#578de4;font-size:20px;font-weight: 700;margin:0 0 0 1px;">${vo.brand}</p>
 					<p class="productName" style="font-size:30px;font-weight:600;color:#333;">${vo.productName}
 					<c:if test="${vo.repurchase == 'OK'}"><span class="repurchaseOKTxt">재구매하고싶어요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-					<c:if test="${vo.repurchase == 'NO'}"><span class="repurchaseNOTxt">${vo.repurchase}</span></c:if>
-					<c:if test="${vo.repurchase == 'Um'}"><span class="repurchaseUmTxt">${vo.repurchase}</span></c:if></p>
+					<c:if test="${vo.repurchase == 'NO'}"><span class="repurchaseNOTxt">재구매는 안할꺼같아요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+					<c:if test="${vo.repurchase == 'Um'}"><span class="repurchaseUmTxt">재구매는 고민중이에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 				</section>
 				<section style="margin-bottom:10px;">
 					<span style="color: #636363; font-size: 14px; font-weight: 500; margin:0 5px;">반려인 &nbsp;&nbsp;</span>
@@ -384,7 +478,7 @@
 		<div class="sec03">
 		<!-- <section class="productInfo"> -->
 		<!-- Swiper -->
-		<div class="swiper mySwiper">
+		<div class="swiper mySwiper" id="productPhotoViewswiper">
 			<div class="swiper-wrapper">
 				<c:set var="productPhotos" value="${fn:split(vo.productPhoto, '/')}"/>
 				<c:forEach var="productPhoto" items="${productPhotos}">
@@ -395,9 +489,10 @@
 			</div>
 		  <div class="swiper-scrollbar"></div>
 		</div>
-		<!-- Swiper JS -->
+		<!-- 
+		Swiper JS
 		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-		<!-- Initialize Swiper -->
+		Initialize Swiper
 		<script>
 		var swiper = new Swiper(".mySwiper", {
 			 	slidesPerView: "auto",
@@ -409,6 +504,7 @@
 				}
 			});
 		</script>
+		 -->
 		<!-- </section> -->
 		</div>
 		<hr style="clear:both;"/>
@@ -508,6 +604,174 @@
 			</c:forEach>
 		</div>
 	</div><!-- inner 끝 -->
+	
+	<!-- 제품후기 update 모달-->
+	<div class="modal fade" id="updateModal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<form name="productReviewUpdateForm" method="post" action="productReviewUpdate" enctype="multipart/form-data">
+					<div class="modal-profile-box sec-boxStyle">
+					
+						<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물</p>
+						<div class="form-group">
+							<div class="check-box" id="check-box">
+								<input type="checkbox" class="check-box-input" value="강아지" id="petCategory1" name="petCategory" <c:if test="${vo.petCategory == '강아지'}">checked</c:if> />
+								<label for="petCategory1">강아지</label>
+								<input type="checkbox" class="check-box-input" value="고양이" id="petCategory2" name="petCategory" <c:if test="${vo.petCategory == '고양이'}">checked</c:if> />
+								<label for="petCategory2">고양이</label>
+								<input type="checkbox" class="check-box-input" value="기타동뮬" id="petCategory3" name="petCategory" <c:if test="${vo.petCategory == '기타동물'}">checked</c:if> />
+								<label for="petCategory3">기타동뮬</label>
+							</div>
+						</div>
+					
+						<p style="font-size:14px;color:#444;margin:10px 0 0;">* 제품종류</p>
+						<div class="form-group">
+							<div class="radio-box" id="radio-box">
+								<input type="radio" class="check-box-input" value="사료" id="productCategory1" name="productCategory" <c:if test="${vo.productCategory == '사료'}">checked</c:if> />
+								<label for="productCategory1">사료</label>
+								<input type="radio" class="check-box-input" value="간식" id="productCategory2" name="productCategory" <c:if test="${vo.productCategory == '간식'}">checked</c:if> />
+								<label for="productCategory2">간식</label>
+								<input type="radio" class="check-box-input" value="장난감" id="productCategory3" name="productCategory" <c:if test="${vo.productCategory == '장난감'}">checked</c:if> />
+								<label for="productCategory3">장난감</label>
+								<input type="radio" class="check-box-input" value="영양제" id="productCategory4" name="productCategory" <c:if test="${vo.productCategory == '영양제'}">checked</c:if> />
+								<label for="productCategory4">영양제</label>
+								<input type="radio" class="check-box-input" value="용품" id="productCategory5" name="productCategory" <c:if test="${vo.productCategory == '용품'}">checked</c:if> />
+								<label for="productCategory5">용품</label>
+								<input type="radio" class="check-box-input" value="기타" id="productCategory6" name="productCategory" <c:if test="${vo.productCategory == '기타'}">checked</c:if> >
+								<label for="productCategory6">기타</label>
+							</div>
+						</div>
+						<section style="width:50%;float:left;padding-right:5px;">
+							<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 제품 브랜드</p>
+							<input type="text" id="brand" name="brand" value="${vo.brand}" class="modal-petName form-control" required />
+						</section>
+						<section style="width:50%;float:left;padding-left:5px;">
+							<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 제품명</p>
+							<input type="text" id="productName" name="productName" value="${vo.productName}" class="modal-petName form-control" required />
+						</section>
+						
+						<section id="HeartInsert" style="width:100%;clear:both;">
+							<fieldset style="border:0px;">
+								<section style="width:50%;float:left;padding-right:5px;">
+									<span class="HeartInsertBar">
+										<input type="radio" name="memberHeart" value="5" id="memberHeart1" <c:if test="${vo.memberHeart == 5}">checked</c:if> /><label for="memberHeart1">❤︎</label>
+										<input type="radio" name="memberHeart" value="4" id="memberHeart2" <c:if test="${vo.memberHeart == 4}">checked</c:if> /><label for="memberHeart2">❤︎</label>
+										<input type="radio" name="memberHeart" value="3" id="memberHeart3" <c:if test="${vo.memberHeart == 3}">checked</c:if> /><label for="memberHeart3">❤︎</label>
+										<input type="radio" name="memberHeart" value="2" id="memberHeart4" <c:if test="${vo.memberHeart == 2}">checked</c:if> /><label for="memberHeart4">❤︎</label>
+										<input type="radio" name="memberHeart" value="1" id="memberHeart5" <c:if test="${vo.memberHeart == 1}">checked</c:if> /><label for="memberHeart5">❤︎</label>
+									</span>
+									<span style="font-size:14px;color:#444;margin:10px 0 0;"> 반려인 만족도 <span style="color:#578de4;">*</span></span>
+								</section>
+								<section style="width:50%;float:left;padding-left:5px;">
+									<span class="HeartInsertBar">
+										<input type="radio" name="petHeart" value="5" id="petHeart1" <c:if test="${vo.petHeart == 5}">checked</c:if> /><label for="petHeart1">❤︎</label>
+										<input type="radio" name="petHeart" value="4" id="petHeart2" <c:if test="${vo.petHeart == 4}">checked</c:if> /><label for="petHeart2">❤︎</label>
+										<input type="radio" name="petHeart" value="3" id="petHeart3" <c:if test="${vo.petHeart == 3}">checked</c:if> /><label for="petHeart3">❤︎</label>
+										<input type="radio" name="petHeart" value="2" id="petHeart4" <c:if test="${vo.petHeart == 2}">checked</c:if> /><label for="petHeart4">❤︎</label>
+										<input type="radio" name="petHeart" value="1" id="petHeart5" <c:if test="${vo.petHeart == 1}">checked</c:if> /><label for="petHeart5">❤︎</label>
+									</span>
+									<span style="font-size:14px;color:#444;margin:10px 0 0;">반려동물 선호도 <span style="color:#578de4;">*</span></span>
+								</section>
+							</fieldset>
+						</section>
+						<section style="width:50%;float:left;padding-right:5px;">
+							<p style="font-size:14px;color:#444;margin:5px 0 0;"><span style="color:#578de4;">*</span> 추천하고싶은 부분</p>
+							<textarea rows="3" name="goodPoint" id="goodPoint" class="modal-goodPoint form-control">${vo.goodPoint}</textarea>
+						</section>
+						<section style="width:50%;float:left;padding-left:5px;margin-bottom:15px;">
+							<p style="font-size:14px;color:#444;margin:5px 0 0;"><span style="color:#578de4;">*</span> 아쉬웠던 부분</p>
+							<textarea rows="3" name="badPoint" id="badPoint" class="modal-badPoint form-control">${vo.badPoint}</textarea>
+						</section>
+						<section class="file_cus" style="clear:both;margin-top:10px;">
+						    <label>
+						        <input type="file" name="fName" id="file" value="${vo.productPhoto}" multiple accept=".jpg, .gif, .png" />
+						        <span class="file_name" id="file_name"><span style="color:#578de4;">*</span> 제품 사진을 선택해주세요.</span>
+						        <span class="file_btn">사진선택</span>
+						    </label>
+						</section>
+						<%-- 
+						<section class="modal-profile">
+							<img id="photoDemo" src="${ctp}/resources/data/productReview/productNoimage.png"/>
+						</section>
+						 --%>
+						<!-- <section class="modal-profile"> -->
+						<section class="swiper-modal-box">
+							 <!-- Swiper -->
+							  <div class="swiper mySwiper" id="updateswiper">
+							    <div class="swiper-wrapper">
+							    <c:forEach var="pdPhoto" items="${vo.productPhoto.split('/')}" varStatus="st">
+							      <div class="swiper-slide">
+							      	<img id="photoDemo" src="${ctp}/resources/data/productReview/${pdPhoto}"/>
+							      </div>
+							      </c:forEach>
+							    </div>
+							    <div class="swiper-scrollbar"></div>
+							  </div>
+							
+							  <!-- Swiper JS -->
+							  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+							
+							  <!-- Initialize Swiper -->
+							  <script>
+								  var swiper = new Swiper(".mySwiper", {
+									  slidesPerView: "auto",
+								      /* spaceBetween: 40, */
+								      freeMode: true,
+								      scrollbar: {
+									          el: ".swiper-scrollbar",
+									          hide: true
+											}
+							    });
+							  </script>
+						</section>
+						
+						<p style="font-size:14px;color:#444;margin:10px 0 0;"><span style="color:#578de4;">*</span> 재구매의사</p>
+						<div class="form-group">
+							<div class="radio-box" id="repurchaseRadio-box">
+								<input type="radio" class="check-box-input" value="OK" id="repurchase1" name="repurchase" <c:if test="${vo.repurchase == 'OK'}">checked</c:if> />
+								<label for="repurchase1">네</label>
+								<input type="radio" class="check-box-input" value="NO" id="repurchase2" name="repurchase" <c:if test="${vo.repurchase == 'NO'}">checked</c:if> />
+								<label for="repurchase2">아니요</label>
+								<input type="radio" class="check-box-input" value="Um" id="repurchase3" name="repurchase" <c:if test="${vo.repurchase == 'Um'}">checked</c:if> />
+								<label for="repurchase3">고민중입니다</label>
+							</div>
+						</div>
+						
+						<section class="modal-info">
+							<button type="button" class="productReviewUpdateBtn" onclick="productReviewUpdate()">수정하기</button>
+						</section>
+						
+						<input type="hidden" name="mid" value="${sMid}"/>
+						<input type="hidden" name="nickName" value="${sNickName}"/>
+						<input type="hidden" name="photo" value="${sPhoto}"/>
+						<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}"/>
+						<input type="hidden" name="pdPhoto" id="pdPhoto"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		$('#insertModal').on('hidden.bs.modal', function (e) {
+			$(this).find('form')[0].reset();
+			$(this).find('#file_name').text('제품 사진을 선택해주세요.');
+			$(this).find('.swiper-wrapper').html('<div class="swiper-slide"><img id="photoDemo" src="${ctp}/resources/data/productReview/productNoimage.png"/></div>');
+			$(this).find('#file').empty();
+			console.log(file.value);
+		});
+		/* 
+		$(document).ready(function() {
+          $('#insertModal').on('hidden.bs.modal', function() {
+        	  $('input#file').val('');
+            });
+        });
+		  */
+	</script>
 	
 	<!-- topBtn nav -->
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
