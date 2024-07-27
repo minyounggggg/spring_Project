@@ -93,13 +93,6 @@
 		.sec02 .badtxt{background-color: #99999933; color: #999999;}
 		
 		/* 모달 css */
-		/* 
-		@media (min-width: 576px) {
-		    .modal-dialog {
-		        max-width: 710px;
-		    }
-		}
-		 */
     	#insertModal .modal-content{
     		background-color: transparent;
     		border: none;
@@ -306,6 +299,18 @@
 	      width: 140px;
 	    }
 	    .swiper-scrollbar-drag{background: var(--swiper-scrollbar-drag-bg-color, rgba(87, 141, 228, 1));}
+	    
+	    .productImgSec {
+		    width:270px;
+		    height:140px;
+		    overflow:hidden;
+		    margin:0 auto;
+		}
+		.productImg {
+		    width:100%;
+		    height:100%;
+		    object-fit:cover;
+		}
 	</style>
 	<script>
 		// 파일선택시 파일명 출력
@@ -472,7 +477,7 @@
 			<c:forEach var="reviewVo" items="${reviewVos}" varStatus="st">
 				<div class="reviewSec" onclick="location.href='productReviewContent?idx=${reviewVo.idx}';">
 					<section class="reviewSecInfo">
-						<p><img src="${ctp}/resources/data/member/${reviewVo.photo}" style="width:60px;"/>
+						<p><img src="${ctp}/resources/data/member/${reviewVo.photo}" style="width:60px;height:60px;object-fit:cover;border-radius: 50px;"/>
 						<span class="reviewNickName">${reviewVo.nickName} · </span>
 						<span class="reviewUploadDate">${(reviewVo.uploadDate).substring(11,16)}</span>
 						<span class="petCategoryVal">${reviewVo.petCategory}</span>
@@ -508,10 +513,14 @@
 					<section class="productInfo">
 						<p class="productBrand" style="color:#578de4;font-size:17px;font-weight: 700;margin:0 0 0 1px;">${reviewVo.brand}</p>
 						<p class="productName" style="font-size:25px;font-weight:600;color:#333;">${reviewVo.productName}</p>
-						<c:set var="productPhotos" value="${fn:split(reviewVo.productPhoto, '/')}"/>
-						<c:forEach var="productPhoto" items="${productPhotos}">
-							<img src="${ctp}/resources/data/productReview/${productPhoto}" style="width:120px;height:120px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
-						</c:forEach>
+						<section class="productImgSec">
+							<c:set var="productPhotos" value="${fn:split(reviewVo.productPhoto, '/')}"/>
+							<span class="productImg">
+								<c:forEach var="productPhoto" items="${productPhotos}">
+									<img src="${ctp}/resources/data/productReview/${productPhoto}" style="width:120px;height:120px;border-radius:15px;margin: 0 5px 20px 0;object-fit: cover;"/>
+								</c:forEach>
+							</span>
+						</section>
 					</section>
 					
 					<hr style="clear:both;"/>
@@ -561,7 +570,7 @@
 						<p style="font-size:14px;color:#444;margin:10px 0 0;">* 제품종류</p>
 						<div class="form-group">
 							<div class="radio-box" id="radio-box">
-								<input type="radio" class="check-box-input" value="사료" id="productCategory1" name="productCategory"/>
+								<input type="radio" class="check-box-input" value="사료" id="productCategory1" name="productCategory" checked/>
 								<label for="productCategory1">사료</label>
 								<input type="radio" class="check-box-input" value="간식" id="productCategory2" name="productCategory"/>
 								<label for="productCategory2">간식</label>
@@ -571,8 +580,8 @@
 								<label for="productCategory4">영양제</label>
 								<input type="radio" class="check-box-input" value="용품" id="productCategory5" name="productCategory"/>
 								<label for="productCategory5">용품</label>
-								<input type="radio" class="check-box-input" value="장난감" id="productCategory6" name="productCategory"/>
-								<label for="productCategory6">장난감</label>
+								<input type="radio" class="check-box-input" value="기타" id="productCategory6" name="productCategory"/>
+								<label for="productCategory6">기타</label>
 							</div>
 						</div>
 						<section style="width:50%;float:left;padding-right:5px;">
@@ -592,7 +601,7 @@
 										<input type="radio" name="memberHeart" value="4" id="memberHeart2"/><label for="memberHeart2">❤︎</label>
 										<input type="radio" name="memberHeart" value="3" id="memberHeart3"/><label for="memberHeart3">❤︎</label>
 										<input type="radio" name="memberHeart" value="2" id="memberHeart4"/><label for="memberHeart4">❤︎</label>
-										<input type="radio" name="memberHeart" value="1" id="memberHeart5"/><label for="memberHeart5">❤︎</label>
+										<input type="radio" name="memberHeart" value="1" id="memberHeart5" checked/><label for="memberHeart5">❤︎</label>
 									</span>
 									<span style="font-size:14px;color:#444;margin:10px 0 0;"> 반려인 만족도 <span style="color:#578de4;">*</span></span>
 								</section>
@@ -602,7 +611,7 @@
 										<input type="radio" name="petHeart" value="4" id="petHeart2"/><label for="petHeart2">❤︎</label>
 										<input type="radio" name="petHeart" value="3" id="petHeart3"/><label for="petHeart3">❤︎</label>
 										<input type="radio" name="petHeart" value="2" id="petHeart4"/><label for="petHeart4">❤︎</label>
-										<input type="radio" name="petHeart" value="1" id="petHeart5"/><label for="petHeart5">❤︎</label>
+										<input type="radio" name="petHeart" value="1" id="petHeart5" checked/><label for="petHeart5">❤︎</label>
 									</span>
 									<span style="font-size:14px;color:#444;margin:10px 0 0;">반려동물 선호도 <span style="color:#578de4;">*</span></span>
 								</section>

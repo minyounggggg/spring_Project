@@ -98,5 +98,11 @@ public class MemberServiceImpl implements MemberService {
 	public int setMemberPetDeleteOK(int idx) {
 		return memberDAO.setMemberPetDeleteOK(idx);
 	}
+
+	@Override
+	public int setMemberUpdateOK(MemberVO vo, String mid) {
+		System.out.println("vo : " + vo);
+		return memberDAO.setMemberUpdateOK(vo, mid);
+	}
 	
 }

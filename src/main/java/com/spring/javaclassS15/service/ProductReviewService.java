@@ -17,4 +17,8 @@ public interface ProductReviewService {
 
 	List<ReviewCommentVO> getPdReviewComment(int idx);
 
+	ReviewCommentVO getPdReviewParentCommentCheck(int partIdx);
+
+	int setPdReviewCommentInputOK(ReviewCommentVO commentVO);
+
 }

@@ -13,12 +13,20 @@
 	<select id="getPdReviewComment" resultType="com.spring.javaclassS15.vo.ReviewCommentVO">
 		select * from reviewComment where part = 'productReview' and partIdx = #{idx} order by commentCnt;
 	</select>
+
+	<select id="getPdReviewParentCommentCheck" resultType="com.spring.javaclassS15.vo.ReviewCommentVO">
+		select * from reviewComment where part = 'productReview' and partIdx = #{partIdx} order by idx desc limit 1;
+	</select>
 	
 	
 	
 	
 	<insert id="setproductReviewInsert">
 		insert into productReview values(default,#{vo.mid},#{vo.nickName},#{vo.photo},#{vo.petCategory},#{vo.productCategory},#{vo.brand},#{vo.productName},#{vo.memberHeart},#{vo.petHeart},#{vo.goodPoint},#{vo.badPoint},#{vo.productPhoto},#{vo.repurchase},default,default,default,default,#{vo.hostIp});
+	</insert>
+	
+	<insert id="setPdReviewCommentInputOK">
+		insert into reviewComment values(default,#{commentVO.commentLev},#{commentVO.commentCnt},#{commentVO.part},#{commentVO.partIdx},#{commentVO.mid},#{commentVO.nickName},#{commentVO.photo},#{commentVO.content},default);
 	</insert>
 
 </mapper>

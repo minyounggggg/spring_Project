@@ -39,6 +39,10 @@
 	
 	
 	
+	<update id="setMemberUpdateOK">
+		update member set nickName=#{vo.nickName}, address=#{vo.address}, photo=#{vo.photo} where mid=#{mid};
+	</update>
+	
 	<update id="setMemberMypagePetUpdateOK">
 		update memberPet set petName=#{petVO.petName}, petGender=#{petVO.petGender}, petBirthday=#{petVO.petBirthday}, petPhoto=#{petVO.petPhoto}, petInfo=#{petVO.petInfo}, playWith=#{petVO.playWith} where idx=#{idx};
 	</update>

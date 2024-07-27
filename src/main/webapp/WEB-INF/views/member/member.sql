@@ -14,7 +14,7 @@ create table member (
 	startDate 	datetime default now(),			/* 최초 가입일 */
 	lastDate  	datetime default now(),			/* 마지막 접속일 */
 	level  		int default 1,
-	primary key (idx,photo),
+	primary key (idx),
 	UNIQUE INDEX mid (mid),
 	UNIQUE INDEX nickName (nickName)
 );
