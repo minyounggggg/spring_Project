@@ -9,16 +9,16 @@ import com.spring.javaclassS15.vo.ReviewCommentVO;
 
 public interface ProductReviewDAO {
 
-	List<ProductReviewVO> getProductReview();
+	public List<ProductReviewVO> getProductReview();
 
-	int setproductReviewInsert(@Param("vo") ProductReviewVO vo);
+	public int setproductReviewInsert(@Param("vo") ProductReviewVO vo);
 
-	ProductReviewVO getproductReviewContent(@Param("idx") int idx);
+	public ProductReviewVO getproductReviewContent(@Param("idx") int idx);
 
-	List<ReviewCommentVO> getPdReviewComment(@Param("idx") int idx);
+	public List<ReviewCommentVO> getPdReviewComment(@Param("idx") int idx);
 
-	ReviewCommentVO getPdReviewParentCommentCheck(@Param("partIdx") int partIdx);
+	public ReviewCommentVO getPdReviewParentCommentCheck(@Param("partIdx") int partIdx);
 
-	int setPdReviewCommentInputOK(@Param("commentVO") ReviewCommentVO commentVO);
+	public int setPdReviewCommentInputOK(@Param("commentVO") ReviewCommentVO commentVO);
 	
 }

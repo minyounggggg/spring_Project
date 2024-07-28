@@ -390,10 +390,10 @@
 		
 		// 댓글 입력 처리
 		function commentInsert() {
-			alert("test!!!!!!!!!");
 			let content = $("#content").val();
 			if(content.trim() == ''){
 				alert("댓글을 입력해주세요.");
+				$("#content").focus();
 				return false;
 			}
 			
@@ -539,9 +539,9 @@
 					</section>
 					 --%>
 					<c:if test="${pdCommentVo.commentLev == 0}">
-						<section>
+						<section style="padding:20px 0 0">
 							<section>
-								<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
+								<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width:60px;height:60px;object-fit:cover;border-radius:50px;margin-right: 15px;"/>
 								<span>${pdCommentVo.nickName}</span> · <span>${fn:substring(pdCommentVo.uploadDate, 0, 16)}</span>
 								<c:if test="${sMid == pdCommentVo.mid || sLevel == 0}">
 									[<a href="javascript:replyDelete(${pdCommentVo.idx})" title="댓글삭제">삭제</a>]
@@ -551,18 +551,21 @@
 								<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
 								<span>${pdCommentVo.content}</span>
 							</section>
+							<!-- 
 							<details style="padding: 0 70px 20px;">
 							    <summary>Click me</summary>
 							    <div>
 							    	하히호헤호
 							    </div>	
 							</details>
-							<hr/>
+							 -->
+							 <input type="button" id="commentReBtn" value="답글" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/>
+							<hr style="margin:20px 0 0 0"/>
 						</section>
 					</c:if>
 					
 					<c:if test="${pdCommentVo.commentLev >= 1}">
-						<section style="margin: 0 0 0 40px;background-color: #f9f9f9;padding: 20px 20px 0 40px;">
+						<section style="background-color: #f9f9f9;padding: 20px 20px 0 40px;">
 							<section>
 								<%-- <c:forEach var="i" begin="1" end="${pdCommentVo.commentLev}">&nbsp;&nbsp;</c:forEach> └  --%>
 								<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
@@ -571,37 +574,16 @@
 									[<a href="javascript:replyDelete(${pdCommentVo.idx})" title="댓글삭제">삭제</a>]
 								</c:if>
 							</section>
-							<section style="padding: 30px;">
+							<section style="padding: 30px;border-bottom: solid 1px #eee;">
 								<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
 								<span>${pdCommentVo.content}</span>
 							</section>
-							<hr/>
 						</section>
 					</c:if>
 					
 				</div>
-				
-				<%-- 
-				<span><!-- 번호가 겹치지않게 고유번호 주깅 -->
-					<a href="javascript:replyShow(${pdCommentVo.idx})" id="replyShowBtn${pdCommentVo.idx}" class="badge badge-success">답글</a>
-					<a href="javascript:replyClose(${pdCommentVo.idx})" id="replyCloseBtn${pdCommentVo.idx}" class="badge badge-secondary replyCloseBtn">닫기</a>
-				</span>
-				<section id="replyDemo${pdCommentVo.idx}" style="display:none">
-					<table class="table table-center">
-						<tr>
-							<td style="85%" class="text-left">답글내용 : 	
-								<textarea rows="4" name="contentRe" id="contentRe${pdCommentVo.idx}" class="form-control">@${pdCommentVo.nickName}</textarea>
-							</td>
-							<td style="15%">
-								<br/>
-								<p>작성자 : ${sNickName}</p>
-								<input type="button" value="답글달기" onclick="replyCheckRe(${pdCommentVo.idx}, ${pdCommentVo.re_step}, ${pdCommentVo.re_order})" class="btn btn-success btn-sm"/>
-			 				</td>
-						</tr>
-					</table>
-				</section>
-				 --%>
 			</c:forEach>
+			
 		</div>
 	</div><!-- inner 끝 -->
 	
@@ -776,7 +758,7 @@
 	<!-- topBtn nav -->
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
 		<%-- <section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section> --%>
-		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
+		<section><a href="#"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>
 	
 	<jsp:include page="/WEB-INF/views/include/footer.jsp" />

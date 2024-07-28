@@ -539,7 +539,7 @@
 	</div>
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">
 		<section data-toggle="modal" data-target="#insertModal"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
-		<section><a href="#listCategory"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
+		<section><a href="#"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>
 	
 	
