@@ -644,12 +644,6 @@
 							 <c:if test="${vo.commentCnt == 0}"><input type="button" id="commentReBtn" value="답글" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/></c:if>
 							 <c:if test="${vo.commentCnt != 0}"><input type="button" id="commentReBtn" value="답글${vo.commentCnt}" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/></c:if>
 							  --%>
-							<section class="sec04">
-								<form name="commentInsertForm">
-									<textarea name="content" id="contentRe" style="border-radius: 50px;float: left;width: 86%;height: 45px;padding: 10px 30px;" placeholder="타인을 모욕하거나 비방하는 행위의 댓글은 처벌 대상이 될 수 있습니다."></textarea>
-									<button onclick="commentInsert()" class="commentInsertBtn">댓글달기</button>
-								</form>
-							</section>
 							<hr style="margin:20px 0 0 0"/>
 						</section>
 					</c:if>
