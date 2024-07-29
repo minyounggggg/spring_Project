@@ -24,6 +24,8 @@ public class ProductReviewVO {
 	private int goodHeart;
 	private String hostIp;
 	
+	private int hourDiff;
+	private int dateDiff;
 	private int commentCnt;
 	
 }

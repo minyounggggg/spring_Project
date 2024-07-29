@@ -12,6 +12,8 @@
 		<interceptors>
 			<interceptor>  <!-- 비회원 처리 -->
 				<mapping path="/member/**"/>
+				<mapping path="/review/**"/>
+				<exclude-mapping path="/member/memberMain"/>
 				<exclude-mapping path="/member/memberLogin"/>
 				<exclude-mapping path="/member/memberJoin"/>
 				<exclude-mapping path="/member/memberLogout"/>

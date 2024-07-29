@@ -13,7 +13,6 @@ public class Level1Interceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session = request.getSession();
 		int level = session.getAttribute("sLevel")==null ? 99 : (int) session.getAttribute("sLevel");
-		
 		// 관리자 0 / 회원 1 / 비회원 99 / 탈퇴회원 999
 		// 비회원 사용처리
 		if(level > 1) {

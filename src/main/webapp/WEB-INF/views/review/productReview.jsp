@@ -479,7 +479,7 @@
 					<section class="reviewSecInfo">
 						<p><img src="${ctp}/resources/data/member/${reviewVo.photo}" style="width:60px;height:60px;object-fit:cover;border-radius: 50px;"/>
 						<span class="reviewNickName">${reviewVo.nickName} · </span>
-						<span class="reviewUploadDate">${(reviewVo.uploadDate).substring(11,16)}</span>
+						<span class="reviewUploadDate">${(reviewVo.uploadDate).substring(0,10)}</span>
 						<span class="petCategoryVal">${reviewVo.petCategory}</span>
 						<span class="productCategoryVal">${reviewVo.productCategory}</span></p>
 					</section>

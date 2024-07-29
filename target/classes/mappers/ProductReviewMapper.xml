@@ -3,11 +3,16 @@
 <mapper namespace="com.spring.javaclassS15.dao.ProductReviewDAO">
 
 	<select id="getProductReview" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
-		select * from productReview order by idx desc;
+		select *,datediff(uploadDate, now()) as dateDiff,
+		timestampdiff(hour, uploadDate, now()) as hourDiff,
+		(select count(*) from reviewComment where part='productReview' and partIdx=p.idx) as commentCnt
+		from productReview p order by idx desc;
 	</select>
 
 	<select id="getproductReviewContent" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
-		select * from productReview where idx = #{idx};
+		select *,(select count(*) from reviewComment where part='productReview' and partIdx=p.idx) as commentCnt
+		from productReview p where idx = #{idx};
+		<!-- select * from productReview where idx = #{idx}; -->
 	</select>
 
 	<select id="getPdReviewComment" resultType="com.spring.javaclassS15.vo.ReviewCommentVO">

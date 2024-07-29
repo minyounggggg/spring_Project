@@ -95,6 +95,14 @@ public class MessageController {
 			model.addAttribute("msg", "제품 후기 등록 실패! 다시 시도해주세요.");
 			model.addAttribute("url", "/review/productReview");
 		}
+		else if(msgFlag.equals("productReviewUpdateOK")) {
+			model.addAttribute("msg", "제품 후기 수정완료.");
+			model.addAttribute("url", "/review/productReview");
+		}
+		else if(msgFlag.equals("productReviewUpdateNO")) {
+			model.addAttribute("msg", "제품 후기 수정 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/review/productReview");
+		}
 		
 		
 		
