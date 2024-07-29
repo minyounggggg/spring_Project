@@ -9,16 +9,16 @@ import com.spring.javaclassS15.vo.ReviewCommentVO;
 
 public interface ProductReviewService {
 
-	List<ProductReviewVO> getProductReview();
+	public List<ProductReviewVO> getProductReview();
 
-	int setproductReviewInsert(MultipartHttpServletRequest pdPhoto, ProductReviewVO vo);
+	public int setproductReviewInsert(MultipartHttpServletRequest pdPhoto, ProductReviewVO vo);
 
-	ProductReviewVO getproductReviewContent(int idx);
+	public ProductReviewVO getproductReviewContent(int idx);
 
-	List<ReviewCommentVO> getPdReviewComment(int idx);
+	public List<ReviewCommentVO> getPdReviewComment(int idx);
 
-	ReviewCommentVO getPdReviewParentCommentCheck(int partIdx);
+	public ReviewCommentVO getPdReviewParentCommentCheck(int partIdx);
 
-	int setPdReviewCommentInputOK(ReviewCommentVO commentVO);
+	public int setPdReviewCommentInputOK(ReviewCommentVO commentVO);
 
 }

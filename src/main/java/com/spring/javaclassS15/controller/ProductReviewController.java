@@ -76,16 +76,12 @@ public class ProductReviewController {
 		
 		if(parentCommentVO == null) {
 			commentVO.setCommentCnt(1);
-			System.out.println("parentCommentVO : 1111" );
 		}
 		else {
 			commentVO.setCommentCnt(parentCommentVO.getCommentCnt() + 1);
-			System.out.println("parentCommentVO : 2222" );
 		}
 		commentVO.setCommentLev(0);	//첫번쨰 댓글(부모댓글)이니까 re_step에 무조건 0을 set
-		System.out.println("parentCommentVO : 333" );
 		int res = productReviewService.setPdReviewCommentInputOK(commentVO);
-		
 		
 		return res + "";
 	}
