@@ -388,6 +388,86 @@
 			$(imgId).remove();
 		}
 		
+		function productReviewUpdate() {
+			let petCategory = productReviewUpdateForm.petCategory.value;
+			let productCategory = productReviewUpdateForm.productCategory.value;
+			let brand = productReviewUpdateForm.brand.value;
+			let productName = productReviewUpdateForm.productName.value;
+			let memberHeart = productReviewUpdateForm.memberHeart.value;
+			let petHeart = productReviewUpdateForm.petHeart.value;
+			let goodPoint = productReviewUpdateForm.goodPoint.value;
+			let badPoint = productReviewUpdateForm.badPoint.value;
+			let file = productReviewUpdateForm.file.value;
+			let repurchase = productReviewUpdateForm.repurchase.value;
+			/* 
+			if(petCategory==""){
+				alert("제품을 사용한 반려동물의 종류를 선택해주세요!");
+				productReviewInsertForm.petCategory.focus;
+				return false;
+			}
+			 */
+			if(productCategory==""){
+				alert("제품의 종류를 선택해주세요!");
+				productReviewUpdateForm.productCategory.focus;
+				return false;
+			}
+			else if(brand==""){
+				alert("제품의 브랜드를 작성해주세요!");
+				productReviewUpdateForm.brand.focus;
+				return false;
+			}
+			else if(productName==""){
+				alert("제품명을 작성해주세요!");
+				productReviewUpdateForm.productName.focus;
+				return false;
+			}
+			else if(memberHeart==""){
+				alert("제품에 대한 반려인의 만족도를 체크해주세요!");
+				productReviewUpdateForm.memberHeart.focus;
+				return false;
+			}
+			else if(petHeart==""){
+				alert("제품에 대한 반려동물의 선호도를 체크해주세요!");
+				productReviewUpdateForm.petHeart.focus;
+				return false;
+			}
+			else if(goodPoint==""){
+				alert("제품의 좋았던 점을 작성해주세요!");
+				productReviewUpdateForm.goodPoint.focus;
+				return false;
+			}
+			else if(badPoint==""){
+				alert("제품의 아쉬웠던 점을 작성해주세요!");
+				productReviewUpdateForm.badPoint.focus;
+				return false;
+			}
+			else if(repurchase==""){
+				alert("제품의 재구매 여부를 체크해주세요!");
+				productReviewUpdateForm.repurchase.focus;
+				return false;
+			}
+			
+			if(imgFiles.length<1){
+				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
+				return false;
+			}
+			else if(file == ""){
+				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
+				return false;
+			}
+			
+			let imgNames = "";
+			for (let i=0; i<imgFiles.length; i++){
+				imgNames += imgFiles[i].name + "/";
+			}
+			imgNames = imgNames.substring(0, imgNames.length-1);
+			//$("#pdPhoto").val(imgNames);
+			productReviewUpdateForm.pdPhoto.value = imgNames;
+			console.log(pdPhoto);
+			
+			productReviewUpdateForm.submit();
+		}
+		
 		// 댓글 입력 처리
 		function commentInsert() {
 			let content = $("#content").val();
@@ -449,8 +529,8 @@
 					<p class="productBrand" style="color:#578de4;font-size:20px;font-weight: 700;margin:0 0 0 1px;">${vo.brand}</p>
 					<p class="productName" style="font-size:30px;font-weight:600;color:#333;">${vo.productName}
 					<c:if test="${vo.repurchase == 'OK'}"><span class="repurchaseOKTxt">재구매하고싶어요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-					<c:if test="${vo.repurchase == 'NO'}"><span class="repurchaseNOTxt">재구매는 안할꺼같아요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-					<c:if test="${vo.repurchase == 'Um'}"><span class="repurchaseUmTxt">재구매는 고민중이에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+					<c:if test="${vo.repurchase == 'NO'}"><span class="repurchaseNOTxt">재구매는 안할꺼같아요 <img src="${ctp}/resources/images/icon/face-holding.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+					<c:if test="${vo.repurchase == 'Um'}"><span class="repurchaseUmTxt">재구매는 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 				</section>
 				<section style="margin-bottom:10px;">
 					<span style="color: #636363; font-size: 14px; font-weight: 500; margin:0 5px;">반려인 &nbsp;&nbsp;</span>
@@ -560,6 +640,16 @@
 							</details>
 							 -->
 							 <input type="button" id="commentReBtn" value="답글" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/>
+							 <%-- 
+							 <c:if test="${vo.commentCnt == 0}"><input type="button" id="commentReBtn" value="답글" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/></c:if>
+							 <c:if test="${vo.commentCnt != 0}"><input type="button" id="commentReBtn" value="답글${vo.commentCnt}" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/></c:if>
+							  --%>
+							<section class="sec04">
+								<form name="commentInsertForm">
+									<textarea name="content" id="contentRe" style="border-radius: 50px;float: left;width: 86%;height: 45px;padding: 10px 30px;" placeholder="타인을 모욕하거나 비방하는 행위의 댓글은 처벌 대상이 될 수 있습니다."></textarea>
+									<button onclick="commentInsert()" class="commentInsertBtn">댓글달기</button>
+								</form>
+							</section>
 							<hr style="margin:20px 0 0 0"/>
 						</section>
 					</c:if>
@@ -596,7 +686,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->
-				<form name="productReviewUpdateForm" method="post" action="productReviewUpdate" enctype="multipart/form-data">
+				<form name="productReviewUpdateForm" method="post" action="productReviewUpdateOK" enctype="multipart/form-data">
 					<div class="modal-profile-box sec-boxStyle">
 					
 						<p style="font-size:14px;color:#444;margin:10px 0 0;">* 반려동물</p>
