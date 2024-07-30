@@ -33,5 +33,15 @@
 	<insert id="setPdReviewCommentInputOK">
 		insert into reviewComment values(default,#{commentVO.commentLev},#{commentVO.commentCnt},#{commentVO.part},#{commentVO.partIdx},#{commentVO.mid},#{commentVO.nickName},#{commentVO.photo},#{commentVO.content},default);
 	</insert>
+	
+	
+	
+	<update id="setReadNumPlus">
+		update productReview set readNum = readNum+1 where idx = #{idx};
+	</update>
+	
+	<update id="setpdReviewHeartUp">
+		update productReview set goodHeart = goodHeart+1 where idx = #{idx};
+	</update>
 
 </mapper>

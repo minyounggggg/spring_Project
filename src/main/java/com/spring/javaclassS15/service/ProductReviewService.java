@@ -21,4 +21,8 @@ public interface ProductReviewService {
 
 	public int setPdReviewCommentInputOK(ReviewCommentVO commentVO);
 
+	public void setReadNumPlus(int idx);
+
+	public void setpdReviewHeartUp(String idx);
+
 }
