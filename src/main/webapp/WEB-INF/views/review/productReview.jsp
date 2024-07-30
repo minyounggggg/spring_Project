@@ -440,6 +440,22 @@
 			productReviewInsertForm.submit();
 		}
 		
+		function petCategoryOp(obj) {
+			var petCategorySelect = obj.value;
+			$.ajax({
+				url : "${ctp}/review/petCategoryCheck",
+				type : "post",
+				data : {petCategorySelect : petCategorySelect},
+				success : function(res) {
+					if(res != "0") location.reload();
+					else alert("오류발생! 다시 시도해주세요.");
+				},
+				error : function() {
+					alert("전송실패");
+				}
+			});
+		}
+		
 	</script>
 </head>
 <body>
@@ -447,8 +463,8 @@
 	<div class="inner">
 		<div class="sec01">
 			<section>
-				<select class="petCategory">
-					<option value="모든동물" selected>모든동물</option>
+				<select class="petCategory" onchange="petCategoryOp(this)">
+					<option value="모든동물">모든동물</option>
 					<option value="강아지">강아지</option>
 					<option value="고양이">고양이</option>
 					<option value="기타동물">기타동물</option>

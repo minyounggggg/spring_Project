@@ -22,6 +22,10 @@
 	<select id="getPdReviewParentCommentCheck" resultType="com.spring.javaclassS15.vo.ReviewCommentVO">
 		select * from reviewComment where part = 'productReview' and partIdx = #{partIdx} order by idx desc limit 1;
 	</select>
+
+	<select id="getPetCategoryCheck" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
+		select * from productReview where petCategory = #{petCategorySelect} order by idx desc;
+	</select>
 	
 	
 	

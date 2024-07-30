@@ -89,4 +89,9 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	public void setpdReviewHeartUp(String idx) {
 		productReviewDAO.setpdReviewHeartUp(idx);
 	}
+
+	@Override
+	public int getPetCategoryCheck(String petCategorySelect) {
+		return productReviewDAO.getPetCategoryCheck(petCategorySelect);
+	}
 }

@@ -24,5 +24,7 @@ public interface ProductReviewDAO {
 	public void setReadNumPlus(@Param("idx") int idx);
 
 	public void setpdReviewHeartUp(@Param("idx") String idx);
+
+	public int getPetCategoryCheck(@Param("petCategorySelect") String petCategorySelect);
 	
 }

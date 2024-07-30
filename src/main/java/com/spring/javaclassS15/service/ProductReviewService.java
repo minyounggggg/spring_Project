@@ -25,4 +25,6 @@ public interface ProductReviewService {
 
 	public void setpdReviewHeartUp(String idx);
 
+	public int getPetCategoryCheck(String petCategorySelect);
+
 }

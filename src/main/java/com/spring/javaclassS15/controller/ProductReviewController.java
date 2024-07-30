@@ -42,6 +42,14 @@ public class ProductReviewController {
 		return "review/productReview";
 	}
 	
+	// 제품리뷰 카테고리선택
+	@ResponseBody
+	@RequestMapping(value = "/petCategoryCheck", method = RequestMethod.POST)
+	public String petCategoryCheckPost(String petCategorySelect) {
+		int res = productReviewService.getPetCategoryCheck(petCategorySelect);
+		return res + "";
+	}
+	
 	// 제품리뷰 insert
 	@RequestMapping(value = "/productReviewInsert", method = RequestMethod.POST)
 	public String productReviewInsertPost(ProductReviewVO vo, MultipartHttpServletRequest pdPhoto) {
