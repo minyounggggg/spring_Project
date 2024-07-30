@@ -103,7 +103,7 @@
 			<a href="#">동네수다</a>
 			<a href="${ctp}/review/productReview">제품후기</a>
 			<a href="#">온동네병원</a>
-			<a href="#">카페</a>
+			<a href="${ctp}/petPlace/petCafe">카페</a>
 			<a href="#">식당</a>
 			<a href="#">펜션&글램핑</a>
 		</div>

@@ -79,4 +79,14 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	public int setPdReviewCommentInputOK(ReviewCommentVO commentVO) {
 		return productReviewDAO.setPdReviewCommentInputOK(commentVO);
 	}
+
+	@Override
+	public void setReadNumPlus(int idx) {
+		productReviewDAO.setReadNumPlus(idx);
+	}
+
+	@Override
+	public void setpdReviewHeartUp(String idx) {
+		productReviewDAO.setpdReviewHeartUp(idx);
+	}
 }

@@ -526,7 +526,8 @@
 					<hr style="clear:both;"/>
 					<section class="reviewHeart">
 						<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.goodHeart}</span>
-						<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.commentCnt}</span>
+						<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.commentCnt}</span>
+						<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.readNum}</span>
 					</section>
 				</div>
 			</c:forEach>	

@@ -20,5 +20,9 @@ public interface ProductReviewDAO {
 	public ReviewCommentVO getPdReviewParentCommentCheck(@Param("partIdx") int partIdx);
 
 	public int setPdReviewCommentInputOK(@Param("commentVO") ReviewCommentVO commentVO);
+
+	public void setReadNumPlus(@Param("idx") int idx);
+
+	public void setpdReviewHeartUp(@Param("idx") String idx);
 	
 }
