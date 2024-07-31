@@ -9,7 +9,7 @@ import com.spring.javaclassS15.vo.ReviewCommentVO;
 
 public interface ProductReviewDAO {
 
-	public List<ProductReviewVO> getProductReview();
+	public List<ProductReviewVO> getProductReview(@Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize, @Param("part") String part);
 
 	public int setproductReviewInsert(@Param("vo") ProductReviewVO vo);
 
@@ -26,5 +26,7 @@ public interface ProductReviewDAO {
 	public void setpdReviewHeartUp(@Param("idx") String idx);
 
 	public int getPetCategoryCheck(@Param("petCategorySelect") String petCategorySelect);
+
+	public int totRecCnt(@Param("part") String part);
 	
 }

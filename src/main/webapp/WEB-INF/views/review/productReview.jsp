@@ -439,7 +439,7 @@
 			
 			productReviewInsertForm.submit();
 		}
-		
+		/* 
 		function petCategoryOp(obj) {
 			var petCategorySelect = obj.value;
 			$.ajax({
@@ -455,7 +455,12 @@
 				}
 			});
 		}
-		
+		 */
+		 
+		function partCheck() {
+			let part = $("#part").val();
+			location.href = "productReview?pag=${pag}&pageSize=${pageSize}&part="+part;
+		}
 	</script>
 </head>
 <body>
@@ -471,14 +476,16 @@
 				</select>
 			</section>
 			<section>
-				<select class="productCategory">
-					<option value="모든제품" selected>모든제품</option>
-					<option value="사료">사료</option>
-					<option value="간식">간식</option>
-					<option value="장난감">장난감</option>
-					<option value="영양제">영양제</option>
-					<option value="용품">용품</option>
-				</select>
+				<form name="partForm">
+					<select name="part" id="part" onchange="partCheck()">
+					<option ${pageVO.part == "모든제품" ? "selected" : ""}>모든제품</option>
+					<option ${pageVO.part == "사료" ? "selected" : ""}>사료</option>
+					<option ${pageVO.part == "간식" ? "selected" : ""}>간식</option>
+					<option ${pageVO.part == "장난감" ? "selected" : ""}>장난감</option>
+					<option ${pageVO.part == "영양제" ? "selected" : ""}>영양제</option>
+					<option ${pageVO.part == "용품" ? "selected" : ""}>용품</option>
+					</select>
+				</form>
 			</section>
 			<section>
 				<select class="listCategory" id="listCategory">
@@ -549,9 +556,22 @@
 			</c:forEach>	
 		</div>
 		
-		 <div style="padding:100px;clear:both;">
-		 	임시 마진 sec
-		 </div>
+		<!-- 블록페이지 시작! -->
+		<div class="text-center" style="clear:both;padding:70px 0;">
+			<ul class="pagination justify-content-center">
+			<c:if test="${pageVO.pag > 1 }"><li class="page-item"><a class="page-link text-secondary" href="productReview?pag=1&pageSize=${pageVO.pageSize}">첫 페이지</a></li></c:if>
+			<c:if test="${pageVO.curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="productReview?pag=${(pageVO.curBlock-1) * pageVO.blockSize + 1}&pageSize=${pageVO.pageSize}">이전블록</a></li></c:if>
+			<c:forEach var="i" begin="${(pageVO.curBlock * pageVO.blockSize)+1}" end="${(pageVO.curBlock * pageVO.blockSize) + pageVO.blockSize}" varStatus="st">
+				<!-- 현재있는 페이지 수만 굵게 표시한다. -->
+				<c:if test="${i <= pageVO.totPage && i == pageVO.pag}"><li class="page-item active"><a class="page-link" href="productReview?pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if> 
+				<!-- 현재있는 페이지가 아닌 숫자는 일반 표시, 두껍게 하지 않는다. -->
+				<c:if test="${i <= pageVO.totPage && i != pageVO.pag}"><li class="page-item"><a class="page-link text-secondary" href="productReview?pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if>
+			</c:forEach>
+			<c:if test="${pageVO.curBlock < pageVO.lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="productReview?pag=${(pageVO.curBlock+1) * (pageVO.blockSize+1)}&pageSize=${pageVO.pageSize}">다음블록</a></li></c:if>
+			<c:if test="${pageVO.pag < pageVO.totPage}"><li class="page-item"><a class="page-link text-secondary" href="productReview?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}">마지막 페이지</a></li></c:if>
+			</ul>
+		</div>
+		<!-- 블록페이지 끝! -->
 		
 	</div>
 	<div class="insertNav" style="bottom: 60px; right: 70px; position: fixed;">

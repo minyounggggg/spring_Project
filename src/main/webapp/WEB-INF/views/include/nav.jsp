@@ -93,6 +93,7 @@
 				</c:if>
 				<c:if test="${!empty sNickName}"><!-- 카카오로그아웃, 네이버로그아웃 추가 -->
 					<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; 
+					<c:if test="${sLevel == 0}"><a href="${ctp}/admin/adminPage">관리자페이지</a> &nbsp;|&nbsp;</c:if>
 					<a href="${ctp}/member/memberMypage">마이페이지</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
 				</c:if>
 			</div>

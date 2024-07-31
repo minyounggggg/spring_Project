@@ -12,5 +12,6 @@ public interface PetPlaceDAO {
 
 	public List<PetCafeVO> getPetCafeMap();
 
+
 	
 }

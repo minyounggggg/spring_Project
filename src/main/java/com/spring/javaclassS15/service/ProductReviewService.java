@@ -9,7 +9,7 @@ import com.spring.javaclassS15.vo.ReviewCommentVO;
 
 public interface ProductReviewService {
 
-	public List<ProductReviewVO> getProductReview();
+	public List<ProductReviewVO> getProductReview(int startIndexNo, int pageSize, String part);
 
 	public int setproductReviewInsert(MultipartHttpServletRequest pdPhoto, ProductReviewVO vo);
 

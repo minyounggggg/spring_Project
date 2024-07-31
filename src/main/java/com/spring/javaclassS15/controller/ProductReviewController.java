@@ -12,11 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
+import com.spring.javaclassS15.pagenation.PageProcess;
 import com.spring.javaclassS15.service.ProductReviewService;
+import com.spring.javaclassS15.vo.PageVO;
 import com.spring.javaclassS15.vo.ProductReviewVO;
 import com.spring.javaclassS15.vo.ReviewCommentVO;
 
@@ -33,11 +36,21 @@ public class ProductReviewController {
 	@Autowired
 	JavaclassProvide javaclassProvide;
 	
+	@Autowired
+	PageProcess pageProcess;
+	
 	// 제품리뷰 view
 	@RequestMapping(value = "/productReview", method = RequestMethod.GET)
-	public String productReviewGet(Model model) {
-		List<ProductReviewVO> reviewVos = productReviewService.getProductReview();
+	public String productReviewGet(Model model,
+		@RequestParam(name="part", defaultValue = "모든제품", required = false) String part,
+		@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
+		@RequestParam(name="pageSize", defaultValue = "6", required = false) int pageSize
+		) {
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "productReview", part, "");
+		List<ProductReviewVO> reviewVos = productReviewService.getProductReview(pageVO.getStartIndexNo(), pageSize, part);
+		
 		model.addAttribute("reviewVos", reviewVos);
+		model.addAttribute("pageVO", pageVO);
 		//System.out.println("reviewVos : " + reviewVos);
 		return "review/productReview";
 	}

@@ -23,8 +23,8 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	
 
 	@Override
-	public List<ProductReviewVO> getProductReview() {
-		return productReviewDAO.getProductReview();
+	public List<ProductReviewVO> getProductReview(int startIndexNo, int pageSize, String part) {
+		return productReviewDAO.getProductReview(startIndexNo, pageSize, part);
 	}
 
 	@Override
