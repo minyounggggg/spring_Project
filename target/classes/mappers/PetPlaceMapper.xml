@@ -5,6 +5,30 @@
 	<select id="getPetCafeMap" resultType="com.spring.javaclassS15.vo.PetCafeVO">
 		select * from petCafe order by idx desc;
 	</select>
+
+	<select id="getMemberinfo" resultType="com.spring.javaclassS15.vo.MemberVO">
+		select * from member where mid = #{mid};
+	</select>
+
+	<select id="getPetCafeReviewList" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
+		select * from petCafeReview where placeIdx = #{idx};
+	</select>
+
+	<select id="getCafeInfo" resultType="com.spring.javaclassS15.vo.PetCafeVO">
+		select * from petCafe where idx = #{idx};
+	</select>
+
+	<select id="getCafeInfoContent" resultType="com.spring.javaclassS15.vo.PetCafeVO">
+		select * from petCafe where idx = #{placeIdx};
+	</select>
+
+	<select id="getPetCafeReviewContent" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
+		select * from petCafeReview where idx = #{idx};
+	</select>
+	
+	
+	
+	
 	
 	<insert id="setPetCafe">
 		insert into petCafe values (default,#{vo.placeName},#{vo.category},#{vo.sido},#{vo.sigungu},#{vo.dong},#{vo.latitude},#{vo.longitude},#{vo.zipNum},#{vo.rdnmAddress},#{vo.lnmAddress},#{vo.homePage},#{vo.closedDay},#{vo.openTime},#{vo.parking},#{vo.playPrice},#{vo.petOK},#{vo.petSize},#{vo.petLimit},#{vo.inPlaceOK},#{vo.outPlaceOK},#{vo.placeInfo},#{vo.petExtraFee});

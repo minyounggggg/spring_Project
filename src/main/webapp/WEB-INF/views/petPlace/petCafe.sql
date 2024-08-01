@@ -51,5 +51,6 @@ create table petCafe(
 	outPlaceOK char(1) not null,			/* 외부장소동반가능여부 */
 	placeInfo varchar(50) not null,			/* 업체정보설명 */
 	petExtraFee varchar(20) not null,		/* 반려동물동반추가요금값 */
+	savePlace int not null,					/* 찜한 갯수 */
 	primary key(idx)
 );

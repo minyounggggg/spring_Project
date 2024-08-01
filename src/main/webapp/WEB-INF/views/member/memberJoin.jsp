@@ -151,7 +151,7 @@
 	function addressSearch() {
 		let searchString = document.getElementById("address").value;
 		if(searchString.trim()==""){
-			alert("검색어를 입력하세요");
+			alert("주소를 입력해주세요");
 			document.getElementById("address").focus();
 			return false;
 		}

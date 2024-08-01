@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.dao.PetPlaceDAO;
+import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.PetCafeReviewVO;
 import com.spring.javaclassS15.vo.PetCafeVO;
 
 @Service
@@ -94,6 +96,31 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	@Override
 	public List<PetCafeVO> getPetCafeMap() {
 		return petPlaceDAO.getPetCafeMap();
+	}
+
+	@Override
+	public MemberVO getMemberinfo(String mid) {
+		return petPlaceDAO.getMemberinfo(mid);
+	}
+
+	@Override
+	public List<PetCafeReviewVO> getPetCafeReviewList(int idx) {
+		return petPlaceDAO.getPetCafeReviewList(idx);
+	}
+
+	@Override
+	public PetCafeVO getCafeInfo(int idx) {
+		return petPlaceDAO.getCafeInfo(idx);
+	}
+
+	@Override
+	public PetCafeReviewVO getPetCafeReviewContent(int idx) {
+		return petPlaceDAO.getPetCafeReviewContent(idx);
+	}
+
+	@Override
+	public PetCafeVO getCafeInfoContent(int placeIdx) {
+		return petPlaceDAO.getCafeInfoContent(placeIdx);
 	}
 	
 
