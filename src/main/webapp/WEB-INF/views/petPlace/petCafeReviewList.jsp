@@ -107,6 +107,19 @@
 	    	/* border: solid 5px #578de4; */
     		/* box-shadow: 10px 14px 14px rgba(0, 0, 50, 0.1); */
 		}
+		.returnVisitOK, .returnVisitNO{
+			margin-left: 10px;
+		    border-radius: 50px;
+		    border: solid 1px #578de4;
+		    padding: 5px 18px;
+		    color: #578de4;
+		    font-size: 16px;
+    		font-weight: 500;
+		}
+		.returnVisitNO{
+			border: solid 1px #666;
+		    color: #666;
+		}
 	</style>
 	<script>
     	'use strict';
@@ -130,15 +143,27 @@
 		
 		<div class="cafeReviewSec">
 			<c:forEach var="vo" items="${vos}" varStatus="st">
-				<section onclick="location.href='petCafeReviewContent?idx=${vo.idx}';">
-					<p><img src="${ctp}/resources/data/member/${vo.photo}" style="width:50px;height:50px;object-fit:cover;border-radius: 50px;"/>${vo.nickName} · ${(vo.uploadDate).substring(0,10)}</p>
+				<section onclick="location.href='petCafeReviewContent?idx=${vo.idx}&placeIdx=${vo.placeIdx}';" style="cursor: pointer;">
+					<p>
+						<img src="${ctp}/resources/data/member/${vo.photo}" style="width:50px;height:50px;object-fit:cover;border-radius: 50px;"/>
+						${vo.nickName} · ${(vo.uploadDate).substring(0,10)} 
+						<c:if test="${vo.returnVisit=='OK'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+						<c:if test="${vo.returnVisit=='Um'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+					</p>
 					<p>${vo.title}</p>
 					<hr/>
 				</section>
 			</c:forEach>
 		</div>
+		<input type="button" value="돌아가기" onclick="location.href='petCafe';" class="backBtn" />
 		
 	</div><!-- inner 끝 -->
+	
+	<div class="insertNav" style="bottom: 150px; right: 90px; position: fixed;">
+		<section onclick="location.href='petCafeReviewInsert?placeIdx=${cafeVO.idx}';"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
+		<section><a href="#"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
+	</div>
+	
 	<input type="hidden" id="placeName" value="${cafeVO.placeName}"/>
 	<input type="hidden" id="rdnmAddress" value="${cafeVO.rdnmAddress}"/>
 	<input type="hidden" id="latitude" value="${cafeVO.latitude}"/>

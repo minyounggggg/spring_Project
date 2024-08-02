@@ -103,6 +103,14 @@ public class MessageController {
 			model.addAttribute("msg", "제품 후기 수정 실패! 다시 시도해주세요.");
 			model.addAttribute("url", "/review/productReview");
 		}
+		else if(msgFlag.equals("petCafeReviewInsertOK")) {
+			model.addAttribute("msg", "카페 후기가 등록 되었습니다.");
+			model.addAttribute("url", "/petPlace/petCafeReviewList?idx="+idx);
+		}
+		else if(msgFlag.equals("petCafeReviewInsertNO")) {
+			model.addAttribute("msg", "후기 등록 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/petPlace/petCafeReviewList?idx="+idx);
+		}
 		
 		
 		

@@ -1,6 +1,9 @@
 package com.spring.javaclassS15.service;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -119,8 +122,61 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	}
 
 	@Override
-	public PetCafeVO getCafeInfoContent(int placeIdx) {
-		return petPlaceDAO.getCafeInfoContent(placeIdx);
+	public PetCafeVO getCafeInfoContent() {
+		return petPlaceDAO.getCafeInfoContent();
+	}
+
+	@Override
+	public void imgCheck(String content) {
+		//		  		  0   		1  		  2			3		  4			5
+		// 				  01234567890123456789012345678901234567890123456789012345
+		// <p><img alt="" src="/javaclassS15/data/ckeditor/240626093408_panchu1.jpg" style="height:200px; width:200px" /></p>
+		// <p><img alt="" src="/javaclassS15/data/cafeReview/240626093408_panchu1.jpg" style="height:200px; width:200px" /></p>
+		
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();	  //ServletRequestAttributes 로 형변환 후 사용
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/");
+		
+		int position = 33;
+		String nextImg = content.substring(content.indexOf("src=\"/") + position);
+		boolean sw = true;
+		
+		while(sw) {
+			String imgFile = nextImg.substring(0, nextImg.indexOf("\""));
+			
+			String origFilePath = realPath + "ckeditor/" + imgFile;  //원본파일 경로명
+			String copyFilePath = realPath + "cafeReview/" + imgFile; 
+			
+			fileCopyCheck(origFilePath, copyFilePath);	//ckeditor폴더의 그림파일을 board폴더 위치로 복사처리하는 메소드
+			
+			if(nextImg.indexOf("src=\"/") == -1) sw = false;
+			else nextImg = nextImg.substring(nextImg.indexOf("src=\"/") + position);
+		}	
+	}
+
+	// 파일 복사처리
+	private void fileCopyCheck(String origFilePath, String copyFilePath) {
+		try {
+			FileInputStream fis = new FileInputStream(new File(origFilePath));
+			FileOutputStream fos = new FileOutputStream(new File(copyFilePath));
+			
+			byte[] b = new byte[2048]; 	//2k
+			int cnt = 0;
+			while((cnt = fis.read(b)) != -1) {	// 있을때 2024바이트만큼 없을때까지 빙글빙글 반복 
+				fos.write(b, 0, cnt);
+			}
+			fos.flush(); 	//찌꺼기 남은거 다 저장
+			fos.close();
+			fis.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int setPetCafeReviewInsert(PetCafeReviewVO vo) {
+		return petPlaceDAO.setPetCafeReviewInsert(vo);
 	}
 	
 

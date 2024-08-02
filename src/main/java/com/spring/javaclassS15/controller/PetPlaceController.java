@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -97,10 +98,36 @@ public class PetPlaceController {
 	}
 	
 	@RequestMapping(value = "/petCafeReviewContent", method = RequestMethod.GET)
-	public String petCafeReviwContentGet(int idx, Model model) {
+	public String petCafeReviwContentGet(int idx, int placeIdx, Model model) {
 		PetCafeReviewVO vo = petPlaceService.getPetCafeReviewContent(idx);
+		//PetCafeVO cafeVO = petPlaceService.getCafeInfoContent();
+		PetCafeVO cafeVO = petPlaceService.getCafeInfo(placeIdx);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("cafeVO", cafeVO);
 		return "petPlace/petCafeReviewContent";
+	}
+	
+	@RequestMapping(value = "/petCafeReviewInsert", method = RequestMethod.GET)
+	public String petCafeReviwInsertGet(Model model, int placeIdx) {
+		PetCafeVO cafeVO = petPlaceService.getCafeInfo(placeIdx);
+		
+		model.addAttribute("cafeVO", cafeVO);
+		return "petPlace/petCafeReviewInsert";
+	}
+	
+	@RequestMapping(value = "/petCafeReviewInsert", method = RequestMethod.POST)
+	public String petCafeReviwInsertPost(PetCafeReviewVO vo, int placeIdx) {
+		// 1. 만약 content에 이미지가 저장되어 있다면, 저장된 이미지만 골라서 board폴더에 따로 보관시켜준다. ('/data/ckeditor'폴더에서 '/data/cafeReview'폴더로 복사처리) 
+		if(vo.getContent().indexOf("src=\"/") != -1) petPlaceService.imgCheck(vo.getContent());
+		
+		// 2. 이미지 작업(복사작업)을 모두 마치면, ckeditor 폴더 경로를 cafeReview 폴더 경로로 변경처리한다.
+		vo.setContent(vo.getContent().replace("/data/ckeditor/", "/data/cafeReview/"));
+		
+		// 3. content안의 그림에 대한 정리와 내용정리가 끝나면 변경된 내용을 vo에 담은 후 DB에 저장한다.
+		int res = petPlaceService.setPetCafeReviewInsert(vo);
+		
+		if(res != 0) return "redirect:/message/petCafeReviewInsertOK?idx="+placeIdx;
+		else return "redirect:/message/petCafeReviewInsertNO?idx="+placeIdx;
 	}
 }

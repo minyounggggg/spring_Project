@@ -22,7 +22,9 @@ public interface PetPlaceDAO {
 
 	public PetCafeReviewVO getPetCafeReviewContent(@Param("idx") int idx);
 
-	public PetCafeVO getCafeInfoContent(@Param("placeIdx") int placeIdx);
+	public PetCafeVO getCafeInfoContent();
+
+	public int setPetCafeReviewInsert(@Param("vo") PetCafeReviewVO vo);
 
 
 	
