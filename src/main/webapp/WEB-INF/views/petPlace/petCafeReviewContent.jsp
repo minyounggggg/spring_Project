@@ -128,6 +128,7 @@
 				<p>${cafeVO.homePage}</p>
 			</section>
 			 --%>
+			 <p>git test</p>
 		</div>
 		
 		<div class="ReviewContentSec">
