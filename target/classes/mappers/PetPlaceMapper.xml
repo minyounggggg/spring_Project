@@ -11,7 +11,7 @@
 	</select>
 
 	<select id="getPetCafeReviewList" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
-		select * from petCafeReview where placeIdx = #{idx};
+		select * from petCafeReview where placeIdx = #{idx} order by idx desc;
 	</select>
 
 	<select id="getCafeInfo" resultType="com.spring.javaclassS15.vo.PetCafeVO">
@@ -19,7 +19,7 @@
 	</select>
 
 	<select id="getCafeInfoContent" resultType="com.spring.javaclassS15.vo.PetCafeVO">
-		select * from petCafe where idx = #{placeIdx};
+		select petCafe.*, petCafeReview.nickName from petCafeReview inner join petCafe on petCafeReview.placeIdx = petCafe.idx order by idx limit 1;
 	</select>
 
 	<select id="getPetCafeReviewContent" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
@@ -33,5 +33,11 @@
 	<insert id="setPetCafe">
 		insert into petCafe values (default,#{vo.placeName},#{vo.category},#{vo.sido},#{vo.sigungu},#{vo.dong},#{vo.latitude},#{vo.longitude},#{vo.zipNum},#{vo.rdnmAddress},#{vo.lnmAddress},#{vo.homePage},#{vo.closedDay},#{vo.openTime},#{vo.parking},#{vo.playPrice},#{vo.petOK},#{vo.petSize},#{vo.petLimit},#{vo.inPlaceOK},#{vo.outPlaceOK},#{vo.placeInfo},#{vo.petExtraFee});
 	</insert>
+	
+	<insert id="setPetCafeReviewInsert">
+		insert into petCafeReview values (default,#{vo.placeIdx},#{vo.mid},#{vo.nickName},#{vo.photo},#{vo.title},#{vo.content},#{vo.returnVisit},default,default,default,default,#{vo.hostIp});
+	</insert>
+
+
 
 </mapper>

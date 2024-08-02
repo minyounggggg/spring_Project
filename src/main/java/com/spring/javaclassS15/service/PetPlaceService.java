@@ -22,7 +22,11 @@ public interface PetPlaceService {
 
 	public PetCafeReviewVO getPetCafeReviewContent(int idx);
 
-	public PetCafeVO getCafeInfoContent(int placeIdx);
+	public PetCafeVO getCafeInfoContent();
+
+	public void imgCheck(String content);
+
+	public int setPetCafeReviewInsert(PetCafeReviewVO vo);
 
 
 }

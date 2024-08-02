@@ -8,8 +8,6 @@ create table petCafeReview (
 	photo 			varchar(100) not null,		/* 제품리뷰 올린사람 프로필 사진 */
 	title 			varchar(100) not null,		/* 업로드 파일의간단 제목 */
 	content 		text,						/* 업로드 파일의 상세 설명 */
-	cafePhoto 	varchar(500) not null,		/* 제품사진 */
-	photoSaveName 	varchar(500) not null,		/* 실제 서버에 저장되는 파일명 */
 	returnVisit 	char(2) not null,			/* 재방문 여부 OK, NO, Um */
 	readNum 		int default 0,				/* 조회수 */
 	uploadDate 		datetime default now(),		/* 제품 리뷰 업로드 일자 */

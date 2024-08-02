@@ -6,7 +6,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>petCafeReviwContent.jsp</title>
+	<title>petCafeReviwInsert.jsp</title>
+	<script src="${ctp}/ckeditor/ckeditor.js"></script>
 	<jsp:include page="/WEB-INF/views/include/bs4.jsp" />
 	<link rel="icon" href="${ctp}/resources/favicon/love.png">
 	
@@ -39,12 +40,13 @@
 	    
 	    /* ==================================================================================== */
 	    input::placeholder{color:#ddd !important;font-size: 14px !important;}
-		input#address, #addressPick{
+		input#nickName, #title, #content{
 		    border-radius: 50px;
 	        height: 40px;
 	        padding: 0 22px;
 		    font-size: 15px;
 		    color: #333;
+		    margin-bottom: 20px;
 		}
 		label{
 			padding-left: 5px;
@@ -55,28 +57,24 @@
 		    cursor: pointer;
 		    color: #578de4;
 	    }
-	    .addressReSearchBtn{
+	    .backBtn, .insertBtn{
 		    border-radius: 50px;
 		    border: none;
 		    color: #fff;
 	    	background-color: #777;
 		    padding: 7px 20px;
-		    margin-left: 10px;
 	    	font-size: 13px;
-	    	width : 140px;
+	    	width : 48%;
+	    	margin-right: 1%;
+	    	height: 40px;
 	    }
-	    .addressSearchBtn{
+	    .insertBtn{
 		    background-color: #578de4;
-		    border-radius: 50px;
-		    border: none;
-		    color: #fff;
-		    padding: 7px 20px;
-		    margin-left: 10px;
-	    	font-size: 13px;
-	    	width : 140px;
+		    width : 50%;
+		    margin: 0;
 		}
-		.addressReSearchBtn:hover {background-color: #666;}
-		.addressSearchBtn:hover {background-color: #3478db;}
+		.backBtn:hover {background-color: #666;}
+		.insertBtn:hover {background-color: #3478db;}
 		
 		/* ======================================================================== */
 		.cafeInfoSec{
@@ -118,19 +116,47 @@
 		    font-size: 16px;
     		font-weight: 500;
 		}
-		.friend{
+		#CKEDITOR{
+			margin-bottom: 40px;
+			border-radius: 10px;
+		}
+		
+		/* 재방문의사 라디오박스 */
+		#returnVisitRadio-box input[type="radio"] {
+			appearance: none;
+		}
+		#returnVisitRadio-box label{
+		    border: solid 1px #ced4da;
 		    border-radius: 50px;
-		    border: solid 1px #EB403D;
-		    padding: 3px 12px;
-		    color: #EB403D;
-		    font-size: 14px;
-    		font-weight: 600;
-    		background: transparent;
+	        padding: 8px 20px;
+		    margin: 5px 5px 0 0;
+	        color: #a1a1a1;
+		}
+		#returnVisitRadio-box input[type=radio]:checked + label{
+			border: solid 1px #578de4;
+			color: #578de4;
 		}
 	</style>
 	<script>
     	'use strict';
     
+    	function cafeReviewInsertCheck() {
+			let title = myform.nickName.value;
+			let content = myform.nickName.value;
+			
+			if(title.trim() == ""){
+				alert("제목을 입력해주세요.");
+				myform.nickName.focus();
+				return false;
+			}
+			else if(content.trim() == ""){
+				alert("내용을 입력해주세요.");
+				myform.content.focus();
+				return false;
+			}
+			
+			myform.submit();
+		}
 	</script>
 </head>
 <body>
@@ -149,29 +175,43 @@
 		</div>
 		
 		<div class="ReviewContentSec">
-			<section>
-				<p>
-					<img src="${ctp}/resources/data/member/${vo.photo}" style="width:50px;height:50px;object-fit:cover;border-radius: 50px;"/>
-					${vo.nickName} · ${(vo.uploadDate).substring(0,10)}
-					<c:if test="${sMid != vo.mid}"><button class="friend">친구맺기</button></c:if>
-					<c:if test="${sMid == vo.mid}">
-						<button class="friend" data-toggle="modal" data-target="#updateModal">리뷰수정</button>
-						<button class="friend">리뷰삭제</button>
-					</c:if>
-				</p>
-				<p style="font-size: 20px;font-weight: 500;">${vo.title} 
-					<c:if test="${vo.returnVisit=='OK'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-					<c:if test="${vo.returnVisit=='Um'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-				</p>
-				<p>${vo.content}</p>
-			</section>
+			<form name="myform" method="post">
+				<section>
+					<p style="font-size:14px;color:#444;margin:0 0 5px 10px;"><span style="color:#578de4;">*</span> 닉네임</p>
+					<input type="text" name="nickName" id="nickName" value="${sNickName}" class="form-control" readonly/>
+					<p style="font-size:14px;color:#444;margin:0 0 5px 10px;"><span style="color:#578de4;">*</span> 제목</p>
+					<input type="text" name="title" id="title" class="form-control" />
+					<p style="font-size:14px;color:#444;margin:0 0 5px 10px;"><span style="color:#578de4;">*</span> 재방문의사</p>
+					<div class="form-group">
+						<div class="radio-box" id="returnVisitRadio-box">
+							<input type="radio" class="check-box-input" value="OK" id="returnVisit1" name="returnVisit" checked/>
+							<label for="returnVisit1">재방문할래요</label>
+							<input type="radio" class="check-box-input" value="Um" id="returnVisit2" name="returnVisit"/>
+							<label for="returnVisit2">고민중입니다</label>
+						</div>
+					</div>
+					<p style="font-size:14px;color:#444;margin:0 0 5px 10px;"><span style="color:#578de4;">*</span> 내용</p>
+					<textarea name="content" id="CKEDITOR" rows="6" class="form-control" required></textarea>
+					<script>
+			        	CKEDITOR.replace("content",{	/* content 부분을 CKEDITOR로 바꿔서 쓰겠다. */
+			        		height : 400,
+			        		filebrowserUploadUrl:"${ctp}/imageUpload",	/* 파일(이미지)를 업로드시키기위한 매핑경로(메소드) */ /* filebrowserUploadUrl(예약어) 이미지누르면 "업로드"카테고리 생기게하는 코드*/
+			        		uploadUrl : "${ctp}/imageUpload"		/* uploadUrl : 여러개의 그림파일을 드래그&드롭해서 올릴수 있다. */
+			        	});
+			        </script>
+				</section>
+				<section style="margin-top:25px;">
+					<input type="button" value="돌아가기" onclick="location.href='petCafeReviewList?idx=${cafeVO.idx}';" class="backBtn" />
+					<input type="button" value="등록하기" onclick="cafeReviewInsertCheck()" class="insertBtn" />
+				</section>
+				<input type="hidden" name="mid" value="${sMid}"/>
+				<input type="hidden" name="photo" value="${sPhoto}"/>
+				<input type="hidden" name="placeIdx" value="${cafeVO.idx}"/>
+				<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}"/>
+			</form>
 		</div>
-		<input type="button" value="돌아가기" onclick="location.href='petCafeReviewList?idx=${cafeVO.idx}';" class="backBtn" />
+		
 	</div><!-- inner 끝 -->
-	<div class="insertNav" style="bottom: 150px; right: 90px; position: fixed;">
-		<section onclick="location.href='petCafeReviewInsert?placeIdx=${cafeVO.idx}';"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
-		<section><a href="#"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
-	</div>
 	<input type="hidden" id="placeName" value="${cafeVO.placeName}"/>
 	<input type="hidden" id="rdnmAddress" value="${cafeVO.rdnmAddress}"/>
 	<input type="hidden" id="latitude" value="${cafeVO.latitude}"/>
