@@ -11,7 +11,11 @@
 	</select>
 
 	<select id="getPetCafeReviewList" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
-		select * from petCafeReview where placeIdx = #{idx} order by idx desc;
+		
+		select *, (select count(*) from petCafeReview where placeIdx=#{idx}) as reviewCnt
+		from petCafeReview where placeIdx=#{idx} order by idx desc limit #{startIndexNo}, #{pageSize};
+	
+		<!-- select * from petCafeReview where placeIdx = #{idx} order by idx desc; -->
 	</select>
 
 	<select id="getCafeInfo" resultType="com.spring.javaclassS15.vo.PetCafeVO">
@@ -25,8 +29,21 @@
 	<select id="getPetCafeReviewContent" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
 		select * from petCafeReview where idx = #{idx};
 	</select>
+
+	<select id="getReviewMiniViewList" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
+		select * from petcafereview where placeIdx=#{idx} order by idx desc limit 3;
+	</select>
+	
+	<select id="totRecCnt" resultType="int">
+		select count(*) from petCafeReview where placeIdx = #{contentNum};
+	</select>
 	
 	
+	
+	
+	<update id="setCafeReviewUpdate">
+		update petCafeReview set title = #{vo.title}, content = #{vo.content}, returnVisit = #{vo.returnVisit}, hostIp = #{vo.hostIp}, uploadDate = now() where idx=#{vo.idx};
+	</update>
 	
 	
 	
@@ -38,6 +55,10 @@
 		insert into petCafeReview values (default,#{vo.placeIdx},#{vo.mid},#{vo.nickName},#{vo.photo},#{vo.title},#{vo.content},#{vo.returnVisit},default,default,default,default,#{vo.hostIp});
 	</insert>
 
+
+	<delete id="setCafeReviewDelete">
+		delete from petCafeReview where idx = #{idx};
+	</delete>
 
 
 </mapper>

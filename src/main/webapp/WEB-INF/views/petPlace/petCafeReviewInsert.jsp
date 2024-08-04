@@ -57,22 +57,18 @@
 		    cursor: pointer;
 		    color: #578de4;
 	    }
-	    .backBtn, .insertBtn{
+	    .insertBtn{
 		    border-radius: 50px;
 		    border: none;
 		    color: #fff;
-	    	background-color: #777;
+	    	background-color: #578de4;
 		    padding: 7px 20px;
-	    	font-size: 13px;
-	    	width : 48%;
-	    	margin-right: 1%;
-	    	height: 40px;
+	    	font-size: 16px;
+	    	font-weight: 500;
+	    	width : 100%;
+	    	height: 50px;
+	    	margin: 0;
 	    }
-	    .insertBtn{
-		    background-color: #578de4;
-		    width : 50%;
-		    margin: 0;
-		}
 		.backBtn:hover {background-color: #666;}
 		.insertBtn:hover {background-color: #3478db;}
 		
@@ -136,6 +132,17 @@
 			border: solid 1px #578de4;
 			color: #578de4;
 		}
+		
+		.backBtn{
+			width: 100%;
+		    background-color: #bdbdbd;
+		    border: none;
+		    height: 40px;
+		    border-radius: 20px;
+		    color: #fff;
+		    font-size: 16px;
+		    margin-top: 16px;
+		}
 	</style>
 	<script>
     	'use strict';
@@ -165,12 +172,14 @@
 		<div class="cafeInfoSec">
 			<div id="map" class="mapSec"></div>
 			<section class="infoSec">
-				<p>${cafeVO.placeName}<span>${cafeVO.category} • ${cafeVO.placeInfo}</span></p>
+				<p style="font-size: 22px;font-weight: 600; color: #333;">${cafeVO.placeName}<span style="font-weight: 500;font-size: 15px;color: #8b8b8b;margin-left: 5px;">${cafeVO.category} · ${cafeVO.placeInfo}</span></p>
 				<p>방문자후기 0 • 찜 0</p>
-				<p>${cafeVO.rdnmAddress}</p>
-				<p>영업시간 <span>${cafeVO.openTime}</span></p>
-				<p>휴무 <span>${cafeVO.closedDay}</span></p>
-				<p>${cafeVO.homePage}</p>
+				<hr/>
+				<p><img src="${ctp}/resources/images/icon/place.png" style="width:20px;margin:0 10px 4px 0;"/>${cafeVO.rdnmAddress}</p>
+				<p><img src="${ctp}/resources/images/icon/clock.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">영업시간 </span>${cafeVO.openTime}</p>
+				<p><img src="${ctp}/resources/images/icon/information.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">휴무 </span>${cafeVO.closedDay}</p>
+				<p><img src="${ctp}/resources/images/icon/home.png" style="width:20px;margin:0 10px 4px 0;"/><a href="${cafeVO.homePage}" style="color:#578de4;">${cafeVO.homePage}</a></p>
+				<input type="button" value="돌아가기" onclick="location.href='petCafeReviewList?idx=${cafeVO.idx}';" class="backBtn" />
 			</section>
 		</div>
 		
@@ -201,7 +210,6 @@
 			        </script>
 				</section>
 				<section style="margin-top:25px;">
-					<input type="button" value="돌아가기" onclick="location.href='petCafeReviewList?idx=${cafeVO.idx}';" class="backBtn" />
 					<input type="button" value="등록하기" onclick="cafeReviewInsertCheck()" class="insertBtn" />
 				</section>
 				<input type="hidden" name="mid" value="${sMid}"/>

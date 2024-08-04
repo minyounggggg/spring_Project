@@ -27,4 +27,6 @@ public interface ProductReviewService {
 
 	public int getPetCategoryCheck(String petCategorySelect);
 
+	public void setpdReviewComplaint(int idx);
+
 }

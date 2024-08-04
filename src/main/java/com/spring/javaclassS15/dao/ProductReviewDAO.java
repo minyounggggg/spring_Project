@@ -28,5 +28,7 @@ public interface ProductReviewDAO {
 	public int getPetCategoryCheck(@Param("petCategorySelect") String petCategorySelect);
 
 	public int totRecCnt(@Param("part") String part);
+
+	public void setpdReviewComplaint(@Param("idx") int idx);
 	
 }

@@ -64,7 +64,7 @@
 			color: #999;
 		}
 		.sec02 .petCategoryVal, .productCategoryVal{
-		    margin-left: 5px;
+		    /* margin-left: 5px; */
 		    border-radius: 50px;
 		    border: solid 1px #578de4;
 		    padding: 3px 12px;

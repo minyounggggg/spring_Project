@@ -94,4 +94,9 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	public int getPetCategoryCheck(String petCategorySelect) {
 		return productReviewDAO.getPetCategoryCheck(petCategorySelect);
 	}
+
+	@Override
+	public void setpdReviewComplaint(int idx) {
+		productReviewDAO.setpdReviewComplaint(idx);
+	}
 }

@@ -516,6 +516,28 @@
 			});
 		}
 		
+		// 게시글 신고 처리
+		function complaintBtn() {
+			let ans = confirm("현재 게시글을 신고 하시겠습니까?\n(허위신고일 경우 불이익이 있을 수 있습니다.)");
+	    	if(ans){
+				$.ajax({
+					url : "${ctp}/review/productReviewComplaint",
+					type : "post",
+					data : {idx : ${vo.idx}},
+					success : function(res) {
+						if(res != "0") {
+							alert("부적절한 게시글 신고가 완료되었습니다.");
+							location.reload();
+						}
+						else alert("이미 신고된 게시글입니다.");
+					},
+					error : function() {
+						alert("전송오류");
+					}
+				});
+	    	}
+		}
+		
 	</script>
 </head>
 <body>
@@ -609,7 +631,7 @@
 			<button onclick="heartUp()" style="background:transparent;border:none;font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</button>
 			<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.commentCnt}</span>
 			<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.readNum}</span><!-- 조회수, 아이콘 바꾸기 -->
-			<span style="font-size:15px;text-align: right;"><img src="${ctp}/resources/images/icon/siren.png" style="width:25px;margin: 0 5px 5px 0;"/></span>
+			<button onclick="complaintBtn()" style="background:transparent;border:none;font-size:15px;text-align: right;"><img src="${ctp}/resources/images/icon/siren.png" style="width:25px;margin: 0 5px 5px 0;"/></button>
 		</section>
 		<hr/>
 		<!-- 댓글 -->
@@ -645,22 +667,9 @@
 								</c:if>
 							</section>
 							<section style="padding:10px 70px 30px;">
-								<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
 								<span>${pdCommentVo.content}</span>
 							</section>
-							<!-- 
-							<details style="padding: 0 70px 20px;">
-							    <summary>Click me</summary>
-							    <div>
-							    	하히호헤호
-							    </div>	
-							</details>
-							 -->
 							 <input type="button" id="commentReBtn" value="답글" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/>
-							 <%-- 
-							 <c:if test="${vo.commentCnt == 0}"><input type="button" id="commentReBtn" value="답글" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/></c:if>
-							 <c:if test="${vo.commentCnt != 0}"><input type="button" id="commentReBtn" value="답글${vo.commentCnt}" onclick="replyCheckRe(${replyVo.idx}, ${replyVo.re_step}, ${replyVo.re_order})" class="btn btn-secondary btn-sm" style="margin-left: 70px;"/></c:if>
-							  --%>
 							<hr style="margin:20px 0 0 0"/>
 						</section>
 					</c:if>
@@ -668,7 +677,6 @@
 					<c:if test="${pdCommentVo.commentLev >= 1}">
 						<section style="background-color: #f9f9f9;padding: 20px 20px 0 40px;">
 							<section>
-								<%-- <c:forEach var="i" begin="1" end="${pdCommentVo.commentLev}">&nbsp;&nbsp;</c:forEach> └  --%>
 								<img src="${ctp}/resources/data/member/${pdCommentVo.photo}" style="width: 50px;margin-right: 15px;border-radius: 50px;"/>
 								<span>${pdCommentVo.nickName}</span> · <span>${fn:substring(pdCommentVo.uploadDate, 0, 16)}</span>
 								<c:if test="${sMid == pdCommentVo.mid || sLevel == 0}">
@@ -676,7 +684,6 @@
 								</c:if>
 							</section>
 							<section style="padding: 30px;border-bottom: solid 1px #eee;">
-								<%-- <span class="text-left">${fn:replace(pdCommentVo.content, newLine, "<br/>")}</span> --%>
 								<span>${pdCommentVo.content}</span>
 							</section>
 						</section>

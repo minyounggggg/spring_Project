@@ -107,8 +107,8 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	}
 
 	@Override
-	public List<PetCafeReviewVO> getPetCafeReviewList(int idx) {
-		return petPlaceDAO.getPetCafeReviewList(idx);
+	public List<PetCafeReviewVO> getPetCafeReviewList(int idx, int startIndexNo, int pageSize) {
+		return petPlaceDAO.getPetCafeReviewList(idx, startIndexNo, pageSize);
 	}
 
 	@Override
@@ -178,6 +178,53 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	public int setPetCafeReviewInsert(PetCafeReviewVO vo) {
 		return petPlaceDAO.setPetCafeReviewInsert(vo);
 	}
+
+	@Override
+	public List<PetCafeReviewVO> getReviewMiniViewList(int idx) {
+		return petPlaceDAO.getReviewMiniViewList(idx);
+	}
+
+	@Override
+	public void imgDelete(String content) {
+		//		  		  0   		1  		  2			3		  4			5
+		// 				  01234567890123456789012345678901234567890123456789012345
+		// <p><img alt="" src="/javaclassS15/data/cafeReview/240626093408_panchu1.jpg" style="height:200px; width:200px" /></p>
+		// <p><img alt="" src="/javaclassS15/data/ckeditor/240626093408_panchu1.jpg" style="height:200px; width:200px" /></p>
+		
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();	  //ServletRequestAttributes 로 형변환 후 사용
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/");
+		
+		int position = 35;
+		String nextImg = content.substring(content.indexOf("src=\"/") + position);
+		boolean sw = true;
+		
+		while(sw) {
+			String imgFile = nextImg.substring(0, nextImg.indexOf("\""));
+			
+			String origFilePath = realPath + "cafeReview/" + imgFile;  //원본파일 경로명
+			
+			fileDelete(origFilePath);	//board폴더의 그림파일을 삭제힌다.
+			
+			if(nextImg.indexOf("src=\"/") == -1) sw = false;
+			else nextImg = nextImg.substring(nextImg.indexOf("src=\"/") + position);
+		}
+	}
+
+	private void fileDelete(String origFilePath) {
+		File delFile = new File(origFilePath);
+		if(delFile.exists()) delFile.delete();
+	}
+
+	@Override
+	public int setCafeReviewUpdate(PetCafeReviewVO vo) {
+		return petPlaceDAO.setCafeReviewUpdate(vo);
+	}
+
+	@Override
+	public int setCafeReviewDelete(int idx) {
+		return petPlaceDAO.setCafeReviewDelete(idx);
+	}
+
 	
 
 }

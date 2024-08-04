@@ -16,7 +16,7 @@ public interface PetPlaceService {
 
 	public MemberVO getMemberinfo(String mid);
 
-	public List<PetCafeReviewVO> getPetCafeReviewList(int idx);
+	public List<PetCafeReviewVO> getPetCafeReviewList(int idx, int startIndexNo, int pageSize);
 
 	public PetCafeVO getCafeInfo(int idx);
 
@@ -27,6 +27,15 @@ public interface PetPlaceService {
 	public void imgCheck(String content);
 
 	public int setPetCafeReviewInsert(PetCafeReviewVO vo);
+
+	public List<PetCafeReviewVO> getReviewMiniViewList(int idx);
+
+	public void imgDelete(String content);
+
+	public int setCafeReviewUpdate(PetCafeReviewVO vo);
+
+	public int setCafeReviewDelete(int idx);
+
 
 
 }
