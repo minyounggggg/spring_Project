@@ -29,4 +29,14 @@ public interface ProductReviewService {
 
 	public void setpdReviewComplaint(int idx);
 
+	public void imgDelete(String productPhoto);
+
+	public int setReviewDelete(int idx);
+
+	public int setproductReviewUpdate(MultipartHttpServletRequest pdPhoto, ProductReviewVO vo);
+
+	public void imgUpdateDelete(String productPhoto);
+
+	public ProductReviewVO getOrgReviewVO(int idx);
+
 }

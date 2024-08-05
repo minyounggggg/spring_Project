@@ -18,5 +18,11 @@
 	<select id="getComplaintList" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
 		select * from productReview where complaint > 0 order by idx desc;
 	</select>
+	
+	
+	
+	<delete id="setReviewDelete">
+		delete from productReview where idx = #{idx};
+	</delete>
 
 </mapper>

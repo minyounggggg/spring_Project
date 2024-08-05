@@ -387,8 +387,8 @@
 			let imgId = "#imgId" + idx;
 			$(imgId).remove();
 		}
-		
 		function productReviewUpdate() {
+			let fName = document.getElementById("file").value;
 			let petCategory = productReviewUpdateForm.petCategory.value;
 			let productCategory = productReviewUpdateForm.productCategory.value;
 			let brand = productReviewUpdateForm.brand.value;
@@ -397,7 +397,7 @@
 			let petHeart = productReviewUpdateForm.petHeart.value;
 			let goodPoint = productReviewUpdateForm.goodPoint.value;
 			let badPoint = productReviewUpdateForm.badPoint.value;
-			let file = productReviewUpdateForm.file.value;
+			let file = productReviewUpdateForm.orgPdPhoto.value;
 			let repurchase = productReviewUpdateForm.repurchase.value;
 			/* 
 			if(petCategory==""){
@@ -447,11 +447,8 @@
 				return false;
 			}
 			
-			if(imgFiles.length<1){
-				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
-				return false;
-			}
-			else if(file == ""){
+			 
+			else if(fName == ""){
 				alert("제품 인증을 위해 1개 이상의 사진을 업로드해주세요!");
 				return false;
 			}
@@ -538,6 +535,27 @@
 	    	}
 		}
 		
+		function reviewDelete(idx, productPhoto) {
+			let ans = confirm("해당 제품 후기를 삭제 하시겠습니까?");
+	    	if(ans) {
+	    		$.ajax({
+	    			url  : "reviewDeleteOK",
+	    			type : "post",
+	    			data : {
+	    				idx : idx,
+	    				productPhoto : productPhoto
+	    			},
+	    			success:function(res) {
+	    				if(res != "0") {
+	    					alert("제품 후기가 삭제 되었습니다.");
+	    					location.href="${ctp}/review/productReview";
+	    				}
+	    				else alert("삭제 오류! 다시 시도해주세요.");
+	    			}
+	    		});
+	    	}
+		}
+		
 	</script>
 </head>
 <body>
@@ -549,9 +567,9 @@
 				<span class="reviewNickName">${vo.nickName} · </span>
 				<span class="reviewUploadDate">${(vo.uploadDate).substring(0,16)}</span>
 				<c:if test="${sMid != vo.mid}"><button class="friend">친구맺기</button></c:if>
-				<c:if test="${sMid == vo.mid}">
+				<c:if test="${sMid == vo.mid || sLevel == 0}">
 					<button class="friend" data-toggle="modal" data-target="#updateModal">리뷰수정</button>
-					<button class="friend">리뷰삭제</button>
+					<button class="friend" onclick="reviewDelete('${vo.idx}','${vo.productPhoto}')">리뷰삭제</button>
 				</c:if>
 				</p>
 			</section>
@@ -780,7 +798,7 @@
 						<section class="file_cus" style="clear:both;margin-top:10px;">
 						    <label>
 						        <input type="file" name="fName" id="file" value="${vo.productPhoto}" multiple accept=".jpg, .gif, .png" />
-						        <span class="file_name" id="file_name"><span style="color:#578de4;">*</span> 제품 사진을 선택해주세요.</span>
+						        <span class="file_name" id="file_name"><span style="color:#578de4;">*</span> ${vo.productPhoto}</span>
 						        <span class="file_btn">사진선택</span>
 						    </label>
 						</section>
@@ -837,10 +855,12 @@
 						</section>
 						
 						<input type="hidden" name="mid" value="${sMid}"/>
+						<input type="hidden" name="idx" value="${vo.idx}"/>
 						<input type="hidden" name="nickName" value="${sNickName}"/>
 						<input type="hidden" name="photo" value="${sPhoto}"/>
 						<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}"/>
 						<input type="hidden" name="pdPhoto" id="pdPhoto"/>
+						<input type="hidden" name="orgPdPhoto" value="${vo.productPhoto}"/>
 					</div>
 				</form>
 			</div>

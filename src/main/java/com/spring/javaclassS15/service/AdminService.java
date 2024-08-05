@@ -14,6 +14,10 @@ public interface AdminService {
 
 	List<ProductReviewVO> getComplaintList();
 
+	void imgDelete(String productPhoto);
+
+	int setReviewDelete(int idx);
+
 	
 
 }

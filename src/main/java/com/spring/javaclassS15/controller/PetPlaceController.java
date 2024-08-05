@@ -62,12 +62,15 @@ public class PetPlaceController {
 	}
 
 	@RequestMapping(value = "/petCafe", method = RequestMethod.GET)
-	public String petCafeGet(Model model, HttpSession session) {
+	public String petCafeGet(Model model, HttpSession session, HttpServletRequest request) {
 		String mid = (String) session.getAttribute("sMid");
 		MemberVO memberVO = petPlaceService.getMemberinfo(mid);
 		PetCafeVO vo = new PetCafeVO();
 		List<PetCafeVO> vos = petPlaceService.getPetCafeMap();
+		List<PetCafeReviewVO> cafeReviewVos = petPlaceService.getCafeReview();
+		request.setAttribute("cafeReviewVos2", cafeReviewVos);
 		
+		model.addAttribute("cafeReviewVos", cafeReviewVos);
 		model.addAttribute("memberVO", memberVO);
 		model.addAttribute("vo", vo);
 		model.addAttribute("jsonVos", JSONArray.fromObject(vos));
@@ -76,11 +79,12 @@ public class PetPlaceController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/reviewMiniView", method = RequestMethod.POST)
-	public String reviewMiniViewGet(Model model, int idx) {
+	public List<PetCafeReviewVO> reviewMiniViewGet(Model model, int idx) {
 		List<PetCafeReviewVO> vos = petPlaceService.getReviewMiniViewList(idx);
 		model.addAttribute("vos", vos);
 		//model.addAttribute("miniViewVos", JSONArray.fromObject(vos));
-		return vos+"";
+		System.out.println("vos : " + vos);
+		return vos;
 	}
 	
 	@ResponseBody

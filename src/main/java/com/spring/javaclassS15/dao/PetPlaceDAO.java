@@ -34,6 +34,8 @@ public interface PetPlaceDAO {
 
 	public int setCafeReviewDelete(@Param("idx") int idx);
 
+	public List<PetCafeReviewVO> getCafeReview();
+
 
 
 	

@@ -30,5 +30,12 @@ public interface ProductReviewDAO {
 	public int totRecCnt(@Param("part") String part);
 
 	public void setpdReviewComplaint(@Param("idx") int idx);
+
+	public int setReviewDelete(@Param("idx") int idx);
+
+	public int setproductReviewUpdate(@Param("vo") ProductReviewVO vo);
+
+	public ProductReviewVO getOrgReviewVO(@Param("idx") int idx);
+
 	
 }

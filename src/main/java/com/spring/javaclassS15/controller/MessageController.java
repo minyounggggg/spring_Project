@@ -154,6 +154,22 @@ public class MessageController {
 			model.addAttribute("msg", "병원 리뷰 삭제 실패! 다시 시도해주세요.");
 			model.addAttribute("url", "/hospital/hospitalReviewList?idx="+idx);
 		}
+		else if(msgFlag.equals("reviewDeleteOK")) {
+			model.addAttribute("msg", "신고 게시글이 삭제 처리되었습니다.");
+			model.addAttribute("url", "/admin/complaintList");
+		}
+		else if(msgFlag.equals("reviewDeleteNO")) {
+			model.addAttribute("msg", "신고 게시글 삭제 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/admin/complaintList");
+		}
+		else if(msgFlag.equals("productReviewUpdateOK")) {
+			model.addAttribute("msg", "해당 제품의 후기가 수정 되었습니다.");
+			model.addAttribute("url", "/review/productReviewContent?idx="+idx);
+		}
+		else if(msgFlag.equals("productReviewUpdateNO")) {
+			model.addAttribute("msg", "제품 후기 수정 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/review/productReviewContent?idx="+idx);
+		}
 		
 		
 		

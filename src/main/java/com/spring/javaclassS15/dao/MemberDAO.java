@@ -31,4 +31,8 @@ public interface MemberDAO {
 
 	public int setMemberUpdateOK(@Param("vo") MemberVO vo, @Param("mid") String mid);
 
+	public void setMemberLastDate(@Param("mid") String mid);
+
+	public void setLoginUpdate(@Param("vo")MemberVO vo);
+
 }

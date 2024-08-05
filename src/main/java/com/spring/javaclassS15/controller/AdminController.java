@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.service.AdminService;
@@ -54,12 +55,16 @@ public class AdminController {
 	}
 	
 	// 신고리스트 삭제
+	@ResponseBody
 	@RequestMapping(value = "/reviewDeleteOk", method = RequestMethod.POST)
 	public String reviewDeleteOkPost(int idx, String productPhoto) {
 		
-		javaclassProvide.deleteFile(productPhoto, "productReview");
+		adminService.imgDelete(productPhoto);
 		
-		return "admin/complaintList";
+		int res = adminService.setReviewDelete(idx);
+		
+		return res + "";
+		
 	}
 	
 	

@@ -36,6 +36,8 @@ public interface PetPlaceService {
 
 	public int setCafeReviewDelete(int idx);
 
+	public List<PetCafeReviewVO> getCafeReview();
+
 
 
 }

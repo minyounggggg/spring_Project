@@ -35,4 +35,9 @@ public interface MemberService {
 
 	public int setMemberUpdateOK(MemberVO vo, String mid);
 
+	public void setMemberLastDate(String mid);
+
+	public void setLoginUpdate(MemberVO vo);
+
+
 }

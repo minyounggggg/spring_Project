@@ -16,6 +16,9 @@
 				<exclude-mapping path="/member/memberMain"/>
 				<exclude-mapping path="/member/memberLogin"/>
 				<exclude-mapping path="/member/memberJoin"/>
+				<exclude-mapping path="/member/memberIdCheck"/>
+				<exclude-mapping path="/member/memberNickCheck"/>
+				<exclude-mapping path="/member/memberAddressSearchOK"/>
 				<exclude-mapping path="/member/memberLogout"/>
 				<exclude-mapping path="/member/kakaoLogin"/>
 				<exclude-mapping path="/member/kakaoLogout"/>
