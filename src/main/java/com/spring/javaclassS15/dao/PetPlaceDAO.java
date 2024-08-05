@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.spring.javaclassS15.vo.MemberVO;
 import com.spring.javaclassS15.vo.PetCafeReviewVO;
 import com.spring.javaclassS15.vo.PetCafeVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 public interface PetPlaceDAO {
 
@@ -35,6 +36,10 @@ public interface PetPlaceDAO {
 	public int setCafeReviewDelete(@Param("idx") int idx);
 
 	public List<PetCafeReviewVO> getCafeReview();
+
+	public PetCafeVO getPlaceName(@Param("placeIdx") int placeIdx);
+
+	public int setWishPlace(@Param("mid") String mid, @Param("nickName") String nickName, @Param("part") String part, @Param("placeIdx") int placeIdx, @Param("placeName") String placeName);
 
 
 

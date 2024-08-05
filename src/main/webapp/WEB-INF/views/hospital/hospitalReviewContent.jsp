@@ -179,8 +179,8 @@
 				</p>
 				<hr/>
 				<p style="font-size: 20px;font-weight: 500;padding-left: 15px;margin: 25px 0 25px;letter-spacing: -1px;">${vo.title} 
-					<c:if test="${vo.returnVisit=='OK'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-					<c:if test="${vo.returnVisit=='Um'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+					<c:if test="${vo.returnVisit=='다음에 또 올꺼에요'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+					<c:if test="${vo.returnVisit=='재방문은 고민중이에요'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 				</p>
 				<section style="background-color:#ffffffcf;border-radius: 10px;padding: 15px 30px;">
 					<p>${vo.content}</p>

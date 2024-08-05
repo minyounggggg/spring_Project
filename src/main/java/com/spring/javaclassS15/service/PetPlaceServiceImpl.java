@@ -22,6 +22,7 @@ import com.spring.javaclassS15.dao.PetPlaceDAO;
 import com.spring.javaclassS15.vo.MemberVO;
 import com.spring.javaclassS15.vo.PetCafeReviewVO;
 import com.spring.javaclassS15.vo.PetCafeVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 @Service
 public class PetPlaceServiceImpl implements PetPlaceService {
@@ -229,7 +230,17 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	public List<PetCafeReviewVO> getCafeReview() {
 		return petPlaceDAO.getCafeReview();
 	}
-
 	
+	@Override 
+	public PetCafeVO getPlaceName(int placeIdx) { 
+		return petPlaceDAO.getPlaceName(placeIdx); 
+	}
+	  
+	@Override
+	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName) {
+		return petPlaceDAO.setWishPlace(mid, nickName, part, placeIdx, placeName);
+	}
+	  
+	 
 
 }

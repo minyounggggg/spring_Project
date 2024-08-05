@@ -193,9 +193,9 @@
 					<p style="font-size:14px;color:#444;margin:0 0 5px 10px;"><span style="color:#578de4;">*</span> 재방문의사</p>
 					<div class="form-group">
 						<div class="radio-box" id="returnVisitRadio-box">
-							<input type="radio" class="check-box-input" value="OK" id="returnVisit1" name="returnVisit" checked/>
+							<input type="radio" class="check-box-input" value="다음에 또 올꺼에요" id="returnVisit1" name="returnVisit" checked/>
 							<label for="returnVisit1">재방문할래요</label>
-							<input type="radio" class="check-box-input" value="Um" id="returnVisit2" name="returnVisit"/>
+							<input type="radio" class="check-box-input" value="재방문은 고민중이에요" id="returnVisit2" name="returnVisit"/>
 							<label for="returnVisit2">고민중입니다</label>
 						</div>
 					</div>

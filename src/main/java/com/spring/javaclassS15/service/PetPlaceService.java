@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.javaclassS15.vo.MemberVO;
 import com.spring.javaclassS15.vo.PetCafeReviewVO;
 import com.spring.javaclassS15.vo.PetCafeVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 public interface PetPlaceService {
 
@@ -37,6 +38,11 @@ public interface PetPlaceService {
 	public int setCafeReviewDelete(int idx);
 
 	public List<PetCafeReviewVO> getCafeReview();
+
+	public PetCafeVO getPlaceName(int placeIdx);
+
+	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName);
+
 
 
 

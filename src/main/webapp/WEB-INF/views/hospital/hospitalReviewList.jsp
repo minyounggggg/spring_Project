@@ -179,8 +179,8 @@
 					<p>
 						<img src="${ctp}/resources/data/member/${vo.photo}" style="width:50px;height:50px;object-fit:cover;border-radius: 50px;"/>
 						<span style="letter-spacing:-1px;font-size:16px;font-weight:500;margin-left: 15px;color: #636363;">${vo.nickName}</span> · <span style="font-size:14px;color:#999;margin-right:5px;">${(vo.uploadDate).substring(0,10)}</span> 
-						<c:if test="${vo.returnVisit=='OK'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
-						<c:if test="${vo.returnVisit=='Um'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+						<c:if test="${vo.returnVisit=='다음에 또 올꺼에요'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
+						<c:if test="${vo.returnVisit=='재방문은 고민중이에요'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 					</p>
 					<p style="margin: 22px 0 30px 70px;;letter-spacing: -1px;font-size: 18px;">${vo.title}<span style="font-size: 12px;margin-left: 10px;color:#afafaf;">... more</span></p>
 					<hr/>
