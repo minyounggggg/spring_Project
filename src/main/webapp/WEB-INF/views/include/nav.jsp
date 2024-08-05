@@ -93,7 +93,7 @@
 				</c:if>
 				<c:if test="${!empty sNickName}"><!-- 카카오로그아웃, 네이버로그아웃 추가 -->
 					<p style="font-size:14px;font-weight:600;color:#578de4;">${sNickName}<span style="font-size:14px;font-weight:400;color:#333333;">님 안녕하세요! &nbsp;|&nbsp; 
-					<c:if test="${sLevel == 0}"><a href="${ctp}/admin/adminPage">관리자페이지</a> &nbsp;|&nbsp;</c:if>
+					<c:if test="${sLevel == 0}"><a href="${ctp}/admin/adminMain">관리자페이지</a> &nbsp;|&nbsp;</c:if>
 					<a href="${ctp}/member/memberMypage">마이페이지</a> &nbsp;|&nbsp; <a href="${ctp}/member/memberLogout">로그아웃</a></span></p>
 				</c:if>
 			</div>
@@ -103,7 +103,7 @@
 			<a href="#">Only-E.W</a>
 			<a href="#">동네수다</a>
 			<a href="${ctp}/review/productReview">제품후기</a>
-			<a href="#">온동네병원</a>
+			<a href="${ctp}/hospital/hospital">온동네병원</a>
 			<a href="${ctp}/petPlace/petCafe">카페</a>
 			<a href="#">식당</a>
 			<a href="#">펜션&글램핑</a>

@@ -46,7 +46,7 @@ public class ProductReviewController {
 		@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
 		@RequestParam(name="pageSize", defaultValue = "6", required = false) int pageSize
 		) {
-		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "productReview", part, "");
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "productReview", part, "", 0);
 		List<ProductReviewVO> reviewVos = productReviewService.getProductReview(pageVO.getStartIndexNo(), pageSize, part);
 		
 		model.addAttribute("reviewVos", reviewVos);
@@ -137,7 +137,26 @@ public class ProductReviewController {
 		}
 		session.setAttribute("sContentGood", contentGood);
 		
-		//response.getWriter().write(sw);
+		return res + "";
+	}
+	
+	// 제품리뷰 신고 처리
+	@ResponseBody
+	@RequestMapping(value = "/productReviewComplaint", method = RequestMethod.POST)
+	public String productReviewComplaintPost(int idx, HttpServletRequest request) {
+		
+		// 신고 수 증가처리 (중복 불허)
+		int res = 0;
+		HttpSession session = request.getSession(); //게시글을 보는순간 세션이 생긴다.
+		ArrayList<String> contentComplaint = (ArrayList<String>)session.getAttribute("sContentComplaint");
+		if(contentComplaint == null) contentComplaint = new ArrayList<String>();
+		String imsiContentComplaint = "pdReviewComplaint" + idx;
+		if(!contentComplaint.contains(imsiContentComplaint)) {  //"contains"= 포함하고있냐는 명령 / (imsiContentReadNum를 포함하고있니?)
+			productReviewService.setpdReviewComplaint(idx);
+			contentComplaint.add(imsiContentComplaint);
+			res = 1;
+		}
+		session.setAttribute("sContentComplaint", contentComplaint);
 		
 		return res + "";
 	}

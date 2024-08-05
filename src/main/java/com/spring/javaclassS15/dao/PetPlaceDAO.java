@@ -16,7 +16,7 @@ public interface PetPlaceDAO {
 
 	public MemberVO getMemberinfo(@Param("mid") String mid);
 
-	public List<PetCafeReviewVO> getPetCafeReviewList(@Param("idx") int idx);
+	public List<PetCafeReviewVO> getPetCafeReviewList(@Param("idx") int idx, @Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize);
 
 	public PetCafeVO getCafeInfo(@Param("idx") int idx);
 
@@ -25,6 +25,15 @@ public interface PetPlaceDAO {
 	public PetCafeVO getCafeInfoContent();
 
 	public int setPetCafeReviewInsert(@Param("vo") PetCafeReviewVO vo);
+
+	public List<PetCafeReviewVO> getReviewMiniViewList(@Param("idx") int idx);
+
+	public int totRecCnt(@Param("contentNum") int contentNum);
+
+	public int setCafeReviewUpdate(@Param("vo") PetCafeReviewVO vo);
+
+	public int setCafeReviewDelete(@Param("idx") int idx);
+
 
 
 	

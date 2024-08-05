@@ -97,13 +97,17 @@
 	    	padding: 30px;
 	    	background-color: #f9f9f9;
 	    }
+	    .partCheckSec{
+	    	float: right;
+    		margin-bottom: 20px;
+	    }
 		.cafeReviewSec{
 			float : left;
 	    	width:63%;
 	    	border-radius: 30px;
 	    	margin-bottom: 30px;
 	    	background-color: #f9f9f9;
-    		padding : 30px;
+    		padding : 40px;
 	    	/* border: solid 5px #578de4; */
     		/* box-shadow: 10px 14px 14px rgba(0, 0, 50, 0.1); */
 		}
@@ -113,16 +117,29 @@
 		    border: solid 1px #578de4;
 		    padding: 5px 18px;
 		    color: #578de4;
-		    font-size: 16px;
+		    font-size: 14px;
     		font-weight: 500;
+    		letter-spacing: -1px;
 		}
 		.returnVisitNO{
 			border: solid 1px #666;
 		    color: #666;
 		}
+		.backBtn{
+			width: 100%;
+		    background-color: #bdbdbd;
+		    border: none;
+		    height: 40px;
+		    border-radius: 20px;
+		    color: #fff;
+		    font-size: 16px;
+		    margin-top: 16px;
+		}
+		.backBtn:hover {background-color: #666;}
 	</style>
 	<script>
     	'use strict';
+    	
     
 	</script>
 </head>
@@ -132,34 +149,64 @@
 		<div class="cafeInfoSec">
 			<div id="map" class="mapSec"></div>
 			<section class="infoSec">
-				<p>${cafeVO.placeName}<span>${cafeVO.category} • ${cafeVO.placeInfo}</span></p>
+				<p style="font-size: 22px;font-weight: 600; color: #333;">${cafeVO.placeName}<span style="font-weight: 500;font-size: 15px;color: #8b8b8b;margin-left: 5px;">${cafeVO.category} · ${cafeVO.placeInfo}</span></p>
 				<p>방문자후기 0 • 찜 0</p>
-				<p>${cafeVO.rdnmAddress}</p>
-				<p>영업시간 <span>${cafeVO.openTime}</span></p>
-				<p>휴무 <span>${cafeVO.closedDay}</span></p>
-				<p>${cafeVO.homePage}</p>
+				<hr/>
+				<p><img src="${ctp}/resources/images/icon/place.png" style="width:20px;margin:0 10px 4px 0;"/>${cafeVO.rdnmAddress}</p>
+				<p><img src="${ctp}/resources/images/icon/clock.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">영업시간 </span>${cafeVO.openTime}</p>
+				<p><img src="${ctp}/resources/images/icon/information.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">휴무 </span>${cafeVO.closedDay}</p>
+				<p><img src="${ctp}/resources/images/icon/home.png" style="width:20px;margin:0 10px 4px 0;"/><a href="${cafeVO.homePage}" style="color:#578de4;">${cafeVO.homePage}</a></p>
+				<input type="button" value="돌아가기" onclick="location.href='petCafe';" class="backBtn" />
 			</section>
 		</div>
-		
+		<%-- 
+		<div class="partCheckSec">
+			<section>
+				<form name="partForm">
+					<select name="part" id="part" onchange="partCheck()">
+						<option ${pageVO.part == "모든제품" ? "selected" : ""}>모든리뷰</option>
+						<option ${pageVO.part == "재방문할래요" ? "selected" : ""}>재방문할래요</option>
+						<option ${pageVO.part == "재방문고민중" ? "selected" : ""}>재방문고민중</option>
+					</select>
+				</form>
+			</section>
+		</div>
+		 --%>
 		<div class="cafeReviewSec">
 			<c:forEach var="vo" items="${vos}" varStatus="st">
 				<section onclick="location.href='petCafeReviewContent?idx=${vo.idx}&placeIdx=${vo.placeIdx}';" style="cursor: pointer;">
 					<p>
 						<img src="${ctp}/resources/data/member/${vo.photo}" style="width:50px;height:50px;object-fit:cover;border-radius: 50px;"/>
-						${vo.nickName} · ${(vo.uploadDate).substring(0,10)} 
+						<span style="letter-spacing:-1px;font-size:16px;font-weight:500;margin-left: 15px;color: #636363;">${vo.nickName}</span> · <span style="font-size:14px;color:#999;margin-right:5px;">${(vo.uploadDate).substring(0,10)}</span> 
 						<c:if test="${vo.returnVisit=='OK'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 						<c:if test="${vo.returnVisit=='Um'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 					</p>
-					<p>${vo.title}</p>
+					<p style="margin: 22px 0 30px 70px;;letter-spacing: -1px;font-size: 18px;">${vo.title}<span style="font-size: 12px;margin-left: 10px;color:#afafaf;">... more</span></p>
 					<hr/>
 				</section>
 			</c:forEach>
+			
+			<!-- 블록페이지 시작! -->
+			<div class="text-center" style="clear:both;">
+				<ul class="pagination justify-content-center" style="margin-bottom:0;">
+				<c:if test="${pageVO.pag > 1 }"><li class="page-item"><a class="page-link text-secondary" href="petCafeReviewList?idx=${cafeVO.idx}&pag=1&pageSize=${pageVO.pageSize}">첫 페이지</a></li></c:if>
+				<c:if test="${pageVO.curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="petCafeReviewList?idx=${cafeVO.idx}&pag=${(pageVO.curBlock-1) * pageVO.blockSize + 1}&pageSize=${pageVO.pageSize}">이전블록</a></li></c:if>
+				<c:forEach var="i" begin="${(pageVO.curBlock * pageVO.blockSize)+1}" end="${(pageVO.curBlock * pageVO.blockSize) + pageVO.blockSize}" varStatus="st">
+					<!-- 현재있는 페이지 수만 굵게 표시한다. -->
+					<c:if test="${i <= pageVO.totPage && i == pageVO.pag}"><li class="page-item active"><a class="page-link" href="petCafeReviewList?idx=${cafeVO.idx}&pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if> 
+					<!-- 현재있는 페이지가 아닌 숫자는 일반 표시, 두껍게 하지 않는다. -->
+					<c:if test="${i <= pageVO.totPage && i != pageVO.pag}"><li class="page-item"><a class="page-link text-secondary" href="petCafeReviewList?idx=${cafeVO.idx}&pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if>
+				</c:forEach>
+				<c:if test="${pageVO.curBlock < pageVO.lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="petCafeReviewList?idx=${cafeVO.idx}&pag=${(pageVO.curBlock+1) * (pageVO.blockSize+1)}&pageSize=${pageVO.pageSize}">다음블록</a></li></c:if>
+				<c:if test="${pageVO.pag < pageVO.totPage}"><li class="page-item"><a class="page-link text-secondary" href="petCafeReviewList?idx=${cafeVO.idx}&pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}">마지막 페이지</a></li></c:if>
+				</ul>
+			</div>
+			<!-- 블록페이지 끝! -->
 		</div>
-		<input type="button" value="돌아가기" onclick="location.href='petCafe';" class="backBtn" />
 		
 	</div><!-- inner 끝 -->
 	
-	<div class="insertNav" style="bottom: 150px; right: 90px; position: fixed;">
+	<div class="insertNav" style="bottom: 100px; right: 90px; position: fixed;">
 		<section onclick="location.href='petCafeReviewInsert?placeIdx=${cafeVO.idx}';"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
 		<section><a href="#"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>
@@ -168,6 +215,7 @@
 	<input type="hidden" id="rdnmAddress" value="${cafeVO.rdnmAddress}"/>
 	<input type="hidden" id="latitude" value="${cafeVO.latitude}"/>
 	<input type="hidden" id="longitude" value="${cafeVO.longitude}"/>
+	<input type="hidden" id="part" name="part" value="${cafeVO.idx}"/>
 	
 	<!-- 카카오맴 자바스크립트 AIP -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4bed81139daac8fd06f75e2c669b1570"></script>

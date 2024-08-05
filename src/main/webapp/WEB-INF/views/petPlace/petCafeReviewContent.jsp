@@ -115,8 +115,9 @@
 		    border: solid 1px #578de4;
 		    padding: 5px 18px;
 		    color: #578de4;
-		    font-size: 16px;
+		    font-size: 14px;
     		font-weight: 500;
+    		letter-spacing: -1px;
 		}
 		.friend{
 		    border-radius: 50px;
@@ -127,10 +128,25 @@
     		font-weight: 600;
     		background: transparent;
 		}
+		.backBtn{
+			width: 100%;
+		    background-color: #bdbdbd;
+		    border: none;
+		    height: 40px;
+		    border-radius: 20px;
+		    color: #fff;
+		    font-size: 16px;
+		    margin-top: 16px;
+		}
+		.backBtn:hover {background-color: #666;}
 	</style>
 	<script>
     	'use strict';
     
+    	function cafeReviewDelete() {
+    		let ans = confirm("해당 카페 리뷰를 삭제 하시겠습니까?");
+        	if(ans) location.href = "cafeReviewDelete?idx=${vo.idx}&placeIdx=${cafeVO.idx}";
+		}
 	</script>
 </head>
 <body>
@@ -139,12 +155,14 @@
 		<div class="cafeInfoSec">
 			<div id="map" class="mapSec"></div>
 			<section class="infoSec">
-				<p>${cafeVO.placeName}<span>${cafeVO.category} • ${cafeVO.placeInfo}</span></p>
+				<p style="font-size: 22px;font-weight: 600; color: #333;">${cafeVO.placeName}<span style="font-weight: 500;font-size: 15px;color: #8b8b8b;margin-left: 5px;">${cafeVO.category} · ${cafeVO.placeInfo}</span></p>
 				<p>방문자후기 0 • 찜 0</p>
-				<p>${cafeVO.rdnmAddress}</p>
-				<p>영업시간 <span>${cafeVO.openTime}</span></p>
-				<p>휴무 <span>${cafeVO.closedDay}</span></p>
-				<p>${cafeVO.homePage}</p>
+				<hr/>
+				<p><img src="${ctp}/resources/images/icon/place.png" style="width:20px;margin:0 10px 4px 0;"/>${cafeVO.rdnmAddress}</p>
+				<p><img src="${ctp}/resources/images/icon/clock.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">영업시간 </span>${cafeVO.openTime}</p>
+				<p><img src="${ctp}/resources/images/icon/information.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">휴무 </span>${cafeVO.closedDay}</p>
+				<p><img src="${ctp}/resources/images/icon/home.png" style="width:20px;margin:0 10px 4px 0;"/><a href="${cafeVO.homePage}" style="color:#578de4;">${cafeVO.homePage}</a></p>
+				<input type="button" value="돌아가기" onclick="location.href='petCafeReviewList?idx=${cafeVO.idx}';" class="backBtn" />
 			</section>
 		</div>
 		
@@ -152,23 +170,26 @@
 			<section>
 				<p>
 					<img src="${ctp}/resources/data/member/${vo.photo}" style="width:50px;height:50px;object-fit:cover;border-radius: 50px;"/>
-					${vo.nickName} · ${(vo.uploadDate).substring(0,10)}
+					<span style="font-size:16px;font-weight:600;margin-left: 15px;">${vo.nickName}</span> · <span style="font-size:14px;color:#999;margin-right: 20px;">${(vo.uploadDate).substring(0,10)}</span>
 					<c:if test="${sMid != vo.mid}"><button class="friend">친구맺기</button></c:if>
 					<c:if test="${sMid == vo.mid}">
-						<button class="friend" data-toggle="modal" data-target="#updateModal">리뷰수정</button>
-						<button class="friend">리뷰삭제</button>
+						<button class="friend" onclick="location.href='petCafeReviewUpdate?idx=${vo.idx}&placeIdx=${cafeVO.idx}';">리뷰수정</button>
+						<button class="friend" onclick="cafeReviewDelete()">리뷰삭제</button>
 					</c:if>
 				</p>
-				<p style="font-size: 20px;font-weight: 500;">${vo.title} 
+				<hr/>
+				<p style="font-size: 20px;font-weight: 500;padding-left: 15px;margin: 25px 0 25px;letter-spacing: -1px;">${vo.title} 
 					<c:if test="${vo.returnVisit=='OK'}"><span class="returnVisitOK">다음에 또 올꺼에요 <img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 					<c:if test="${vo.returnVisit=='Um'}"><span class="returnVisitNO">재방문은 고민중이에요 <img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span></c:if>
 				</p>
-				<p>${vo.content}</p>
+				<section style="background-color:#ffffffcf;border-radius: 10px;padding: 15px 30px;">
+					<p>${vo.content}</p>
+				</section>
 			</section>
 		</div>
-		<input type="button" value="돌아가기" onclick="location.href='petCafeReviewList?idx=${cafeVO.idx}';" class="backBtn" />
+		
 	</div><!-- inner 끝 -->
-	<div class="insertNav" style="bottom: 150px; right: 90px; position: fixed;">
+	<div class="insertNav" style="bottom: 100px; right: 90px; position: fixed;">
 		<section onclick="location.href='petCafeReviewInsert?placeIdx=${cafeVO.idx}';"><img src="${ctp}/resources/images/icon/insertBtn.png" style="margin-bottom:10px;width:80px;cursor:pointer;"/></section>
 		<section><a href="#"><img src="${ctp}/resources/images/icon/topBtn.png" style="width:80px;"/></a></section>
 	</div>

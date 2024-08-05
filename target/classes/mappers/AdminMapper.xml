@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.javaclassS15.dao.AdminDAO">
+
+	<select id="getCafeReviewCount" resultType="int">
+		select count(*) from petCafeReview where DATE_FORMAT(uploadDate, "%Y-%m-%d") BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE();
+	</select>
+
+	<select id="getHospitalReviewCount" resultType="int">
+		select count(*) from hospitalReview where DATE_FORMAT(uploadDate, "%Y-%m-%d") BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE();
+	</select>
+
+	<select id="getProductReviewCount" resultType="int">
+		<!-- select count(*) from productReview where DATE_FORMAT(uploadDate, "%Y-%m-%d") = CURDATE(); 오늘 하루 얼마나 게시되었는지-->
+		select count(*) from productReview where DATE_FORMAT(uploadDate, "%Y-%m-%d") BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE();
+	</select>
+
+	<select id="getComplaintList" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
+		select * from productReview where complaint > 0 order by idx desc;
+	</select>
+
+</mapper>

@@ -3,6 +3,8 @@ package com.spring.javaclassS15.pagenation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.javaclassS15.dao.HospitalDAO;
+import com.spring.javaclassS15.dao.PetPlaceDAO;
 import com.spring.javaclassS15.dao.ProductReviewDAO;
 import com.spring.javaclassS15.vo.PageVO;
 
@@ -12,15 +14,23 @@ public class PageProcess {
 	@Autowired
 	ProductReviewDAO productReviewDAO;
 	
+	@Autowired
+	PetPlaceDAO petPlaceDAO;
+	
+	@Autowired
+	HospitalDAO hospitalDAO;
+	
 
-	public PageVO totRecCnt(int pag, int pageSize, String section, String part, String searchString) {
+	public PageVO totRecCnt(int pag, int pageSize, String section, String part, String searchString, int contentNum) {
 		PageVO pageVO = new PageVO();
 		
 		int totRecCnt = 0;
 		String search = "";
 		
 		if(section.equals("productReview")) totRecCnt = productReviewDAO.totRecCnt(part);
-//		else if(section.equals("member")) totRecCnt = memberDAO.totRecCnt();
+		else if(section.equals("cafeReview")) totRecCnt = petPlaceDAO.totRecCnt(contentNum);
+		else if(section.equals("hospitalReview")) totRecCnt = hospitalDAO.totRecCnt(contentNum);
+			
 		//else if(section.equals("pds")) totRecCnt = pdsDAO.totRecCnt(part);
 		
 		int totPage = (totRecCnt % pageSize) == 0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) +1;

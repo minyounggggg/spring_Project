@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
+import com.spring.javaclassS15.pagenation.PageProcess;
 import com.spring.javaclassS15.service.PetPlaceService;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.PageVO;
 import com.spring.javaclassS15.vo.PetCafeReviewVO;
 import com.spring.javaclassS15.vo.PetCafeVO;
 
@@ -42,6 +44,9 @@ public class PetPlaceController {
 	
 	@Autowired
 	JavaclassProvide javaclassProvide;
+	
+	@Autowired
+	PageProcess pageProcess;
 	
 	
 	@RequestMapping(value = "/petCafeForm", method = RequestMethod.GET)
@@ -70,6 +75,15 @@ public class PetPlaceController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value = "/reviewMiniView", method = RequestMethod.POST)
+	public String reviewMiniViewGet(Model model, int idx) {
+		List<PetCafeReviewVO> vos = petPlaceService.getReviewMiniViewList(idx);
+		model.addAttribute("vos", vos);
+		//model.addAttribute("miniViewVos", JSONArray.fromObject(vos));
+		return vos+"";
+	}
+	
+	@ResponseBody
 	@RequestMapping(value = "/memberAddressSearchOK", method = RequestMethod.POST)
 	public ArrayList<String> memberAddressSearchOKPost(String search, String searchSelector) throws IOException {
 		Connection conn = Jsoup.connect(search);
@@ -88,12 +102,18 @@ public class PetPlaceController {
 	}
 	
 	@RequestMapping(value = "/petCafeReviewList", method = RequestMethod.GET)
-	public String petCafeReviewListGet(int idx, Model model) {
-		List<PetCafeReviewVO> vos = petPlaceService.getPetCafeReviewList(idx);
+	public String petCafeReviewListGet(int idx, Model model,
+			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name="pageSize", defaultValue = "5", required = false) int pageSize) {
+		
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "cafeReview", "", "", idx);
+		
+		List<PetCafeReviewVO> vos = petPlaceService.getPetCafeReviewList(idx, pageVO.getStartIndexNo(), pageSize);
 		PetCafeVO cafeVO = petPlaceService.getCafeInfo(idx);
 		
 		model.addAttribute("vos", vos);
 		model.addAttribute("cafeVO", cafeVO);
+		model.addAttribute("pageVO", pageVO);
 		return "petPlace/petCafeReviewList";
 	}
 	
@@ -130,4 +150,60 @@ public class PetPlaceController {
 		if(res != 0) return "redirect:/message/petCafeReviewInsertOK?idx="+placeIdx;
 		else return "redirect:/message/petCafeReviewInsertNO?idx="+placeIdx;
 	}
+	
+	@RequestMapping(value = "/petCafeReviewUpdate", method = RequestMethod.GET)
+	public String petCafeReviewUpdateGet(Model model, int idx,  int placeIdx) {
+		PetCafeReviewVO vo = petPlaceService.getPetCafeReviewContent(idx);
+		PetCafeVO cafeVO = petPlaceService.getCafeInfo(placeIdx);
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("cafeVO", cafeVO);
+		return "petPlace/petCafeReviewUpdate";
+	}
+	
+	@RequestMapping(value = "/petCafeReviewUpdate", method = RequestMethod.POST)
+	public String petCafeReviewUpdatePost(Model model, PetCafeReviewVO vo) {
+		// 수정된 자료가 원본자료와 완전히 동일하다면 고치지않은거니까 수정할 필요가 없다. 즉, DB에 저장된 원본자료를 불러와서 현재 vo에 담긴 내용(content)과 비교해본다.
+		PetCafeReviewVO origVo = petPlaceService.getPetCafeReviewContent(vo.getIdx());
+		
+		// content의 내용이 조금이라도 변경이 되었다면 내용을 수정한 것이기에, 그림파일 처리 유무를 결정한다.
+		if(!origVo.getContent().equals(vo.getContent())) {
+			// 1.기존 cafeReview폴더에 그림이 존재했다면 원본그림을 모두 삭제처리한다.(원본그림은 수정창에 들어오기 전에 ckeditor폴더에 저장시켜두었다)
+			if(origVo.getContent().indexOf("src=\"/") != -1) petPlaceService.imgDelete(origVo.getContent());
+			
+			// 2.앞의 삭제 작업이 끝나면 'cafeReview'폴더를 'ckeditor'로 변경한다.
+			vo.setContent(vo.getContent().replace("/data/cafeReview/", "/data/ckeditor/"));
+			
+			// 1,2 작업을 마치면 파일을 처음 업로드한것과 같은 작업처리를 해준다.
+			// 즉, content에 이미지가 저장되어있다면, 저장된 이미지만 골라서 '/data/cafeReview/'폴더에 복사 저장처리한다.
+			if(vo.getContent().indexOf("src=\"/") != -1) petPlaceService.imgCheck(vo.getContent());
+			
+			//이미지들의 모든 복사작업을 마치면, 폴더명을 ckeditor에서 cafeReview폴더로 변경처리한다.
+			vo.setContent(vo.getContent().replace("/data/ckeditor/", "/data/cafeReview/"));
+			
+			// content안의 내용과 그림파일까지, 잘 정비된 vo를 DB에 Update시켜준다.
+		}
+		int res = petPlaceService.setCafeReviewUpdate(vo);
+		
+		model.addAttribute("idx", vo.getIdx());
+		
+		if(res != 0) return "redirect:/message/cafeReviewUpdateOk?updateIdx="+vo.getIdx()+"&placeIdx="+vo.getPlaceIdx();
+		else return "redirect:/message/cafeReviewUpdateNo?updateIdx="+vo.getIdx()+"&placeIdx="+vo.getPlaceIdx();
+	}
+	
+	@RequestMapping(value = "/cafeReviewDelete", method = RequestMethod.GET)
+	public String cafeReviewDeleteGet(int idx,  int placeIdx) {
+		// 게시글에 사진이 존재한다면 서버에 저장된 사진을 삭제처리한다.
+		PetCafeReviewVO vo = petPlaceService.getPetCafeReviewContent(idx);
+		if(vo.getContent().indexOf("src=\"/") != -1) petPlaceService.imgDelete(vo.getContent());
+		
+		// 사진작업이 끝나면 DB에 저장된 실제 정보레코드를 삭제처리한다.
+		int res = petPlaceService.setCafeReviewDelete(idx);
+		
+		if(res != 0) return "redirect:/message/cafeReviewDeleteOK?idx="+placeIdx;
+		else return "redirect:/message/cafeReviewDeleteNO?idx="+placeIdx;
+	}
+	
+	
+	
 }

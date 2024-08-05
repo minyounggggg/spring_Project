@@ -51,5 +51,9 @@
 	<update id="setpdReviewHeartUp">
 		update productReview set goodHeart = goodHeart+1 where idx = #{idx};
 	</update>
+	
+	<update id="setpdReviewComplaint">
+		update productReview set complaint = complaint+1 where idx = #{idx};
+	</update>
 
 </mapper>

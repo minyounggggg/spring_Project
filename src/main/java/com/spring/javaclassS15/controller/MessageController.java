@@ -15,6 +15,8 @@ public class MessageController {
 			@PathVariable String msgFlag,
 			@RequestParam(name="mid", defaultValue = "", required = false) String mid,
 			@RequestParam(name="idx", defaultValue = "", required = false) String idx,
+			@RequestParam(name="updateIdx", defaultValue = "", required = false) String updateIdx,
+			@RequestParam(name="placeIdx", defaultValue = "", required = false) String placeIdx,
 			@RequestParam(name="pag", defaultValue = "1", required = false) String pag,
 			@RequestParam(name="pageSize", defaultValue = "5", required = false) String pageSize
 			) {
@@ -104,12 +106,53 @@ public class MessageController {
 			model.addAttribute("url", "/review/productReview");
 		}
 		else if(msgFlag.equals("petCafeReviewInsertOK")) {
-			model.addAttribute("msg", "카페 후기가 등록 되었습니다.");
+			model.addAttribute("msg", "카페 리뷰가 등록 되었습니다.");
 			model.addAttribute("url", "/petPlace/petCafeReviewList?idx="+idx);
 		}
 		else if(msgFlag.equals("petCafeReviewInsertNO")) {
-			model.addAttribute("msg", "후기 등록 실패! 다시 시도해주세요.");
+			model.addAttribute("msg", "리뷰 등록 실패! 다시 시도해주세요.");
 			model.addAttribute("url", "/petPlace/petCafeReviewList?idx="+idx);
+		}
+		else if(msgFlag.equals("cafeReviewUpdateOk")) {
+			model.addAttribute("msg", "카페 리뷰가 수정되었습니다.");
+			model.addAttribute("url", "/petPlace/petCafeReviewContent?idx="+updateIdx+"&placeIdx="+placeIdx);
+		}
+		else if(msgFlag.equals("cafeReviewUpdateNO")) {
+			model.addAttribute("msg", "카페 리뷰 수정 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/petPlace/petCafeReviewContent?idx="+updateIdx+"&placeIdx="+placeIdx);
+		}
+		else if(msgFlag.equals("cafeReviewDeleteOK")) {
+			model.addAttribute("msg", "카페 리뷰가 정상적으로 삭제 되었습니다.");
+			model.addAttribute("url", "/petPlace/petCafeReviewList?idx="+idx);
+		}
+		else if(msgFlag.equals("cafeReviewDeleteNO")) {
+			model.addAttribute("msg", "카페 리뷰 삭제 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/petPlace/petCafeReviewList?idx="+idx);
+		}
+		
+		else if(msgFlag.equals("hospitalReviewInsertOK")) {
+			model.addAttribute("msg", "병원 리뷰가 등록 되었습니다.");
+			model.addAttribute("url", "/hospital/hospitalReviewList?idx="+idx);
+		}
+		else if(msgFlag.equals("hospitalReviewInsertNO")) {
+			model.addAttribute("msg", "리뷰 등록 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/hospital/hospitalReviewList?idx="+idx);
+		}
+		else if(msgFlag.equals("hospitalReviewUpdateOk")) {
+			model.addAttribute("msg", "병원 리뷰가 수정되었습니다.");
+			model.addAttribute("url", "/hospital/hospitalReviewContent?idx="+updateIdx+"&placeIdx="+placeIdx);
+		}
+		else if(msgFlag.equals("hospitalReviewUpdateNO")) {
+			model.addAttribute("msg", "병원 리뷰 수정 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/hospital/hospitalReviewContent?idx="+updateIdx+"&placeIdx="+placeIdx);
+		}
+		else if(msgFlag.equals("hospitalReviewDeleteOK")) {
+			model.addAttribute("msg", "병원 리뷰가 정상적으로 삭제 되었습니다.");
+			model.addAttribute("url", "/hospital/hospitalReviewList?idx="+idx);
+		}
+		else if(msgFlag.equals("hospitalReviewDeleteNO")) {
+			model.addAttribute("msg", "병원 리뷰 삭제 실패! 다시 시도해주세요.");
+			model.addAttribute("url", "/hospital/hospitalReviewList?idx="+idx);
 		}
 		
 		

@@ -17,4 +17,5 @@ public class PageVO {
 	private String search;
 	private String searchString;
 	private String part;
+	private int contentNum;
 }

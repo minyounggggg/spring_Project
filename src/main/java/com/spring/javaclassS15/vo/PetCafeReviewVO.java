@@ -17,4 +17,6 @@ public class PetCafeReviewVO {
 	private int complaint;
 	private int goodHeart;
 	private String hostIp;
+	
+	private int reviewCnt;
 }
