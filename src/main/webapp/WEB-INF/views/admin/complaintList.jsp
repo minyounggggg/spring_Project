@@ -169,7 +169,7 @@
 						<tr>
 							<td>${vo.nickName}</td>
 							<td>제품후기</td>
-							<td>${vo.productName}</td>
+							<td><a href="${ctp}/review/productReviewContent?idx=${vo.idx}" target="_blank">${vo.productName}</a></td>
 							<td>${vo.complaint} 회</td>
 							<td>
 								<button onclick="reviewDelete('${vo.idx}','${vo.productPhoto}')" class="btn btn-danger btn-sm">삭제</button>

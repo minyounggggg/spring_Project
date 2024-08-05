@@ -1,3 +1,6 @@
+<%@page import="com.spring.javaclassS15.service.PetPlaceServiceImpl"%>
+<%@page import="com.spring.javaclassS15.vo.PetCafeReviewVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -95,6 +98,12 @@
 		    padding: 30px;
 		    color: #999999;
 		}
+		div#reviewMiniView {
+		    border: solid 1px #dee2e6;
+		    padding: 30px;
+		    margin: 20px 0;
+		    border-radius: 10px;
+		}
 	</style>
 	<script>
     'use strict';
@@ -123,15 +132,12 @@
 			<div id="cafeReviewMore">
 				<p class="placePick">#원하는 장소의 마커를 클릭해 해당장소의 상세정보와 다양한 후기를 둘러보세요</p>
 			</div>
+			<div id="reviewMiniView"></div>
 		</div>
 		
 		<div id="demo"></div>
 		
-		<div id="plz">
-			<c:forEach var="vo" items="${vos}">
-				<p>${vo.idx}</p>
-			</c:forEach>
-		</div>
+		
 	</div>
 	
 	<!-- 카카오맴 자바스크립트 AIP -->
@@ -248,7 +254,7 @@
 		    				'</p></section>' +
 		    				'<section style="float:left;width:33%;border-right: solid 1px #dbdbdb;padding-right: 20px;text-align: center;">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">찜</p>' + 
-		    					'<button><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button>' +
+		    					'<button onclick="wishPickBtn()"><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button>' +
 		    				'</section>' +
 		    				'<section style="float:left;width:33%;text-align: center;">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">반려동물 크기 제한</p>' + 
@@ -269,21 +275,56 @@
 		    	document.getElementById("cafeReviewMore").innerHTML = 
 		    		'<div><a class="cafeReviewBtn" href="petCafeReviewList?idx='+ position.idx +'";>['+position.placeName+'] 리뷰 보기</a>'+
 		    		'<a class="cafeReviewBtn" href="petCafeReviewInsert?placeIdx='+ position.idx +'";>['+position.placeName+'] 후기 작성하기</a>'+
-		    		'</div>'+
-		    		'<div id="reviewMiniView"></div>';
+		    		'</div>';
+		    		//'<div id="reviewMiniView"></div>';
+		    	
+		    	let reviewMini = '';
+		    	reviewMini += '';
+		    	<%--
+		    	<c:set var="viewCnt" value="0"/>
+		    	for(var i=0; i<${fn:length(cafeReviewVos)}; i++) {
+		          <c:set var="viewCnt" value="${viewCnt + 1}"/>
+		    	  alert('${viewCnt}');
+		          alert('${cafeReviewVos[viewCnt].title}');
+		    	}	
+		    	--%>
+		    	<%--
+		    	<c:set var="viewCnt" value="0"/>
+		        <c:forEach var="i" begin="0" end="${fn:length(cafeReviewVos)-1}">
+		    		<c:if test="${viewCnt < 3 && "+position.idx+" == cafeReviewVos[i].placeIdx}">
+			    		alert('${cafeReviewVos[i].placeIdx}');
+		    			reviewMini += '${cafeReviewVos[i].title}<br/>';
+				        <c:set var="viewCnt" value="${viewCnt + 1}"/>
+		    		</c:if>
+		    	</c:forEach>
+		    	--%>
 		    	
 		    	$.ajax({
-		    		url : '${ctp}/petPlace/reviewMiniView',
-		    		type : 'post',
-		    		data : {idx : position.idx},
-		    		success : function(vos) {
-						if(vos != 0){
-							
-						}
-					},
-		    		error : function() {
-						alert('전송오류');
-					}
+		    		url  : "${ctp}/petPlace/reviewMiniView",
+		    		type : "post",
+		    		data : {idx :position.idx},
+		    		success:function(vos) {
+		    			//for(var i=0; i<res.length; i++) {
+		    			for(var i=0; i<3; i++) {
+		    				if(vos[i].returnVisit == 'OK'){
+		    					reviewMini += '<span class="returnVisitOK">';
+			    				reviewMini += vos[i].returnVisit;
+			    				reviewMini += '<img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin-bottom:4px;"/></span>';
+		    				}
+		    				else {
+			    				reviewMini += '<span class="returnVisitNO">';
+			    				reviewMini += vos[i].returnVisit;
+			    				reviewMini += '<img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin-bottom:4px;"/></span>';
+		    				}
+		    				reviewMini += '<p class="reviewMiniViewTxt">';
+		    				reviewMini += vos[i].title;
+		    				reviewMini += '</p>';
+		    			}
+		    			document.getElementById("reviewMiniView").innerHTML = reviewMini;
+		    		},
+		    		error: function() {
+		    			alert("전송오류!");
+		    		}
 		    	});
 			});
 	    });

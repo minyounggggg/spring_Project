@@ -12,8 +12,8 @@ create table reviewComment (
   	content	 	text,							/* 댓글 내용 */
   	uploadDate	datetime default now(),			/* 댓글 등록일자 */
   	primary key(idx),
-  	foreign key(partIdx) references productReview(idx),
-  	foreign key(nickName) references member(nickName) on update cascade on delete restrict
+  	foreign key(partIdx) references productReview(idx) on update cascade on delete cascade,
+  	foreign key(nickName) references member(nickName) on update cascade on delete cascade
   	/* cascade를 설정해줄땐 하나 설정했으면 다 설정해주기 */
 );
 

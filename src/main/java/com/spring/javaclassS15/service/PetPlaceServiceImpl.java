@@ -225,6 +225,11 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 		return petPlaceDAO.setCafeReviewDelete(idx);
 	}
 
+	@Override
+	public List<PetCafeReviewVO> getCafeReview() {
+		return petPlaceDAO.getCafeReview();
+	}
+
 	
 
 }

@@ -14,6 +14,8 @@ public interface AdminDAO {
 
 	List<ProductReviewVO> getComplaintList();
 
+	int setReviewDelete(int idx);
+
 	
 	
 }

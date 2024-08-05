@@ -1,7 +1,9 @@
 package com.spring.javaclassS15.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -92,10 +94,26 @@ public class MemberController {
 					}
 				}
 			}
-			//request.setAttribute("msg", "로그인 되었습니다.");
-			//request.setAttribute("url", "member/memberMain");
+			memberService.setMemberLastDate(mid);
 			
-			//return "include/message";
+			// (1번/2-1번)처리 : 방문포인트 처리를 위한 날짜 추출 비교하기 - 조건에 맞도록 방문 포인트와 카운트를 증가처리한다.
+			Date today = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String strToday = sdf.format(today);
+			
+			if(!strToday.equals(vo.getLastDate().substring(0,10))) {
+				// 오늘 처음 방문한 경우이다.(오늘 방문카운트는 1로, 기존 포인트에 +10)
+				vo.setTodayCnt(1);
+				vo.setPoint((vo.getPoint() + 10));
+				
+			}
+			else {
+				// 오늘 다시 방문한경우(오늘 방문카운트는 오늘방문카운트 + 1, 포인트증가는? 오늘 방문횟수가 1회전까지라면 기존포인트에 +10을 한다.)
+				vo.setTodayCnt(vo.getTodayCnt() + 1);
+				if(vo.getTodayCnt() <= 1) vo.setPoint(vo.getPoint() + 10);
+			}
+			memberService.setLoginUpdate(vo);
+			
 			return "redirect:/message/memberLoginOK?mid="+mid;
 		}
 		else return "redirect:/message/memberLoginNO";

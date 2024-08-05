@@ -38,6 +38,10 @@
 		select count(*) from petCafeReview where placeIdx = #{contentNum};
 	</select>
 	
+	<select id="getCafeReview" resultType="com.spring.javaclassS15.vo.PetCafeReviewVO">
+		select * from petCafeReview order by idx desc limit 3;
+	</select>
+	
 	
 	
 	

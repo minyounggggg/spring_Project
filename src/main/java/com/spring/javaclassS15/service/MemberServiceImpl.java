@@ -101,8 +101,17 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int setMemberUpdateOK(MemberVO vo, String mid) {
-		System.out.println("vo : " + vo);
 		return memberDAO.setMemberUpdateOK(vo, mid);
+	}
+
+	@Override
+	public void setMemberLastDate(String mid) {
+		memberDAO.setMemberLastDate(mid);
+	}
+
+	@Override
+	public void setLoginUpdate(MemberVO vo) {
+		memberDAO.setLoginUpdate(vo);
 	}
 	
 }

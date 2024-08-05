@@ -18,4 +18,6 @@ public class MemberVO {
 	private String startDate;
 	private String lastDate;
 	private int level;
+	
+	private int todayCnt;
 }

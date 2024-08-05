@@ -66,10 +66,8 @@ public class ProductReviewController {
 	// 제품리뷰 insert
 	@RequestMapping(value = "/productReviewInsert", method = RequestMethod.POST)
 	public String productReviewInsertPost(ProductReviewVO vo, MultipartHttpServletRequest pdPhoto) {
-		System.out.println("pdPhoto : " + pdPhoto);
 		
 		int res = productReviewService.setproductReviewInsert(pdPhoto, vo);
-		System.out.println("vo : " + vo);
 		if(res != 0) return "redirect:/message/productReviewInsertOK";
 		else return "redirect:/message/productReviewInsertNO";
 	}
@@ -103,9 +101,6 @@ public class ProductReviewController {
 	public String productReviewCommentInsertPost(ReviewCommentVO commentVO) {
 		// 부모댓글의 경우는 re_step=0, re_order=1로 처리. (단, 원본글의 첫번째 부모댓글은 re_order=1이지만, 2번 이상은 마지막 부모댓글의 re_order보다 +1처리 시켜준다.)
 		ReviewCommentVO parentCommentVO = productReviewService.getPdReviewParentCommentCheck(commentVO.getPartIdx());
-		
-		System.out.println("commentVO : " + commentVO);
-		System.out.println("parentCommentVO : " + parentCommentVO);
 		
 		if(parentCommentVO == null) {
 			commentVO.setCommentCnt(1);
@@ -161,4 +156,32 @@ public class ProductReviewController {
 		return res + "";
 	}
 	
+	// 제품후기 삭제
+	@ResponseBody
+	@RequestMapping(value = "/reviewDeleteOK", method = RequestMethod.POST)
+	public String reviewDeleteOkPost(int idx, String productPhoto) {
+		
+		productReviewService.imgDelete(productPhoto);
+		
+		int res = productReviewService.setReviewDelete(idx);
+		
+		return res + "";
+		
+	}
+	
+	// 제품리뷰 update
+	@RequestMapping(value = "/productReviewUpdateOK", method = RequestMethod.POST)
+	public String productReviewUpdateOKPost(int idx, ProductReviewVO vo, MultipartHttpServletRequest pdPhoto) {
+		ProductReviewVO orgVO = productReviewService.getOrgReviewVO(idx);
+		System.out.println("orgVO : " + orgVO);
+		
+		productReviewService.imgUpdateDelete(orgVO.getProductPhoto());
+		//vo.setPetPhoto(productReviewService.fileUploadPet(updateFName, mid));
+		//vo.setReviewUpdatePhoto(petVO.getPetPhoto());
+		
+		int res = productReviewService.setproductReviewUpdate(pdPhoto, vo);
+		if(res != 0) return "redirect:/message/productReviewUpdateOK?idx="+idx;
+		else return "redirect:/message/productReviewUpdateNO?idx="+idx;
+		
+	}
 }
