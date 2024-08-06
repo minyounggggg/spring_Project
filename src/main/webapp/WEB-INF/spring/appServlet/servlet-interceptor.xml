@@ -12,7 +12,13 @@
 		<interceptors>
 			<interceptor>  <!-- 비회원 처리 -->
 				<mapping path="/member/**"/>
-				<mapping path="/review/**"/>
+				<mapping path="/review/productReviewContent/**"/>
+				<mapping path="/hospital/hospitalReviewList/**"/>
+				<mapping path="/hospital/hospitalReviewInsert/**"/>
+				<mapping path="/petPlace/wishPlaceSave"/>
+				<mapping path="/petPlace/petCafeReviewList/**"/>
+				<mapping path="/petPlace/petCafeReviewInsert/**"/>
+				
 				<exclude-mapping path="/member/memberMain"/>
 				<exclude-mapping path="/member/memberLogin"/>
 				<exclude-mapping path="/member/memberJoin"/>

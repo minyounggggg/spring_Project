@@ -237,5 +237,16 @@ public class PetPlaceController {
 		return res + "";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/wishPlaceDelete", method = RequestMethod.POST)
+	public String wishPlaceDeletePost(HttpSession session, int placeIdx, String part) {
+		session.removeAttribute("sWishPlace");
+		
+		String mid = (String) session.getAttribute("sMid");
+		
+		int res = petPlaceService.setWishPlaceDelete(mid, part, placeIdx);
+		return res + "";
+	}
+	
 	
 }

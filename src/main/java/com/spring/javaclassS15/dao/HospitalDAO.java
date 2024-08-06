@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import com.spring.javaclassS15.vo.HospitalReviewVO;
 import com.spring.javaclassS15.vo.HospitalVO;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.PetCafeReviewVO;
+import com.spring.javaclassS15.vo.PetCafeVO;
 
 public interface HospitalDAO {
 
@@ -33,6 +35,14 @@ public interface HospitalDAO {
 	public int setHospitalReviewUpdate(@Param("vo") HospitalReviewVO vo);
 
 	public int setHospitalReviewDelete(@Param("idx") int idx);
+
+	public List<HospitalReviewVO> gethospitalReview();
+
+	public PetCafeVO getPlaceName(@Param("placeIdx") int placeIdx);
+
+	public void setWishPlace(@Param("mid") String mid, @Param("nickName") String nickName, @Param("part") String part, @Param("placeIdx") int placeIdx, @Param("placeName") String placeName);
+
+	public int setWishPlaceDelete(@Param("mid") String mid, @Param("part") String part, @Param("placeIdx") int placeIdx);
 
 
 

@@ -38,7 +38,13 @@
 		select count(*) from hospitalReview where placeIdx = #{contentNum};
 	</select>
 	
+	<select id="gethospitalReview" resultType="com.spring.javaclassS15.vo.HospitalReviewVO">
+		select * from hospitalReview order by idx desc limit 3;
+	</select>
 	
+	<select id="getPlaceName" resultType="com.spring.javaclassS15.vo.HospitalVO">
+		select * from Hospital where idx = #{placeIdx};
+	</select>
 	
 	
 	<update id="setHospitalReviewUpdate">
@@ -54,10 +60,20 @@
 	<insert id="setHospitalReviewInsert">
 		insert into hospitalReview values (default,#{vo.placeIdx},#{vo.mid},#{vo.nickName},#{vo.photo},#{vo.title},#{vo.content},#{vo.returnVisit},default,default,default,default,#{vo.hostIp});
 	</insert>
+	
+	<insert id="setWishPlace">
+		insert into wishPlace values (default, #{mid}, #{nickName}, #{part}, #{placeIdx}, #{placeName}, default);
+	</insert>
+	
+	
 
 
 	<delete id="setHospitalReviewDelete">
 		delete from hospitalReview where idx = #{idx};
+	</delete>
+	
+	<delete id="setWishPlaceDelete">
+		delete from wishPlace where mid = #{mid} and part = #{part} and placeIdx = #{placeIdx};
 	</delete>
 
 

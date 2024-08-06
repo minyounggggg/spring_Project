@@ -22,6 +22,8 @@ import com.spring.javaclassS15.dao.HospitalDAO;
 import com.spring.javaclassS15.vo.HospitalReviewVO;
 import com.spring.javaclassS15.vo.HospitalVO;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.PetCafeReviewVO;
+import com.spring.javaclassS15.vo.PetCafeVO;
 
 @Service
 public class HospitalServiceImpl implements HospitalService {
@@ -223,6 +225,26 @@ public class HospitalServiceImpl implements HospitalService {
 	@Override
 	public int setHospitalReviewDelete(int idx) {
 		return hospitalDAO.setHospitalReviewDelete(idx);
+	}
+
+	@Override
+	public List<HospitalReviewVO> gethospitalReview() {
+		return hospitalDAO.gethospitalReview();
+	}
+
+	@Override
+	public PetCafeVO getPlaceName(int placeIdx) {
+		return hospitalDAO.getPlaceName(placeIdx);
+	}
+
+	@Override
+	public void setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName) {
+		hospitalDAO.setWishPlace(mid, nickName, part, placeIdx, placeName);
+	}
+
+	@Override
+	public int setWishPlaceDelete(String mid, String part, int placeIdx) {
+		return hospitalDAO.setWishPlaceDelete(mid, part, placeIdx);
 	}
 
 	

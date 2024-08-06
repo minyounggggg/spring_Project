@@ -37,5 +37,7 @@ public interface ProductReviewDAO {
 
 	public ProductReviewVO getOrgReviewVO(@Param("idx") int idx);
 
+	public int setReviewHeartDelete(@Param("idx") int idx);
+
 	
 }

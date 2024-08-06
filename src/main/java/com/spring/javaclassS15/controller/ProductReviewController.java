@@ -135,6 +135,15 @@ public class ProductReviewController {
 		return res + "";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/reviewHeartDelete", method = RequestMethod.POST)
+	public String reviewHeartDeletePost(HttpSession session, int idx) {
+		session.removeAttribute("sContentGood");
+		
+		int res = productReviewService.setReviewHeartDelete(idx);
+		return res + "";
+	}
+	
 	// 제품리뷰 신고 처리
 	@ResponseBody
 	@RequestMapping(value = "/productReviewComplaint", method = RequestMethod.POST)

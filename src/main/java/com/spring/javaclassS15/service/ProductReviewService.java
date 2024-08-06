@@ -39,4 +39,6 @@ public interface ProductReviewService {
 
 	public ProductReviewVO getOrgReviewVO(int idx);
 
+	public int setReviewHeartDelete(int idx);
+
 }

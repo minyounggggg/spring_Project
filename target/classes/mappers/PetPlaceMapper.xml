@@ -76,5 +76,9 @@
 		delete from petCafeReview where idx = #{idx};
 	</delete>
 
+	<delete id="setWishPlaceDelete">
+		delete from wishPlace where mid = #{mid} and part = #{part} and placeIdx = #{placeIdx};
+	</delete>
+
 
 </mapper>

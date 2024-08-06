@@ -40,13 +40,13 @@
 	    .mapSec{
 	    	float : left;
 	    	width:50%;
-	    	height:500px;
+	    	height:527px;
 	    	border-radius: 30px;
 	    	border: solid 5px #578de4;
-	    	margin-bottom: 30px;
+	    	margin-bottom: 25px;
     		/* box-shadow: 10px 14px 14px rgba(0, 0, 50, 0.1); */
 	    }
-	    .mapSearchSec{float:left; width:50%; padding:30px;}
+	    .mapSearchSec{float:left; width:50%; padding-left:30px;}
 	    
 	    input::placeholder{color:#ddd !important;font-size: 14px !important;}
 		input#address, #addressPick{
@@ -75,7 +75,7 @@
 	    	font-size: 13px;
 	    	width : 140px;
 		}
-		.cafeReviewBtn {margin:0 10px 0 0;}
+		.cafeReviewBtn {margin:0 0 0 10px;}
 		.addressSearchBtn:hover {background-color: #3478db;}
 		.cafeReviewBtn:hover {background-color: #3478db;}
 		
@@ -84,24 +84,103 @@
 			clear: both;
 			width: 100%;
 			padding: 40px 35px 20px;
-			margin: 30px 0;
-			background-color: #f9f9f9;
-			border-radius: 30px;
+			margin: 30px 0 130px;
+			background-color: #f8f9f9;
+			border-radius: 20px;
 		}
 		p.placePick {
 		    border: dashed 2px #ededed;
 		    border-radius: 20px;
-		    height: 354px;
+		    height: 411px;
 		    padding: 30px;
 		    color: #999999;
+		}
+		#clickSec {
+		    border: solid 1px #dee2e6;
+		    padding: 32px 25px 25px;
+		    margin: 20px 0;
+		    border-radius: 20px;
+		    display: none;
+		}
+		.returnVisitOK, .returnVisitNO{
+		    border-radius: 50px;
+		    border: solid 1px #578de4;
+		    padding: 4px 11px 4px 13px;
+		    color: #578de4;
+		    font-size: 13px;
+    		font-weight: 500;
+    		letter-spacing: -1px;
+		}
+		.returnVisitNO{
+			border: solid 1px #666;
+		    color: #666;
+		}
+		.reviewMiniViewTxt{
+			margin: 10px 14px 25px;
+			font-size: 16px;
+		    letter-spacing: -1px;
+		    font-weight: 500;
+		    color: #7e878f;
+		}
+		.cafeInfoSecBox{
+			display: flex;
+    		justify-content: space-between;
+		}
+		.cafeInfoSecBoxInner{
+			/* float: left;
+		    width: 33%; */
+		    text-align: center;
+		    background-color: #e9ecef;
+		    border-radius: 10px;
+		    padding: 20px 0 10px;
+		    width: 32.5%;
 		}
 	</style>
 	<script>
     'use strict';
     
-	let addressSw = 0;
+	//let addressSw = 0;
 	
-	
+	function wishPickBtn(placeIdx) {
+    	if (${empty sLevel}) {
+    		alert("로그인 후 이용가능합니다.");
+    		return false;
+    	}
+		$.ajax({
+			url : "${ctp}/hospital/wishPlaceSave",
+			type : "post",
+			data : {placeIdx : placeIdx, part : "hospital"},
+			success : function(res) {
+				if(res != 0){
+					alert("찜한 목록에 추가되었습니다!");
+					location.reload();
+				}
+				else {
+					let ans = confirm("이미 찜한 목록에 추가되었습니다.\n찜한 목록에서 삭제하시겠습니까?");
+			    	if(ans){
+						$.ajax({
+							url : "${ctp}/hospital/wishPlaceDelete",
+							type : "post",
+							data : {placeIdx : placeIdx, part : "hospital"},
+							success : function(res) {
+								if(res != "0") {
+									alert("해당장소가 찜한 목록에서 삭제되었습니다.");
+									location.reload();
+								}
+								else alert("찜삭제처리실패");
+							},
+							error : function() {
+								alert("전송오류");
+							}
+						});
+			    	}
+				}
+			},
+			error : function() {
+				alert("전송오류");
+			}
+		});
+	}
     
 	</script>
 </head>
@@ -120,18 +199,15 @@
 				    </div>
 				</div>
 		    </div>
-			<div id="cafeReviewMore">
-				<p class="placePick">#원하는 장소의 마커를 클릭해 해당장소의 상세정보와 다양한 후기를 둘러보세요</p>
+			<div id="clickSec">
+				<div id="reviewMiniView"></div>
+				<div id="cafeReviewMore"></div>
 			</div>
+				<p class="placePick">#원하는 장소의 마커를 클릭해 해당장소의 상세정보와 다양한 후기를 둘러보세요</p>
 		</div>
 		
 		<div id="demo"></div>
 		
-		<div id="plz">
-			<c:forEach var="vo" items="${vos}">
-				<p>${vo.idx}</p>
-			</c:forEach>
-		</div>
 	</div>
 	
 	<!-- 카카오맴 자바스크립트 AIP -->
@@ -233,6 +309,9 @@
 		    var parkingCheck = position.parking == "Y" ? "주차가능":"주차어려움";
 		    
 		    kakao.maps.event.addListener(marker, 'click', function() {
+		    	$('#clickSec').show();
+		    	$('.placePick').hide();
+		    
 		    	//console.log(miniViewVos);
 			    // 마커클릭이벤트
 		    	document.getElementById("demo").innerHTML = 
@@ -240,19 +319,22 @@
 		    			'<p style="font-size: 25px;font-weight: 600;color: #333333;">' + position.placeName + '<span style="margin-left: 5px;font-size: 17px;font-weight: 500;color: #939396;"> '+position.category+' • '+position.placeInfo+'</span></p>' + 
 		    			'<p style="margin-bottom: 30px;">방문자후기 0 • 찜 0</p>'+
 		    			'<hr/>'+
-		    			'<div>'+
-		    				'<section style="float:left;width:33%;border-right: solid 1px #dbdbdb;padding-right: 20px;text-align: center;">' +
-		    					'<p style="margin-bottom: 0;font-size: 16px;font-weight: 700;color: #999;">주차</p><p>' + 
+		    			'<div class="cafeInfoSecBox">'+
+		    				'<section class="cafeInfoSecBoxInner">' +
+		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">주차</p><p>' + 
 		    					'<p style="margin-bottom: 0;font-weight: 600;font-size: 20px;">'+ parkingCheck +'</p>' +
 		    					
 		    				'</p></section>' +
-		    				'<section style="float:left;width:33%;border-right: solid 1px #dbdbdb;padding-right: 20px;text-align: center;">' +
+		    				'<section class="cafeInfoSecBoxInner">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">찜</p>' + 
-		    					'<button><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button>' +
+		    					
+		    					'<c:if test="${empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love-3.png" style="width:40px;"/></button></c:if>'+
+		    					'<c:if test="${!empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love.png" style="width:40px;"/></button></c:if>'+
+		    					
 		    				'</section>' +
-		    				'<section style="float:left;width:33%;text-align: center;">' +
+		    				'<section class="cafeInfoSecBoxInner">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">반려동물 크기 제한</p>' + 
-		    					'<p style="margin-bottom: 0;font-weight: 600;font-size: 20px;">' + position.petSize + '</p>' +
+		    					'<p style="margin-bottom: 0;font-weight: 600;font-size: 22px;">' + position.petSize + '</p>' +
 		    				'</section>' +
 		    			'</div>'+
 		    			'<hr style="clear:both;"/>'+
@@ -267,23 +349,41 @@
 		    		'</div>';
 		    		
 		    	document.getElementById("cafeReviewMore").innerHTML = 
-		    		'<div><a class="cafeReviewBtn" href="hospitalReviewList?idx='+ position.idx +'";>['+position.placeName+'] 리뷰 보기</a>'+
+		    		'<div style="text-align: right;margin: -10px 0px -5px 0;"><a class="cafeReviewBtn" href="hospitalReviewList?idx='+ position.idx +'";>['+position.placeName+'] 리뷰 보기</a>'+
 		    		'<a class="cafeReviewBtn" href="hospitalReviewInsert?placeIdx='+ position.idx +'";>['+position.placeName+'] 후기 작성하기</a>'+
-		    		'</div>'+
-		    		'<div id="reviewMiniView"></div>';
+		    		'</div>';
+		    	
+		    	let reviewMini = '';
+		    	reviewMini += '';
 		    	
 		    	$.ajax({
-		    		url : '${ctp}/petPlace/reviewMiniView',
-		    		type : 'post',
-		    		data : {idx : position.idx},
-		    		success : function(vos) {
-						if(vos != 0){
-							
-						}
-					},
-		    		error : function() {
-						alert('전송오류');
-					}
+		    		url  : "${ctp}/hospital/reviewMiniView",
+		    		type : "post",
+		    		data : {idx :position.idx},
+		    		success:function(vos) {
+		    			//for(var i=0; i<res.length; i++) {
+		    			for(var i=0; i<3; i++) {
+		    				if(vos[i].returnVisit == '다음에 또 올꺼에요'){
+		    					reviewMini += '<span class="returnVisitOK">';
+			    				reviewMini += vos[i].returnVisit;
+			    				reviewMini += '<img src="${ctp}/resources/images/icon/heartface-emoji.png" style="width:20px;margin: 0 0 3px 8px;"/></span>';
+		    				}
+		    				else {
+			    				reviewMini += '<span class="returnVisitNO">';
+			    				reviewMini += vos[i].returnVisit;
+			    				reviewMini += '<img src="${ctp}/resources/images/icon/thinking-face.png" style="width:20px;margin: 0 0 3px 8px;"/></span>';
+		    				}
+		    				reviewMini += '<p class="reviewMiniViewTxt">';
+		    				reviewMini += vos[i].title;
+		    				reviewMini += '<span style="color:#ced4da;font-size:12px;"> &nbsp;...more</span>';
+		    				reviewMini += '</p>';
+		    				reviewMini += '<hr style="margin: 20px 0 30px;"/>';
+		    			}
+		    			document.getElementById("reviewMiniView").innerHTML = reviewMini;
+		    		},
+		    		error: function() {
+		    			alert("전송오류!");
+		    		}
 		    	});
 			});
 	    });
