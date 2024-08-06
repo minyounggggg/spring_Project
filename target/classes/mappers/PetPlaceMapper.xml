@@ -42,12 +42,17 @@
 		select * from petCafeReview order by idx desc limit 3;
 	</select>
 	
+	<select id="getPlaceName" resultType="com.spring.javaclassS15.vo.PetCafeVO">
+		select * from petCafe where idx = #{placeIdx};
+	</select>
+	 
 	
 	
 	
 	<update id="setCafeReviewUpdate">
 		update petCafeReview set title = #{vo.title}, content = #{vo.content}, returnVisit = #{vo.returnVisit}, hostIp = #{vo.hostIp}, uploadDate = now() where idx=#{vo.idx};
 	</update>
+	
 	
 	
 	
@@ -58,6 +63,13 @@
 	<insert id="setPetCafeReviewInsert">
 		insert into petCafeReview values (default,#{vo.placeIdx},#{vo.mid},#{vo.nickName},#{vo.photo},#{vo.title},#{vo.content},#{vo.returnVisit},default,default,default,default,#{vo.hostIp});
 	</insert>
+	
+	
+	<insert id="setWishPlace">
+		insert into wishPlace values (default, #{mid}, #{nickName}, #{part}, #{placeIdx}, #{placeName}, default);
+	</insert>
+
+
 
 
 	<delete id="setCafeReviewDelete">

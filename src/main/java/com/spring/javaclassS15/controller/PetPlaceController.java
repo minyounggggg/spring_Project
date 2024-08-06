@@ -29,6 +29,7 @@ import com.spring.javaclassS15.vo.MemberVO;
 import com.spring.javaclassS15.vo.PageVO;
 import com.spring.javaclassS15.vo.PetCafeReviewVO;
 import com.spring.javaclassS15.vo.PetCafeVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 import net.sf.json.JSONArray;
 
@@ -83,7 +84,7 @@ public class PetPlaceController {
 		List<PetCafeReviewVO> vos = petPlaceService.getReviewMiniViewList(idx);
 		model.addAttribute("vos", vos);
 		//model.addAttribute("miniViewVos", JSONArray.fromObject(vos));
-		System.out.println("vos : " + vos);
+		//System.out.println("vos : " + vos);
 		return vos;
 	}
 	
@@ -208,6 +209,33 @@ public class PetPlaceController {
 		else return "redirect:/message/cafeReviewDeleteNO?idx="+placeIdx;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/wishPlaceSave", method = RequestMethod.POST)
+	public String wishPlaceSavePost(int placeIdx, String part, String mid, String nickName, String placeName, HttpSession session, WishPlaceVO wishVO, HttpServletRequest request) {
+		
+		mid = (String) session.getAttribute("sMid");
+		nickName = (String) session.getAttribute("sNickName");
+		
+		PetCafeVO vo = petPlaceService.getPlaceName(placeIdx);
+		placeName = vo.getPlaceName();
+		
+		// 찜 목록 증가처리 (중복 불허)
+		int res = 0;
+		session = request.getSession(); //게시글을 보는순간 세션이 생긴다.
+		ArrayList<String> wishPlace = (ArrayList<String>)session.getAttribute("sWishPlace");
+		
+		if(wishPlace == null) wishPlace = new ArrayList<String>();
+		String imsiWishPlace = "wishPlaceCheck" + placeIdx;
+		
+		if(!wishPlace.contains(imsiWishPlace)) {  //"contains"= 포함하고있냐는 명령 / (imsiContentReadNum를 포함하고있니?)
+			petPlaceService.setWishPlace(mid, nickName, part, placeIdx, placeName);
+			wishPlace.add(imsiWishPlace);
+			res = 1;
+		}
+		session.setAttribute("sWishPlace", wishPlace);
+		
+		return res + "";
+	}
 	
 	
 }
