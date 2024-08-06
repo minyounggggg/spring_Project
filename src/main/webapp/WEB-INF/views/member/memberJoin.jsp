@@ -63,7 +63,7 @@
 	    margin-top: 140px;
 	}
 	.sec01{
-		/* background-image : url("${ctp}/resources/images/memberLogin/testBG.jpg"); */
+		background-image : url("${ctp}/resources/images/memberLogin/login_bg_03.png"); 
 		background-color : #999;
 		height: 670px;
 		border-radius : 30px 0 0 30px;
@@ -478,11 +478,11 @@
 	<div class="joinForm">
 		<form name="myform" method="post">
 			<section class="sec01">
-				<%-- <div class="text-center"><img src="${ctp}/images/memberLogin/logo03.png" class="logo" style="width:300px">회원가입</div> --%>
+				<%-- <div class="text-center"><img src="${ctp}/images/memberLogin/login_bg_03.png" class="logo" style="width:300px">회원가입</div> --%>
 				<!-- 반려동물 커뮤니티 사이트, 커플 일정 공유 캘린더 --><!-- 커플 일정공유 캘린더, 친구맺어진 사람들끼리만 공유, 한쪽이 수정중이면 다른 한쪽은 수정불가 -->
 				<!-- 반려동물이용 시설, 내가 찜한 목록 -->
-				<!-- 산책인증 챌린지 -->
-				회원가입img
+				<!-- 산책인증 챌린지 
+				회원가입img-->
 			    
 			    <!-- 특이사항 적을지 말지? -->
 			</section>
