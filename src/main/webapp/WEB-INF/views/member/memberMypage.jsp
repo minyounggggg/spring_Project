@@ -148,7 +148,7 @@
     		border: none;
     	}
     	#myModal1 .modal-dialog {
-	        width : 400px;
+	        width : 500px;
 	    }
 	    #myModal1 .modal-header, #myModal2 .modal-header, #myModal3 .modal-header{
 	    	border: none;
@@ -602,7 +602,10 @@
 				<section class="info">
 					<p style="font-size:26px;font-weight:700;color:#444;margin:0 0 5px">${vo.nickName}</p>
 					<p><img src="${ctp}/resources/images/memberMypage/place.png" style="width:20px;margin-right:5px;"/>${vo.address}</p>
-					<p>안녕하세용 &nbsp;&nbsp;|&nbsp;&nbsp; <button data-toggle="modal" data-target="#myModal1" style="background: transparent;border: none;">수정하기</button></p> 
+					<p>안녕하세용 &nbsp;&nbsp;|&nbsp;&nbsp; 
+					<button data-toggle="modal" data-target="#myModal1" style="background: transparent;border: none;">수정하기</button>
+					<a href="${ctp}/member/wishPlace?mid=${vo.mid}">찜한장소보기</a>
+					</p> 
 				</section>
 			</div>
 			<div class="point-box sec-boxStyle">

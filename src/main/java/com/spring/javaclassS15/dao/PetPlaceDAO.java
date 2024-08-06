@@ -39,7 +39,7 @@ public interface PetPlaceDAO {
 
 	public PetCafeVO getPlaceName(@Param("placeIdx") int placeIdx);
 
-	public int setWishPlace(@Param("mid") String mid, @Param("nickName") String nickName, @Param("part") String part, @Param("placeIdx") int placeIdx, @Param("placeName") String placeName);
+	public int setWishPlace(@Param("mid") String mid, @Param("nickName") String nickName, @Param("part") String part, @Param("placeIdx") int placeIdx, @Param("placeName") String placeName, @Param("sido") String sido, @Param("sigungu") String sigungu, @Param("dong") String dong);
 
 	public int setWishPlaceDelete(@Param("mid") String mid, @Param("part") String part, @Param("placeIdx") int placeIdx);
 

@@ -38,9 +38,9 @@ public interface HospitalDAO {
 
 	public List<HospitalReviewVO> gethospitalReview();
 
-	public PetCafeVO getPlaceName(@Param("placeIdx") int placeIdx);
+	public HospitalVO getPlaceName(@Param("placeIdx") int placeIdx);
 
-	public void setWishPlace(@Param("mid") String mid, @Param("nickName") String nickName, @Param("part") String part, @Param("placeIdx") int placeIdx, @Param("placeName") String placeName);
+	public void setWishPlace(@Param("mid") String mid, @Param("nickName") String nickName, @Param("part") String part, @Param("placeIdx") int placeIdx, @Param("placeName") String placeName, @Param("sido") String sido, @Param("sigungu") String sigungu, @Param("dong") String dong);
 
 	public int setWishPlaceDelete(@Param("mid") String mid, @Param("part") String part, @Param("placeIdx") int placeIdx);
 

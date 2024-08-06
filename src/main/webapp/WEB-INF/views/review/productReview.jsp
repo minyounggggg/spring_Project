@@ -467,6 +467,7 @@
 <jsp:include page="/WEB-INF/views/include/nav.jsp" />
 	<div class="inner">
 		<div class="sec01">
+			<!--
 			<section>
 				<select class="petCategory" onchange="petCategoryOp(this)">
 					<option value="모든동물">모든동물</option>
@@ -475,6 +476,7 @@
 					<option value="기타동물">기타동물</option>
 				</select>
 			</section>
+				-->
 			<section>
 				<form name="partForm">
 					<select name="part" id="part" onchange="partCheck()">
@@ -487,6 +489,7 @@
 					</select>
 				</form>
 			</section>
+			<!--
 			<section>
 				<select class="listCategory" id="listCategory">
 					<option value="최신순" selected>최신순</option>
@@ -495,6 +498,7 @@
 					<option value="Um">재구매 고민중</option>
 				</select>
 			</section>
+				-->
 		</div>
 		<div class="sec02">
 			<c:forEach var="reviewVo" items="${reviewVos}" varStatus="st">
@@ -550,7 +554,7 @@
 					<section class="reviewHeart">
 						<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.goodHeart}</span>
 						<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.commentCnt}</span>
-						<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.readNum}</span>
+						<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/visibility.png" style="width:25px;margin: 0 5px 5px 0;"/>${reviewVo.readNum}</span>
 					</section>
 				</div>
 			</c:forEach>	

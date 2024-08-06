@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.vo.MemberPetVO;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 public interface MemberService {
 
@@ -38,6 +39,11 @@ public interface MemberService {
 	public void setMemberLastDate(String mid);
 
 	public void setLoginUpdate(MemberVO vo);
+
+	public List<WishPlaceVO> getCafeWishPlace(String mid, String cafePart, int startIndexNo, int pageSize);
+
+	public List<WishPlaceVO> getHospitalWishPlace(String mid, String hospitalPart);
+
 
 
 }

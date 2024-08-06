@@ -11,6 +11,7 @@ import com.spring.javaclassS15.common.JavaclassProvide;
 import com.spring.javaclassS15.dao.MemberDAO;
 import com.spring.javaclassS15.vo.MemberPetVO;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -112,6 +113,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void setLoginUpdate(MemberVO vo) {
 		memberDAO.setLoginUpdate(vo);
+	}
+
+	@Override
+	public List<WishPlaceVO> getCafeWishPlace(String mid, String cafePart, int startIndexNo, int pageSize) {
+		return memberDAO.getCafeWishPlace(mid, cafePart, startIndexNo, pageSize);
+	}
+
+	@Override
+	public List<WishPlaceVO> getHospitalWishPlace(String mid, String hospitalPart) {
+		return memberDAO.getHospitalWishPlace(mid, hospitalPart);
 	}
 	
 }

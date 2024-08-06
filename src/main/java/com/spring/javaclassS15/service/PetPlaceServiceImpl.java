@@ -237,8 +237,8 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	}
 	  
 	@Override
-	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName) {
-		return petPlaceDAO.setWishPlace(mid, nickName, part, placeIdx, placeName);
+	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName, String sido, String sigungu, String dong) {
+		return petPlaceDAO.setWishPlace(mid, nickName, part, placeIdx, placeName, sido, sigungu, dong);
 	}
 
 	@Override

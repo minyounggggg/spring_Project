@@ -218,6 +218,9 @@ public class PetPlaceController {
 		
 		PetCafeVO vo = petPlaceService.getPlaceName(placeIdx);
 		placeName = vo.getPlaceName();
+		String sido = vo.getSido();
+		String sigungu = vo.getSigungu();
+		String dong = vo.getDong();
 		
 		// 찜 목록 증가처리 (중복 불허)
 		int res = 0;
@@ -228,7 +231,7 @@ public class PetPlaceController {
 		String imsiWishPlace = "wishPlaceCheck" + placeIdx;
 		
 		if(!wishPlace.contains(imsiWishPlace)) {  //"contains"= 포함하고있냐는 명령 / (imsiContentReadNum를 포함하고있니?)
-			petPlaceService.setWishPlace(mid, nickName, part, placeIdx, placeName);
+			petPlaceService.setWishPlace(mid, nickName, part, placeIdx, placeName, sido, sigungu, dong);
 			wishPlace.add(imsiWishPlace);
 			res = 1;
 		}

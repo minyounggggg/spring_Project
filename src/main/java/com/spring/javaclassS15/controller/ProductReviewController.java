@@ -155,7 +155,7 @@ public class ProductReviewController {
 		ArrayList<String> contentComplaint = (ArrayList<String>)session.getAttribute("sContentComplaint");
 		if(contentComplaint == null) contentComplaint = new ArrayList<String>();
 		String imsiContentComplaint = "pdReviewComplaint" + idx;
-		if(!contentComplaint.contains(imsiContentComplaint)) {  //"contains"= 포함하고있냐는 명령 / (imsiContentReadNum를 포함하고있니?)
+		if(!contentComplaint.contains(imsiContentComplaint)) { 
 			productReviewService.setpdReviewComplaint(idx);
 			contentComplaint.add(imsiContentComplaint);
 			res = 1;

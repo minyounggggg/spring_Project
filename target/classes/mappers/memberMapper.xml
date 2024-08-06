@@ -21,12 +21,21 @@
 	<select id="getMemberPetPhoto" resultType="com.spring.javaclassS15.vo.MemberPetVO">
 		select * from memberPet where idx = #{idx};
 	</select>
+
+	<select id="getCafeWishPlace" resultType="com.spring.javaclassS15.vo.WishPlaceVO">
+		select *, (select count(*) from wishPlace where mid = #{mid} and part = #{cafePart}) as wishCnt
+		from wishPlace where mid = #{mid} and part = #{cafePart} order by idx desc limit #{startIndexNo}, #{pageSize};
+	</select>
+
+	<select id="getHospitalWishPlace" resultType="com.spring.javaclassS15.vo.WishPlaceVO">
+		select * from wishPlace where mid = #{mid} and part = #{hospitalPart};
+	</select>
 	
 	
 	
 	
 	<insert id="setMemberJoinOK">
-		insert into member values (default, #{vo.mid}, #{vo.pwd}, #{vo.nickName}, #{vo.address}, #{vo.email}, #{vo.photo}, default, default, default, default, default, default);
+		insert into member values (default, #{vo.mid}, #{vo.pwd}, #{vo.nickName}, #{vo.address}, #{vo.email}, #{vo.photo}, default, default, default, default, default, default, default);
 	</insert>
 	
 	<insert id="setKakaoMemberInput">

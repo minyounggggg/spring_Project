@@ -41,7 +41,7 @@ public interface PetPlaceService {
 
 	public PetCafeVO getPlaceName(int placeIdx);
 
-	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName);
+	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName, String sido, String sigungu, String dong);
 
 	public int setWishPlaceDelete(String mid, String part, int placeIdx);
 

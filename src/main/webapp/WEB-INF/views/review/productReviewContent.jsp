@@ -622,11 +622,11 @@
 						<c:forEach var="i" begin="1" end="${5 - vo.petHeart}" varStatus="iSt"><font color="#FFBDBD">❤︎</font></c:forEach>
 					</span>
 				</section>
-				<section class="gbPoint" style="margin-top:30px;">
+				<section class="gbPoint" style="margin-top:45px;">
 					<span class="goodtxt">이런 점이 좋아요</span>
-					<p style="font-size: 14px; color: #999; margin: 10px 0 20px 9px;">${vo.goodPoint}</p>
+					<p style="font-size: 18px; color: #333; margin: 10px 0 45px 9px;">${vo.goodPoint}</p>
 					<span class="badtxt">이런 점이 아쉬워요</span>
-					<p style="font-size: 14px; color: #999; margin: 10px 0 20px 9px;">${vo.badPoint}</p>
+					<p style="font-size: 18px; color: #999; margin: 10px 0 20px 9px;">${vo.badPoint}</p>
 				</section>
 			</section>
 		</div>
@@ -669,8 +669,8 @@
 			<c:if test="${empty sContentGood}"><button onclick="heartUp()" style="background:transparent;border:none;font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love-3.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</button></c:if>
 			<c:if test="${!empty sContentGood}"><button onclick="heartUp()" style="background:transparent;border:none;font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</button></c:if>
 			<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.commentCnt}</span>
-			<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.readNum}</span><!-- 조회수, 아이콘 바꾸기 -->
-			<button onclick="complaintBtn()" style="background:transparent;border:none;font-size:15px;text-align: right;"><img src="${ctp}/resources/images/icon/siren.png" style="width:25px;margin: 0 5px 5px 0;"/></button>
+			<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/visibility.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.readNum}</span><!-- 조회수, 아이콘 바꾸기 -->
+			<button onclick="complaintBtn()" style="background:transparent;border:none;font-size:15px;float:right;"><img src="${ctp}/resources/images/icon/siren.png" style="width:45px;margin: -8px 5px 5px 0;"/></button>
 		</section>
 		<hr/>
 		<!-- 댓글 -->
