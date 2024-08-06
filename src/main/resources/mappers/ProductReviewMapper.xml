@@ -64,6 +64,12 @@
 		update productReview set petCategory=#{vo.petCategory}, productCategory=#{vo.productCategory}, brand=#{vo.brand}, productName=#{vo.productName}, memberHeart=#{vo.memberHeart}, petHeart=#{vo.petHeart}, goodPoint=#{vo.goodPoint}, badPoint=#{vo.badPoint}, productPhoto=#{vo.productPhoto}, repurchase=#{vo.repurchase} where idx = #{vo.idx};
 	</update>
 	
+	<update id="setReviewHeartDelete">
+		update productReview set goodHeart = goodHeart-1 where idx = #{idx};
+	</update>
+	
+	
+	
 	
 	<delete id="setReviewDelete">
 		delete from productReview where idx = #{idx};

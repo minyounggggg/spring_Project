@@ -126,11 +126,28 @@
 		    font-weight: 500;
 		    color: #7e878f;
 		}
+		.cafeInfoSecBox{
+			display: flex;
+    		justify-content: space-between;
+		}
+		.cafeInfoSecBoxInner{
+			/* float: left;
+		    width: 33%; */
+		    text-align: center;
+		    background-color: #e9ecef;
+		    border-radius: 10px;
+		    padding: 20px 0 10px;
+		    width: 32.5%;
+		}
 	</style>
 	<script>
     'use strict';
     
     function wishPickBtn(placeIdx) {
+    	if (${empty sLevel}) {
+    		alert("로그인 후 이용가능합니다.");
+    		return false;
+    	}
 		$.ajax({
 			url : "${ctp}/petPlace/wishPlaceSave",
 			type : "post",
@@ -146,10 +163,10 @@
 						$.ajax({
 							url : "${ctp}/petPlace/wishPlaceDelete",
 							type : "post",
-							data : {placeIdx : placeIdx},
+							data : {placeIdx : placeIdx, part : "cafe"},
 							success : function(res) {
 								if(res != "0") {
-									alert("찜한 목록에서 삭제되었습니다.");
+									alert("해당장소가 찜한 목록에서 삭제되었습니다.");
 									location.reload();
 								}
 								else alert("찜삭제처리실패");
@@ -167,7 +184,6 @@
 		});
 	}
 	
-	 
     
 	</script>
 </head>
@@ -307,19 +323,22 @@
 		    			'<p style="font-size: 25px;font-weight: 600;color: #333333;">' + position.placeName + '<span style="margin-left: 5px;font-size: 17px;font-weight: 500;color: #939396;"> '+position.category+' • '+position.placeInfo+'</span></p>' + 
 		    			'<p style="margin-bottom: 30px;">방문자후기 0 • 찜 0</p>'+
 		    			'<hr/>'+
-		    			'<div>'+
-		    				'<section style="float:left;width:33%;border-right: solid 1px #dbdbdb;padding-right: 20px;text-align: center;">' +
-		    					'<p style="margin-bottom: 0;font-size: 16px;font-weight: 700;color: #999;">주차</p><p>' + 
+		    			'<div class="cafeInfoSecBox">'+
+		    				'<section class="cafeInfoSecBoxInner">' +
+		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">주차</p><p>' + 
 		    					'<p style="margin-bottom: 0;font-weight: 600;font-size: 20px;">'+ parkingCheck +'</p>' +
 		    					
 		    				'</p></section>' +
-		    				'<section style="float:left;width:33%;border-right: solid 1px #dbdbdb;padding-right: 20px;text-align: center;">' +
+		    				'<section class="cafeInfoSecBoxInner">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">찜</p>' + 
-		    					'<button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button>' +
+		    					
+		    					'<c:if test="${empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love-3.png" style="width:40px;"/></button></c:if>'+
+		    					'<c:if test="${!empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love.png" style="width:40px;"/></button></c:if>'+
+		    					
 		    				'</section>' +
-		    				'<section style="float:left;width:33%;text-align: center;">' +
+		    				'<section class="cafeInfoSecBoxInner">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">반려동물 크기 제한</p>' + 
-		    					'<p style="margin-bottom: 0;font-weight: 600;font-size: 20px;">' + position.petSize + '</p>' +
+		    					'<p style="margin-bottom: 0;font-weight: 600;font-size: 22px;">' + position.petSize + '</p>' +
 		    				'</section>' +
 		    			'</div>'+
 		    			'<hr style="clear:both;"/>'+
@@ -341,24 +360,6 @@
 		    	
 		    	let reviewMini = '';
 		    	reviewMini += '';
-		    	<%--
-		    	<c:set var="viewCnt" value="0"/>
-		    	for(var i=0; i<${fn:length(cafeReviewVos)}; i++) {
-		          <c:set var="viewCnt" value="${viewCnt + 1}"/>
-		    	  alert('${viewCnt}');
-		          alert('${cafeReviewVos[viewCnt].title}');
-		    	}	
-		    	--%>
-		    	<%--
-		    	<c:set var="viewCnt" value="0"/>
-		        <c:forEach var="i" begin="0" end="${fn:length(cafeReviewVos)-1}">
-		    		<c:if test="${viewCnt < 3 && "+position.idx+" == cafeReviewVos[i].placeIdx}">
-			    		alert('${cafeReviewVos[i].placeIdx}');
-		    			reviewMini += '${cafeReviewVos[i].title}<br/>';
-				        <c:set var="viewCnt" value="${viewCnt + 1}"/>
-		    		</c:if>
-		    	</c:forEach>
-		    	--%>
 		    	
 		    	$.ajax({
 		    		url  : "${ctp}/petPlace/reviewMiniView",

@@ -240,6 +240,11 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	public int setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName) {
 		return petPlaceDAO.setWishPlace(mid, nickName, part, placeIdx, placeName);
 	}
+
+	@Override
+	public int setWishPlaceDelete(String mid, String part, int placeIdx) {
+		return petPlaceDAO.setWishPlaceDelete(mid, part, placeIdx);
+	}
 	  
 	 
 

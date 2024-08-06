@@ -164,6 +164,47 @@
 			
 			myform.submit();
 		}
+    	
+    	function wishPickBtn(placeIdx) {
+        	if (${empty sLevel}) {
+        		alert("로그인 후 이용가능합니다.");
+        		return false;
+        	}
+    		$.ajax({
+    			url : "${ctp}/petPlace/wishPlaceSave",
+    			type : "post",
+    			data : {placeIdx : placeIdx, part : "cafe"},
+    			success : function(res) {
+    				if(res != 0){
+    					alert("찜한 목록에 추가되었습니다!");
+    					location.reload();
+    				}
+    				else {
+    					let ans = confirm("이미 찜한 목록에 추가되었습니다.\n찜한 목록에서 삭제하시겠습니까?");
+    			    	if(ans){
+    						$.ajax({
+    							url : "${ctp}/petPlace/wishPlaceDelete",
+    							type : "post",
+    							data : {placeIdx : placeIdx, part : "cafe"},
+    							success : function(res) {
+    								if(res != "0") {
+    									alert("해당장소가 찜한 목록에서 삭제되었습니다.");
+    									location.reload();
+    								}
+    								else alert("찜삭제처리실패");
+    							},
+    							error : function() {
+    								alert("전송오류");
+    							}
+    						});
+    			    	}
+    				}
+    			},
+    			error : function() {
+    				alert("전송오류");
+    			}
+    		});
+    	}
 	</script>
 </head>
 <body>
@@ -173,7 +214,8 @@
 			<div id="map" class="mapSec"></div>
 			<section class="infoSec">
 				<p style="font-size: 22px;font-weight: 600; color: #333;">${cafeVO.placeName}<span style="font-weight: 500;font-size: 15px;color: #8b8b8b;margin-left: 5px;">${cafeVO.category} · ${cafeVO.placeInfo}</span></p>
-				<p>방문자후기 0 • 찜 0</p>
+				<c:if test="${empty sWishPlace}"><p>방문자후기 0 • 찜 <button onclick="wishPickBtn(${cafeVO.idx})"><img src="${ctp}/resources/images/icon/love-3.png" style="width:30px;"/></button> 0</p></c:if>
+				<c:if test="${!empty sWishPlace}"><p>방문자후기 0 • 찜 <button onclick="wishPickBtn(${cafeVO.idx})"><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button> 0</p></c:if>
 				<hr/>
 				<p><img src="${ctp}/resources/images/icon/place.png" style="width:20px;margin:0 10px 4px 0;"/>${cafeVO.rdnmAddress}</p>
 				<p><img src="${ctp}/resources/images/icon/clock.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">영업시간 </span>${cafeVO.openTime}</p>

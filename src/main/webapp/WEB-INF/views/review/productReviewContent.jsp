@@ -499,13 +499,33 @@
 		
 		// 게시글 좋아요 처리
 		function heartUp() {
+			if (${empty sLevel}) {
+        		alert("로그인 후 이용가능합니다.");
+        		return false;
+        	}
 			$.ajax({
 				url : "${ctp}/review/productReviewCommentHeartUp",
 				type : "post",
 				data : {idx : ${vo.idx}},
 				success : function(res) {
 					if(res != "0") location.reload();
-					else alert("이미 좋아요를 누은 게시글입니다.");
+					else {
+   						$.ajax({
+   							url : "${ctp}/review/reviewHeartDelete",
+   							type : "post",
+   							data : {idx : ${vo.idx}},
+   							success : function(res) {
+   								if(res != "0") {
+   									alert("좋아요가 취소되었습니다.");
+   									location.reload();
+   								}
+   								else alert("좋아요 취소 실패");
+   							},
+   							error : function() {
+   								alert("전송오류");
+   							}
+   						});
+    				}
 				},
 				error : function() {
 					alert("전송오류");
@@ -646,7 +666,8 @@
 		<hr style="clear:both;"/>
 		<!-- 좋아요 수, 댓글 수, 신고버튼 -->
 		<section class="reviewHeart">
-			<button onclick="heartUp()" style="background:transparent;border:none;font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</button>
+			<c:if test="${empty sContentGood}"><button onclick="heartUp()" style="background:transparent;border:none;font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love-3.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</button></c:if>
+			<c:if test="${!empty sContentGood}"><button onclick="heartUp()" style="background:transparent;border:none;font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/love.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.goodHeart}</button></c:if>
 			<span style="font-size:15px;margin-right:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.commentCnt}</span>
 			<span style="font-size:15px;"><img src="${ctp}/resources/images/icon/speech-bubble.png" style="width:25px;margin: 0 5px 5px 0;"/>${vo.readNum}</span><!-- 조회수, 아이콘 바꾸기 -->
 			<button onclick="complaintBtn()" style="background:transparent;border:none;font-size:15px;text-align: right;"><img src="${ctp}/resources/images/icon/siren.png" style="width:25px;margin: 0 5px 5px 0;"/></button>

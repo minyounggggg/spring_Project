@@ -107,7 +107,7 @@
 			align-items: center;
 		    border: dashed 2px #578de4;
 			width : 410px;
-		    height: 310px;
+		    height: 320px;
 			margin-right : 5px;
 			cursor:pointer;
 		}
@@ -122,7 +122,7 @@
 	    .swiper-slide {
 	      /* text-align: center; */
 	      /* font-size: 18px; */
-	      width: 30%;
+	      width: 428px;
 	      /* 
 	      display: flex;
 	      justify-content: center;
@@ -602,7 +602,7 @@
 				<section class="info">
 					<p style="font-size:26px;font-weight:700;color:#444;margin:0 0 5px">${vo.nickName}</p>
 					<p><img src="${ctp}/resources/images/memberMypage/place.png" style="width:20px;margin-right:5px;"/>${vo.address}</p>
-					<p>안녕하세용 &nbsp;&nbsp;|&nbsp;&nbsp; <button data-toggle="modal" data-target="#myModal1">수정하기</button></p> 
+					<p>안녕하세용 &nbsp;&nbsp;|&nbsp;&nbsp; <button data-toggle="modal" data-target="#myModal1" style="background: transparent;border: none;">수정하기</button></p> 
 				</section>
 			</div>
 			<div class="point-box sec-boxStyle">
@@ -879,7 +879,7 @@
 			<script>
 			  var swiper = new Swiper(".mySwiper", {
 				  slidesPerView: "auto",
-			      spaceBetween: 40,
+			      //spaceBetween: 40,
 			      freeMode: true,
 			      scrollbar: {
 				          el: ".swiper-scrollbar",
@@ -900,8 +900,13 @@
 	</div>
 	
 <script> 
+	$('#myModal1').on('hidden.bs.modal', function (e) {
+		$(this).find('form')[0].reset();
+		$(this).find('#memberPhotoUpdate').attr('src', '${ctp}/resources/data/member/${vo.photo}');
+		$(this).find('#memberUpdateFile_name').text('사진을 선택해주세요.');
+	});
+	
 	$('#myModal2').on('hidden.bs.modal', function (e) {
-		 console.log('modal close');
 		$(this).find('form')[0].reset();
 		$(this).find('#photoDemo').attr('src', '${ctp}/resources/data/memberPet/noimage-pet.png');
 		$(this).find('#file_name').text('사진을 선택해주세요.');

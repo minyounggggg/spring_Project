@@ -176,4 +176,9 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	public ProductReviewVO getOrgReviewVO(int idx) {
 		return productReviewDAO.getOrgReviewVO(idx);
 	}
+
+	@Override
+	public int setReviewHeartDelete(int idx) {
+		return productReviewDAO.setReviewHeartDelete(idx);
+	}
 }
