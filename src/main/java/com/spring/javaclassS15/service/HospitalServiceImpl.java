@@ -233,13 +233,13 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public PetCafeVO getPlaceName(int placeIdx) {
+	public HospitalVO getPlaceName(int placeIdx) {
 		return hospitalDAO.getPlaceName(placeIdx);
 	}
 
 	@Override
-	public void setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName) {
-		hospitalDAO.setWishPlace(mid, nickName, part, placeIdx, placeName);
+	public void setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName, String sido, String sigungu, String dong) {
+		hospitalDAO.setWishPlace(mid, nickName, part, placeIdx, placeName, sido, sigungu, dong);
 	}
 
 	@Override

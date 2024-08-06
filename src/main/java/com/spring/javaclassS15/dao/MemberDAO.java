@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.spring.javaclassS15.vo.MemberPetVO;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 public interface MemberDAO {
 
@@ -33,6 +34,10 @@ public interface MemberDAO {
 
 	public void setMemberLastDate(@Param("mid") String mid);
 
-	public void setLoginUpdate(@Param("vo")MemberVO vo);
+	public void setLoginUpdate(@Param("vo") MemberVO vo);
+
+	public List<WishPlaceVO> getCafeWishPlace(@Param("mid") String mid, @Param("cafePart") String cafePart, @Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize);
+
+	public List<WishPlaceVO> getHospitalWishPlace(@Param("mid") String mid, @Param("hospitalPart") String hospitalPart);
 
 }

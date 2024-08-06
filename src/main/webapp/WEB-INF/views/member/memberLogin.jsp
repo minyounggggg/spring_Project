@@ -147,7 +147,7 @@
 	</nav>
 	<div class="loginForm">
 		<section class="sec01">
-			<%-- <img src="${ctp}/resources/images/memberLogin/login_bg_02.png" /> --%>
+			<img src="${ctp}/resources/images/memberLogin/login_bg_03.png" />
 			<!-- ios 이미지 편집 후 넣어주세용 -->
 		</section>
 		<section class="sec02">

@@ -12,4 +12,8 @@ public class WishPlaceVO {
 	private String placeName;
 	private String saveDate;
 	
+	private String sido;
+	private String sigungu;
+	private String dong;
+	
 }

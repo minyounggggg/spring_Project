@@ -63,7 +63,7 @@
 	    margin-top: 140px;
 	}
 	.sec01{
-		/* background-image : url("${ctp}/resources/images/memberLogin/testBG.jpg"); */
+		background-image : url("${ctp}/resources/images/memberLogin/login_bg_03.png"); 
 		background-color : #999;
 		height: 670px;
 		border-radius : 30px 0 0 30px;
@@ -207,10 +207,17 @@
     let nickCheckSw = 0;
 	
 	function fCheck() {
-		let regMid = /^[a-zA-Z0-9_]{4,16}$/;			// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
-	    let regNickName = /^[가-힣a-zA-Z0-9_]{2,6}$/;		// 닉네임은 한글, 영문대소문자, 숫자, 밑줄만 가능
-	    let regPwd = /(?=.*\d)(?=.*[a-zA-ZS]).{4,20}/; 	// 문자, 숫자 1개이상 포함, 8자리 이상
-	    let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; 	// 이메일 형식 ex) abc123@defgh456.ijk
+		// 아이디는 4~20의 영문 대/소문자와 숫자와 밑줄 가능
+		let regMid = /^[a-zA-Z0-9_]{4,16}$/;			
+		
+	    // 닉네임은 한글, 영문대소문자, 숫자, 밑줄만 가능
+	    let regNickName = /^[가-힣a-zA-Z0-9_]{2,6}$/;		
+	    
+	    // 문자, 숫자 1개이상 포함, 8자리 이상
+	    let regPwd = /(?=.*\d)(?=.*[a-zA-ZS]).{4,20}/; 	
+	    
+	    // 이메일 형식 ex) abc123@defgh456.ijk
+	    let regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; 	
 	    // " -" ," _"," ." 세개의 문자 입력을 허용하며 도메인 주소 " ."  이전에 "@" 가 나와야 하고, 도메인 주소 "."   이후에 2-3 문자는 와야된다. 
 	    
 	    let mid = myform.mid.value.trim();
@@ -471,11 +478,11 @@
 	<div class="joinForm">
 		<form name="myform" method="post">
 			<section class="sec01">
-				<%-- <div class="text-center"><img src="${ctp}/images/memberLogin/logo03.png" class="logo" style="width:300px">회원가입</div> --%>
+				<%-- <div class="text-center"><img src="${ctp}/images/memberLogin/login_bg_03.png" class="logo" style="width:300px">회원가입</div> --%>
 				<!-- 반려동물 커뮤니티 사이트, 커플 일정 공유 캘린더 --><!-- 커플 일정공유 캘린더, 친구맺어진 사람들끼리만 공유, 한쪽이 수정중이면 다른 한쪽은 수정불가 -->
 				<!-- 반려동물이용 시설, 내가 찜한 목록 -->
-				<!-- 산책인증 챌린지 -->
-				회원가입img
+				<!-- 산책인증 챌린지 
+				회원가입img-->
 			    
 			    <!-- 특이사항 적을지 말지? -->
 			</section>

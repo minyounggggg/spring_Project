@@ -40,9 +40,9 @@ public interface HospitalService {
 
 	public List<HospitalReviewVO> gethospitalReview();
 
-	public PetCafeVO getPlaceName(int placeIdx);
+	public HospitalVO getPlaceName(int placeIdx);
 
-	public void setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName);
+	public void setWishPlace(String mid, String nickName, String part, int placeIdx, String placeName, String sido, String sigungu, String dong);
 
 	public int setWishPlaceDelete(String mid, String part, int placeIdx);
 

@@ -24,13 +24,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.javaclassS15.common.JavaclassProvide;
+import com.spring.javaclassS15.pagenation.PageProcess;
 import com.spring.javaclassS15.service.MemberService;
 import com.spring.javaclassS15.vo.MemberPetVO;
 import com.spring.javaclassS15.vo.MemberVO;
+import com.spring.javaclassS15.vo.PageVO;
+import com.spring.javaclassS15.vo.WishPlaceVO;
 
 @Controller
 @RequestMapping("/member")
@@ -44,8 +48,9 @@ public class MemberController {
 	
 	@Autowired
 	JavaclassProvide javaclassProvide;
-	// 깃저장 ㅠ 아오ㅠㅠ
-	// 큐알 로그인할꺼면 누르면 큐알코드 발행 시킨 후 
+	
+	@Autowired
+	PageProcess pageProcess;
 	
 	// 로그인 폼
 	@RequestMapping(value = "/memberLogin", method = RequestMethod.GET)
@@ -96,19 +101,17 @@ public class MemberController {
 			}
 			memberService.setMemberLastDate(mid);
 			
-			// (1번/2-1번)처리 : 방문포인트 처리를 위한 날짜 추출 비교하기 - 조건에 맞도록 방문 포인트와 카운트를 증가처리한다.
 			Date today = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String strToday = sdf.format(today);
 			
 			if(!strToday.equals(vo.getLastDate().substring(0,10))) {
-				// 오늘 처음 방문한 경우이다.(오늘 방문카운트는 1로, 기존 포인트에 +10)
+				// 오늘 처음 방문한 경우(오늘 방문카운트는 1로, 기존 포인트에 +10)
 				vo.setTodayCnt(1);
 				vo.setPoint((vo.getPoint() + 10));
-				
 			}
 			else {
-				// 오늘 다시 방문한경우(오늘 방문카운트는 오늘방문카운트 + 1, 포인트증가는? 오늘 방문횟수가 1회전까지라면 기존포인트에 +10을 한다.)
+				// 오늘 다시 방문한경우(오늘 방문카운트는 오늘방문카운트 + 1, 포인트증가는? 오늘 방문횟수가 1회전까지라면 기존포인트에 +10)
 				vo.setTodayCnt(vo.getTodayCnt() + 1);
 				if(vo.getTodayCnt() <= 1) vo.setPoint(vo.getPoint() + 10);
 			}
@@ -314,6 +317,25 @@ public class MemberController {
 		if(!petPhoto.equals("noimage-pet.png")) javaclassProvide.deleteFile(petPhoto, "memberPet");
 		
 		return memberService.setMemberPetDeleteOK(idx)+ "";
+	}
+	
+	@RequestMapping(value = "/wishPlace", method = RequestMethod.GET)
+	public String wishPlaceGet(String mid, Model model,
+			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
+			@RequestParam(name="pageSize", defaultValue = "5", required = false) int pageSize) {
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "wishPlace","","",0);
+		
+		String cafePart = "cafe";
+		String hospitalPart = "hospital";
+		
+		List<WishPlaceVO> cafeVos = memberService.getCafeWishPlace(mid, cafePart, pageVO.getStartIndexNo(), pageSize);
+		List<WishPlaceVO> hospitalVos = memberService.getHospitalWishPlace(mid, hospitalPart);
+		
+		model.addAttribute("cafeVos", cafeVos);
+		model.addAttribute("hospitalVos", hospitalVos);
+		model.addAttribute("pageVO", pageVO);
+		
+		return "member/wishPlace";
 	}
 	
 }
