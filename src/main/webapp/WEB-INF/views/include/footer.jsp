@@ -40,10 +40,10 @@
 <body>
 	<footer>
 		<div class="footerInner">
-			<P>footer입니다. 아ㅏ 외 이럿캐 귀찬냐 대충 뚝-따ㅏㄱHappyYoung --</P>
-			<P>HappyYoung --Here 연락주ㅜ쇼</P>
-			<P>이곳의 Content is from ㅗ메ㅔㅔ 아이고 HappyYoung -- HappyYoung -- 小さくなっても頭脳は同じ！ 真実はいつも１つ！</P>
-			<P>シロも家族です！ パパがいてママがいて私がいてチャンアがいて,シロも家族です！ 新シロですよ！</P>
+			<P>개인정보처리방침 | 이용약관 | 고객센터</P>
+			<P>충청북도 청주시 서원구 사창동 148-7 4층</P>
+			<P>シロも家族です！ パパがいてママがいて私がいてチャンアがいて,シロも家族です！ 新シロですよ！ 小さくなっても頭脳は同じ！ 真実はいつも１つ！ </P>
+			<P>© HappyYoung Corp.</P>
 		</div>
 	</footer>
 </body>

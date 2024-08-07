@@ -143,46 +143,55 @@
 	<script>
     'use strict';
     
-    function wishPickBtn(placeIdx) {
-    	if (${empty sLevel}) {
-    		alert("로그인 후 이용가능합니다.");
-    		return false;
+    
+    	function wishPickBtn(placeIdx) {
+    		if (${empty sLevel}) {
+        		alert("로그인 후 이용가능합니다.");
+        		return false;
+        	}
+    		$.ajax({
+    			url : "${ctp}/petPlace/wishPlaceSave",
+    			type : "post",
+    			data : {placeIdx : placeIdx, part : "cafe"},
+    			success : function(res) {
+    				if(res != 0){
+    					alert("찜한 목록에 추가되었습니다!");
+    					location.reload();
+    				}
+    			},
+    			error : function() {
+    				alert("전송오류");
+    			}
+    		});
     	}
-		$.ajax({
-			url : "${ctp}/petPlace/wishPlaceSave",
-			type : "post",
-			data : {placeIdx : placeIdx, part : "cafe"},
-			success : function(res) {
-				if(res != 0){
-					alert("찜한 목록에 추가되었습니다!");
-					location.reload();
-				}
-				else {
-					let ans = confirm("이미 찜한 목록에 추가되었습니다.\n찜한 목록에서 삭제하시겠습니까?");
-			    	if(ans){
-						$.ajax({
-							url : "${ctp}/petPlace/wishPlaceDelete",
-							type : "post",
-							data : {placeIdx : placeIdx, part : "cafe"},
-							success : function(res) {
-								if(res != "0") {
-									alert("해당장소가 찜한 목록에서 삭제되었습니다.");
-									location.reload();
-								}
-								else alert("찜삭제처리실패");
-							},
-							error : function() {
-								alert("전송오류");
-							}
-						});
-			    	}
-				}
-			},
-			error : function() {
-				alert("전송오류");
-			}
-		});
-	}
+    	
+    	function wishDeleteBtn(placeIdx) {
+    		if (${empty sLevel}) {
+        		alert("로그인 후 이용가능합니다.");
+        		return false;
+        	}
+    		
+			let ans = confirm("이미 찜한 목록에 추가되었습니다.\n찜한 목록에서 삭제하시겠습니까?");
+	    	if(ans){
+				$.ajax({
+					url : "${ctp}/petPlace/wishPlaceDelete",
+					type : "post",
+					data : {placeIdx : placeIdx, part : "cafe"},
+					success : function(res) {
+						if(res != "0") {
+							alert("해당장소가 찜한 목록에서 삭제되었습니다.");
+							location.reload();
+						}
+						else alert("찜삭제처리실패");
+					},
+					error : function() {
+						alert("전송오류");
+					}
+				});
+	    	}
+ 		
+ 		}
+	
 	
     
 	</script>
@@ -268,9 +277,16 @@
 		  
 		var vos = ${jsonVos};
 		
+		var res= ${res};
+		
 		// 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
-		vos.forEach(function(position) {
+		vos.forEach(function(position, index) {
 			
+			
+			
+			
+			var line = res[index] == 0 ? '<button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love-3.png" style="width:40px;"/></button>' : '<button onclick="wishDeleteBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love.png" style="width:40px;"/></button>'
+				
 			var imageSrc = '${ctp}/resources/images/icon/petCafeIcon.png', // 마커이미지의 주소입니다    
 		    imageSize = new kakao.maps.Size(35, 35), // 마커이미지의 크기입니다
 		    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -332,9 +348,9 @@
 		    				'<section class="cafeInfoSecBoxInner">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">찜</p>' + 
 		    					
-		    					'<c:if test="${empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love-3.png" style="width:40px;"/></button></c:if>'+
-		    					'<c:if test="${!empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love.png" style="width:40px;"/></button></c:if>'+
-		    					
+		    				/* 	'<c:if test="${empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love-3.png" style="width:40px;"/></button></c:if>'+
+		    					'<c:if test="${!empty sWishPlace}"><button onclick="wishPickBtn('+ position.idx +')"><img src="${ctp}/resources/images/icon/love.png" style="width:40px;"/></button></c:if>'+ */
+		    				line+
 		    				'</section>' +
 		    				'<section class="cafeInfoSecBoxInner">' +
 		    					'<p style="margin-bottom: 10px;font-size: 16px;font-weight: 700;color: #999;">반려동물 크기 제한</p>' + 

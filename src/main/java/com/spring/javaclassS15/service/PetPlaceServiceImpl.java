@@ -245,6 +245,16 @@ public class PetPlaceServiceImpl implements PetPlaceService {
 	public int setWishPlaceDelete(String mid, String part, int placeIdx) {
 		return petPlaceDAO.setWishPlaceDelete(mid, part, placeIdx);
 	}
+
+	@Override
+	public WishPlaceVO getWishcheck(String mid, int placeIdx) {
+		return petPlaceDAO.getWishcheck(mid, placeIdx);
+	}
+
+	@Override
+	public int getWishPlace(String mid, int placeIdx) {
+		return petPlaceDAO.getWishPlace(mid, placeIdx);
+	}
 	  
 	 
 

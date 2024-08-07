@@ -190,8 +190,8 @@
 			<div id="map" class="mapSec"></div>
 			<section class="infoSec">
 				<p style="font-size: 22px;font-weight: 600; color: #333;">${cafeVO.placeName}<span style="font-weight: 500;font-size: 15px;color: #8b8b8b;margin-left: 5px;">${cafeVO.category} · ${cafeVO.placeInfo}</span></p>
-				<c:if test="${empty sWishPlace}"><p>방문자후기 0 • 찜 <button onclick="wishPickBtn(${cafeVO.idx})"><img src="${ctp}/resources/images/icon/love-3.png" style="width:30px;"/></button> 0</p></c:if>
-				<c:if test="${!empty sWishPlace}"><p>방문자후기 0 • 찜 <button onclick="wishPickBtn(${cafeVO.idx})"><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button> 0</p></c:if>
+				<c:if test="${res == 0}"><p>방문자후기 0 • 찜 <button onclick="wishPickBtn(${cafeVO.idx})"><img src="${ctp}/resources/images/icon/love-3.png" style="width:30px;"/></button> 0</p></c:if>
+				<c:if test="${res != 0}"><p>방문자후기 0 • 찜 <button onclick="wishPickBtn(${cafeVO.idx})"><img src="${ctp}/resources/images/icon/love.png" style="width:30px;"/></button> 0</p></c:if>
 				<hr/>
 				<p><img src="${ctp}/resources/images/icon/place.png" style="width:20px;margin:0 10px 4px 0;"/>${cafeVO.rdnmAddress}</p>
 				<p><img src="${ctp}/resources/images/icon/clock.png" style="width:20px;margin:0 10px 4px 0;"/><span style="font-size:16px;font-weight:600;margin-right: 5px;">영업시간 </span>${cafeVO.openTime}</p>

@@ -111,7 +111,6 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/productReview/");
 		
 		String[] imgs = productPhoto.split("/");
-		//System.out.println("imgs : " + imgs);
 		
 		for(int i=0; i < imgs.length; i++) {
 			File file = new File(realPath + imgs[i]);

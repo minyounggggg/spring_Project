@@ -45,6 +45,14 @@
 	<select id="getPlaceName" resultType="com.spring.javaclassS15.vo.PetCafeVO">
 		select * from petCafe where idx = #{placeIdx};
 	</select>
+	
+	<select id="getWishcheck" resultType="com.spring.javaclassS15.vo.WishPlaceVO">
+		select * from wishPlace where mid = #{mid} and placeIdx = #{placeIdx};
+	</select>
+	
+	<select id="getWishPlace" resultType="int">
+		select count(*) from wishPlace where mid = #{mid} and placeIdx = #{placeIdx};
+	</select>
 	 
 	
 	
@@ -66,7 +74,7 @@
 	
 	
 	<insert id="setWishPlace">
-		insert into wishPlace values (default, #{mid}, #{nickName}, #{part}, #{placeIdx}, #{placeName}, #{sido}, #{sigungu}, #{dong}, default);
+		insert into wishPlace values (default, #{mid}, #{nickName}, #{part}, #{placeIdx}, #{placeName}, default, #{sido}, #{sigungu}, #{dong});
 	</insert>
 
 

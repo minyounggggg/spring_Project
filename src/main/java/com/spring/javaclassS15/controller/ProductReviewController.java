@@ -182,7 +182,7 @@ public class ProductReviewController {
 	@RequestMapping(value = "/productReviewUpdateOK", method = RequestMethod.POST)
 	public String productReviewUpdateOKPost(int idx, ProductReviewVO vo, MultipartHttpServletRequest pdPhoto) {
 		ProductReviewVO orgVO = productReviewService.getOrgReviewVO(idx);
-		System.out.println("orgVO : " + orgVO);
+		//System.out.println("orgVO : " + orgVO);
 		
 		productReviewService.imgUpdateDelete(orgVO.getProductPhoto());
 		//vo.setPetPhoto(productReviewService.fileUploadPet(updateFName, mid));
