@@ -91,7 +91,7 @@ public class ProductReviewServiceImpl implements ProductReviewService {
 	}
 
 	@Override
-	public void setpdReviewHeartUp(String idx) {
+	public void setpdReviewHeartUp(int idx) {
 		productReviewDAO.setpdReviewHeartUp(idx);
 	}
 

@@ -38,6 +38,10 @@ public interface MemberDAO {
 
 	public List<WishPlaceVO> getCafeWishPlace(@Param("mid") String mid, @Param("cafePart") String cafePart, @Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize);
 
-	public List<WishPlaceVO> getHospitalWishPlace(@Param("mid") String mid, @Param("hospitalPart") String hospitalPart);
+	public List<WishPlaceVO> getHospitalWishPlace(@Param("mid") String mid, @Param("hospitalPart") String hospitalPart, @Param("startIndexNo") int startIndexNo, @Param("pageSize") int pageSize);
+
+	public int totRecCnt(@Param("part") String part, @Param("searchString") String searchString);
+
+	public int hospitalTotRecCnt(@Param("part") String part, @Param("searchString") String searchString);
 
 }

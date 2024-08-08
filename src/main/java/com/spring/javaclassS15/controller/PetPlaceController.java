@@ -67,15 +67,13 @@ public class PetPlaceController {
 		String mid = (String) session.getAttribute("sMid");
 		MemberVO memberVO = petPlaceService.getMemberinfo(mid);
 		PetCafeVO vo = new PetCafeVO();
+		
 		List<PetCafeVO> vos = petPlaceService.getPetCafeMap();
 		List<PetCafeReviewVO> cafeReviewVos = petPlaceService.getCafeReview();
 		request.setAttribute("cafeReviewVos2", cafeReviewVos);
 		
-	
-		
 		List<Integer> res = new ArrayList<Integer>(); 
 		for(PetCafeVO vo1 :vos ) {
-			
 			int r =petPlaceService.getWishPlace(mid, vo1.getIdx());
 			res.add(r);
 		}
@@ -151,9 +149,12 @@ public class PetPlaceController {
 	}
 	
 	@RequestMapping(value = "/petCafeReviewInsert", method = RequestMethod.GET)
-	public String petCafeReviwInsertGet(Model model, int placeIdx) {
+	public String petCafeReviwInsertGet(Model model, int placeIdx, HttpSession session) {
 		PetCafeVO cafeVO = petPlaceService.getCafeInfo(placeIdx);
+		String mid = (String) session.getAttribute("sMid");
+		int res = petPlaceService.getWishPlace(mid, placeIdx);
 		
+		model.addAttribute("res", res);
 		model.addAttribute("cafeVO", cafeVO);
 		return "petPlace/petCafeReviewInsert";
 	}

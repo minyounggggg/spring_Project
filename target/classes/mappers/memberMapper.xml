@@ -24,11 +24,20 @@
 
 	<select id="getCafeWishPlace" resultType="com.spring.javaclassS15.vo.WishPlaceVO">
 		select *, (select count(*) from wishPlace where mid = #{mid} and part = #{cafePart}) as wishCnt
-		from wishPlace where mid = #{mid} and part = #{cafePart} order by idx desc limit #{startIndexNo}, #{pageSize};
+		from wishPlace where mid = #{mid} and part = #{cafePart} order by idx desc limit #{startIndexNo}, #{pageSize};	
 	</select>
 
 	<select id="getHospitalWishPlace" resultType="com.spring.javaclassS15.vo.WishPlaceVO">
-		select * from wishPlace where mid = #{mid} and part = #{hospitalPart};
+		select *, (select count(*) from wishPlace where mid = #{mid} and part = #{hospitalPart}) as wishCnt
+		from wishPlace where mid = #{mid} and part = #{hospitalPart} order by idx desc limit #{startIndexNo}, #{pageSize};
+	</select>
+	
+	<select id="totRecCnt" resultType="int">
+		select count(*) from wishPlace where mid = #{part} and part = #{searchString};
+	</select>
+	
+	<select id="hospitalTotRecCnt" resultType="int">
+		select count(*) from wishPlace where mid = #{part} and part = #{searchString};
 	</select>
 	
 	

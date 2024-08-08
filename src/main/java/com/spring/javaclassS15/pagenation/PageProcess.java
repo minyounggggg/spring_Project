@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.javaclassS15.dao.HospitalDAO;
+import com.spring.javaclassS15.dao.MemberDAO;
 import com.spring.javaclassS15.dao.PetPlaceDAO;
 import com.spring.javaclassS15.dao.ProductReviewDAO;
 import com.spring.javaclassS15.vo.PageVO;
@@ -20,6 +21,9 @@ public class PageProcess {
 	@Autowired
 	HospitalDAO hospitalDAO;
 	
+	@Autowired
+	MemberDAO memberDAO;
+	
 
 	public PageVO totRecCnt(int pag, int pageSize, String section, String part, String searchString, int contentNum) {
 		PageVO pageVO = new PageVO();
@@ -30,6 +34,8 @@ public class PageProcess {
 		if(section.equals("productReview")) totRecCnt = productReviewDAO.totRecCnt(part);
 		else if(section.equals("cafeReview")) totRecCnt = petPlaceDAO.totRecCnt(contentNum);
 		else if(section.equals("hospitalReview")) totRecCnt = hospitalDAO.totRecCnt(contentNum);
+		else if(section.equals("wishCafe")) totRecCnt = memberDAO.totRecCnt(part, searchString);
+		else if(section.equals("wishHospital")) totRecCnt = memberDAO.hospitalTotRecCnt(part, searchString);
 			
 		//else if(section.equals("pds")) totRecCnt = pdsDAO.totRecCnt(part);
 		

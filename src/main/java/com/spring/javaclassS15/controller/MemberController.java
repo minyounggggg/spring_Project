@@ -321,19 +321,22 @@ public class MemberController {
 	
 	@RequestMapping(value = "/wishPlace", method = RequestMethod.GET)
 	public String wishPlaceGet(String mid, Model model,
+			@RequestParam(name="part", defaultValue = "cafe", required = false) String part,
 			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name="pageSize", defaultValue = "5", required = false) int pageSize) {
-		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "wishPlace","","",0);
+		PageVO pageVO = pageProcess.totRecCnt(pag, pageSize, "wishCafe", mid, "cafe",0);
+		PageVO pageVOh = pageProcess.totRecCnt(pag, pageSize, "wishHospital", mid, "hospital",0);
 		
 		String cafePart = "cafe";
 		String hospitalPart = "hospital";
 		
 		List<WishPlaceVO> cafeVos = memberService.getCafeWishPlace(mid, cafePart, pageVO.getStartIndexNo(), pageSize);
-		List<WishPlaceVO> hospitalVos = memberService.getHospitalWishPlace(mid, hospitalPart);
+		List<WishPlaceVO> hospitalVos = memberService.getHospitalWishPlace(mid, hospitalPart, pageVO.getStartIndexNo(), pageSize);
 		
 		model.addAttribute("cafeVos", cafeVos);
 		model.addAttribute("hospitalVos", hospitalVos);
 		model.addAttribute("pageVO", pageVO);
+		model.addAttribute("pageVOh", pageVOh);
 		
 		return "member/wishPlace";
 	}

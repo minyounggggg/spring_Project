@@ -117,7 +117,7 @@ public class ProductReviewController {
 	// 제품리뷰 좋아요버튼 처리
 	@ResponseBody
 	@RequestMapping(value = "/productReviewCommentHeartUp", method = RequestMethod.POST)
-	public String productReviewCommentHeartUpPost(String idx, HttpServletRequest request) {
+	public String productReviewCommentHeartUpPost(int idx, HttpServletRequest request) {
 
 		// 좋아요 수 증가처리 (중복 불허)
 		int res = 0;

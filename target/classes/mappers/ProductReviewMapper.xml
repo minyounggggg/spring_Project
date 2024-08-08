@@ -14,8 +14,8 @@
 	</select>
 
 	<select id="getproductReviewContent" resultType="com.spring.javaclassS15.vo.ProductReviewVO">
-		select *,(select count(*) from reviewComment where part='productReview' and partIdx=p.idx) as commentCnt
-		from productReview p where idx = #{idx};
+		select p.*,(select count(*) from reviewComment where part='productReview' and partIdx=p.idx) as commentCnt
+		from productReview p where p.idx = #{idx};
 		<!-- select * from productReview where idx = #{idx}; -->
 	</select>
 

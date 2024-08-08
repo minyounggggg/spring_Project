@@ -85,10 +85,7 @@
 	<script>
     	'use strict';
     	
-    	function pageSizeCheck() {
-        	let pageSize = $("#pageSize").val();
-        	location.href = "wishPlace?pageSize="+pageSize;
-        }
+    	
     
 	</script>
 </head>
@@ -112,14 +109,14 @@
 				<!-- 블록페이지 시작 -->
 				<div class="text-center">
 				  <ul class="pagination justify-content-center">
-					  <c:if test="${pageVO.pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?pag=1&pageSize=${pageVO.pageSize}">첫페이지</a></li></c:if>
-					  <c:if test="${pageVO.curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?pag=${(pageVO.curBlock-1)*pageVO.blockSize + 1}&pageSize=${pageVO.pageSize}">이전블록</a></li></c:if>
+					  <c:if test="${pageVO.pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=1&pageSize=${pageVO.pageSize}">첫페이지</a></li></c:if>
+					  <c:if test="${pageVO.curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${(pageVO.curBlock-1)*pageVO.blockSize + 1}&pageSize=${pageVO.pageSize}">이전블록</a></li></c:if>
 					  <c:forEach var="i" begin="${(pageVO.curBlock*pageVO.blockSize)+1}" end="${(pageVO.curBlock*pageVO.blockSize) + pageVO.blockSize}" varStatus="st">
-					    <c:if test="${i <= pageVO.totPage && i == pageVO.pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="wishPlace?pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if>
-					    <c:if test="${i <= pageVO.totPage && i != pageVO.pag}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if>
+					    <c:if test="${i <= pageVO.totPage && i == pageVO.pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="wishPlace?mid=${sMid}&pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if>
+					    <c:if test="${i <= pageVO.totPage && i != pageVO.pag}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${i}&pageSize=${pageVO.pageSize}">${i}</a></li></c:if>
 					  </c:forEach>
-					  <c:if test="${pageVO.curBlock < pageVO.lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?pag=${(pageVO.curBlock+1)*pageVO.blockSize+1}&pageSize=${pageVO.pageSize}">다음블록</a></li></c:if>
-					  <c:if test="${pageVO.pag < pageVO.totPage}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}">마지막페이지</a></li></c:if>
+					  <c:if test="${pageVO.curBlock < pageVO.lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${(pageVO.curBlock+1)*pageVO.blockSize+1}&pageSize=${pageVO.pageSize}">다음블록</a></li></c:if>
+					  <c:if test="${pageVO.pag < pageVO.totPage}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${pageVO.totPage}&pageSize=${pageVO.pageSize}">마지막페이지</a></li></c:if>
 				  </ul>
 				</div>
 				<!-- 블록페이지 끝 -->
@@ -155,6 +152,20 @@
 						<section class="moreBtn"><button onclick="location.href='${ctp}/hospital/hospitalReviewList?idx=${hospitalVO.placeIdx}';" class="moreBtn-1">hospital more</button></section>
 					</section>
 				</c:forEach>
+				<!-- 블록페이지 시작 -->
+				<div class="text-center">
+				  <ul class="pagination justify-content-center">
+					  <c:if test="${pageVOh.pag > 1}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=1&pageSize=${pageVOh.pageSize}">첫페이지</a></li></c:if>
+					  <c:if test="${pageVOh.curBlock > 0}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${(pageVOh.curBlock-1)*pageVOh.blockSize + 1}&pageSize=${pageVOh.pageSize}">이전블록</a></li></c:if>
+					  <c:forEach var="i" begin="${(pageVOh.curBlock*pageVOh.blockSize)+1}" end="${(pageVOh.curBlock*pageVOh.blockSize) + pageVOh.blockSize}" varStatus="st">
+					    <c:if test="${i <= pageVOh.totPage && i == pageVOh.pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="wishPlace?mid=${sMid}&pag=${i}&pageSize=${pageVOh.pageSize}">${i}</a></li></c:if>
+					    <c:if test="${i <= pageVOh.totPage && i != pageVOh.pag}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${i}&pageSize=${pageVOh.pageSize}">${i}</a></li></c:if>
+					  </c:forEach>
+					  <c:if test="${pageVOh.curBlock < pageVOh.lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${(pageVOh.curBlock+1)*pageVOh.blockSize+1}&pageSize=${pageVOh.pageSize}">다음블록</a></li></c:if>
+					  <c:if test="${pageVOh.pag < pageVOh.totPage}"><li class="page-item"><a class="page-link text-secondary" href="wishPlace?mid=${sMid}&pag=${pageVOh.totPage}&pageSize=${pageVOh.pageSize}">마지막페이지</a></li></c:if>
+				  </ul>
+				</div>
+				<!-- 블록페이지 끝 -->
 			</section>	
 			
 		</div>

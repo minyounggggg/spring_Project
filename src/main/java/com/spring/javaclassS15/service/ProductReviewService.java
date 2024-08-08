@@ -23,7 +23,7 @@ public interface ProductReviewService {
 
 	public void setReadNumPlus(int idx);
 
-	public void setpdReviewHeartUp(String idx);
+	public void setpdReviewHeartUp(int idx);
 
 	public int getPetCategoryCheck(String petCategorySelect);
 
