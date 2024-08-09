@@ -170,6 +170,10 @@ public class MessageController {
 			model.addAttribute("msg", "제품 후기 수정 실패! 다시 시도해주세요.");
 			model.addAttribute("url", "/review/productReviewContent?idx="+idx);
 		}
+		else if(msgFlag.equals("memberPointCheck")) {
+			model.addAttribute("msg", "출석 포인트(+10P)가 지급되었습니다!");
+			model.addAttribute("url", "/member/memberMain");
+		}
 		
 		
 		
