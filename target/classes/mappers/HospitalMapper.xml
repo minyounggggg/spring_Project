@@ -62,7 +62,7 @@
 	</insert>
 	
 	<insert id="setWishPlace">
-		insert into wishPlace values (default, #{mid}, #{nickName}, #{part}, #{placeIdx}, #{placeName}, #{sido}, #{sigungu}, #{dong}, default);
+		insert into wishPlace values (default, #{mid}, #{nickName}, #{part}, #{placeIdx}, #{placeName}, default, #{sido}, #{sigungu}, #{dong});
 	</insert>
 	
 	

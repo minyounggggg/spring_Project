@@ -121,8 +121,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<WishPlaceVO> getHospitalWishPlace(String mid, String hospitalPart) {
-		return memberDAO.getHospitalWishPlace(mid, hospitalPart);
+	public List<WishPlaceVO> getHospitalWishPlace(String mid, String hospitalPart, int startIndexNo, int pageSize) {
+		return memberDAO.getHospitalWishPlace(mid, hospitalPart, startIndexNo, pageSize);
 	}
 	
 }

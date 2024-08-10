@@ -42,7 +42,7 @@ public interface MemberService {
 
 	public List<WishPlaceVO> getCafeWishPlace(String mid, String cafePart, int startIndexNo, int pageSize);
 
-	public List<WishPlaceVO> getHospitalWishPlace(String mid, String hospitalPart);
+	public List<WishPlaceVO> getHospitalWishPlace(String mid, String hospitalPart, int startIndexNo, int pageSize);
 
 
 

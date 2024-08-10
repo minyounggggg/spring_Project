@@ -25,6 +25,7 @@
 		* {font-family: 'Noto Sans KR', sans-serif;}
 		a {text-decoration: none; color: inherit;}
 		a:link {text-decoration: none;}
+		.cafeReviewBtn:hover {color:#fff;}
 		/* p {margin:0;} */
 		.inner {width : 1300px; margin : 0 auto; padding-top:150px;}
 		.sec-boxStyle{

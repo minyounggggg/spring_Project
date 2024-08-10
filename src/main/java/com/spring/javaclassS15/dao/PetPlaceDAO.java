@@ -43,6 +43,10 @@ public interface PetPlaceDAO {
 
 	public int setWishPlaceDelete(@Param("mid") String mid, @Param("part") String part, @Param("placeIdx") int placeIdx);
 
+	public WishPlaceVO getWishcheck(@Param("mid") String mid, @Param("placeIdx") int placeIdx);
+
+	public int getWishPlace(@Param("mid") String mid, @Param("placeIdx") int placeIdx);
+
 
 
 	

@@ -27,4 +27,7 @@ public class PetCafeVO {
 	private String outPlaceOK;
 	private String placeInfo;
 	private String petExtraFee;
+	
+	private int savePlace;
+	
 }

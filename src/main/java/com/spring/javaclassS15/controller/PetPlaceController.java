@@ -67,13 +67,21 @@ public class PetPlaceController {
 		String mid = (String) session.getAttribute("sMid");
 		MemberVO memberVO = petPlaceService.getMemberinfo(mid);
 		PetCafeVO vo = new PetCafeVO();
+		
 		List<PetCafeVO> vos = petPlaceService.getPetCafeMap();
 		List<PetCafeReviewVO> cafeReviewVos = petPlaceService.getCafeReview();
 		request.setAttribute("cafeReviewVos2", cafeReviewVos);
 		
+		List<Integer> res = new ArrayList<Integer>(); 
+		for(PetCafeVO vo1 :vos ) {
+			int r =petPlaceService.getWishPlace(mid, vo1.getIdx());
+			res.add(r);
+		}
+		
 		model.addAttribute("cafeReviewVos", cafeReviewVos);
 		model.addAttribute("memberVO", memberVO);
 		model.addAttribute("vo", vo);
+		model.addAttribute("res", res);
 		model.addAttribute("jsonVos", JSONArray.fromObject(vos));
 		return "petPlace/petCafe";
 	}
@@ -107,7 +115,7 @@ public class PetPlaceController {
 	}
 	
 	@RequestMapping(value = "/petCafeReviewList", method = RequestMethod.GET)
-	public String petCafeReviewListGet(int idx, Model model,
+	public String petCafeReviewListGet(int idx, Model model,HttpSession session,
 			@RequestParam(name="pag", defaultValue = "1", required = false) int pag,
 			@RequestParam(name="pageSize", defaultValue = "5", required = false) int pageSize) {
 		
@@ -116,27 +124,37 @@ public class PetPlaceController {
 		List<PetCafeReviewVO> vos = petPlaceService.getPetCafeReviewList(idx, pageVO.getStartIndexNo(), pageSize);
 		PetCafeVO cafeVO = petPlaceService.getCafeInfo(idx);
 		
+		String mid = (String) session.getAttribute("sMid");
+		int res = petPlaceService.getWishPlace(mid, idx);
+		
 		model.addAttribute("vos", vos);
+		model.addAttribute("res", res);
 		model.addAttribute("cafeVO", cafeVO);
 		model.addAttribute("pageVO", pageVO);
 		return "petPlace/petCafeReviewList";
 	}
 	
 	@RequestMapping(value = "/petCafeReviewContent", method = RequestMethod.GET)
-	public String petCafeReviwContentGet(int idx, int placeIdx, Model model) {
+	public String petCafeReviwContentGet(int idx, int placeIdx, Model model, HttpSession session) {
 		PetCafeReviewVO vo = petPlaceService.getPetCafeReviewContent(idx);
 		//PetCafeVO cafeVO = petPlaceService.getCafeInfoContent();
 		PetCafeVO cafeVO = petPlaceService.getCafeInfo(placeIdx);
+		String mid = (String) session.getAttribute("sMid");
+		int res = petPlaceService.getWishPlace(mid, placeIdx);
 		
 		model.addAttribute("vo", vo);
+		model.addAttribute("res", res);
 		model.addAttribute("cafeVO", cafeVO);
 		return "petPlace/petCafeReviewContent";
 	}
 	
 	@RequestMapping(value = "/petCafeReviewInsert", method = RequestMethod.GET)
-	public String petCafeReviwInsertGet(Model model, int placeIdx) {
+	public String petCafeReviwInsertGet(Model model, int placeIdx, HttpSession session) {
 		PetCafeVO cafeVO = petPlaceService.getCafeInfo(placeIdx);
+		String mid = (String) session.getAttribute("sMid");
+		int res = petPlaceService.getWishPlace(mid, placeIdx);
 		
+		model.addAttribute("res", res);
 		model.addAttribute("cafeVO", cafeVO);
 		return "petPlace/petCafeReviewInsert";
 	}
@@ -211,7 +229,7 @@ public class PetPlaceController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/wishPlaceSave", method = RequestMethod.POST)
-	public String wishPlaceSavePost(int placeIdx, String part, String mid, String nickName, String placeName, HttpSession session, WishPlaceVO wishVO, HttpServletRequest request) {
+	public String wishPlaceSavePost(Model model, int placeIdx, String part, String mid, String nickName, String placeName, HttpSession session, WishPlaceVO wishVO, HttpServletRequest request) {
 		
 		mid = (String) session.getAttribute("sMid");
 		nickName = (String) session.getAttribute("sNickName");
@@ -222,28 +240,18 @@ public class PetPlaceController {
 		String sigungu = vo.getSigungu();
 		String dong = vo.getDong();
 		
-		// 찜 목록 증가처리 (중복 불허)
-		int res = 0;
-		session = request.getSession(); //게시글을 보는순간 세션이 생긴다.
-		ArrayList<String> wishPlace = (ArrayList<String>)session.getAttribute("sWishPlace");
+		WishPlaceVO wishVos = petPlaceService.getWishcheck(mid, placeIdx); 
+		model.addAttribute("wishVos", wishVos);
 		
-		if(wishPlace == null) wishPlace = new ArrayList<String>();
-		String imsiWishPlace = "wishPlaceCheck" + placeIdx;
-		
-		if(!wishPlace.contains(imsiWishPlace)) {  //"contains"= 포함하고있냐는 명령 / (imsiContentReadNum를 포함하고있니?)
-			petPlaceService.setWishPlace(mid, nickName, part, placeIdx, placeName, sido, sigungu, dong);
-			wishPlace.add(imsiWishPlace);
-			res = 1;
-		}
-		session.setAttribute("sWishPlace", wishPlace);
-		
+		int res = petPlaceService.setWishPlace(mid, nickName, part, placeIdx, placeName, sido, sigungu, dong);
 		return res + "";
+		
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/wishPlaceDelete", method = RequestMethod.POST)
 	public String wishPlaceDeletePost(HttpSession session, int placeIdx, String part) {
-		session.removeAttribute("sWishPlace");
+		//session.removeAttribute("sWishPlace");
 		
 		String mid = (String) session.getAttribute("sMid");
 		
