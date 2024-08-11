@@ -100,7 +100,7 @@
 		</div>
 		<hr/>
 		<div class="nav" style="font-size:16px;font-weight:700;">
-			<a href="#">Only-E.W</a>
+			<a href="${ctp}/mbti/mbti">Only-E.W</a>
 			<a href="#">동네수다</a>
 			<a href="${ctp}/review/productReview">제품후기</a>
 			<a href="${ctp}/hospital/hospital">온동네병원</a>

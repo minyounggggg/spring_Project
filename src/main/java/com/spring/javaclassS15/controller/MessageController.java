@@ -174,6 +174,14 @@ public class MessageController {
 			model.addAttribute("msg", "출석 포인트(+10P)가 지급되었습니다!");
 			model.addAttribute("url", "/member/memberMain");
 		}
+		else if(msgFlag.equals("mbti_E")) {
+			model.addAttribute("msg", "당신의 MBTI는 E입니다.");
+			model.addAttribute("url", "/mbti/mbti");
+		}
+		else if(msgFlag.equals("mbti_I")) {
+			model.addAttribute("msg", "당신의 MBTI는 I입니다.");
+			model.addAttribute("url", "/mbti/mbti");
+		}
 		
 		
 		
