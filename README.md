@@ -4,7 +4,13 @@
 <div style="text-align: left;"> 
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 반려동물과 함께하는 사람들을 위한 종합 정보 사이트 </h2>  
     <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;"> 반려동물들과 같이 다닐수있는 장소, 주변 병원 등을 검색하여 찾아보고 리뷰쓰기도 가능하며 여러 제품들을 직접 써본 솔직 후기를 업로드하여 전국의 반려인들과 소통할 수 있는것을 목표로한 프로젝트 </div> 
+    <br/>
 </div>
+
+💙 [Enjoy With 사이트 둘러보기](http://49.142.157.251:9090/javaclassS15/)
+- Test ID :
+- Test P/W :
+
 <div style="text-align: left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🛠️ Use Stacks </h2> <br> 
     <div style="margin: ; text-align: left;" "text-align: left;"> <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white">
@@ -15,3 +21,5 @@
         <br/><img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
     </div>
 </div>
+
+
