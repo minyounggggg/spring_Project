@@ -1,5 +1,5 @@
 <div align= "center">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=85baff&height=180&text=Enjoy%20With&animation=&fontColor=ffffff&fontSize=70" />
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=85baff&height=240&text=Enjoy%20With&animation=&fontColor=ffffff&fontSize=70" />
     </div>
     <div style="text-align: left;"> 
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 반려동물과 함께하는 사람들을 위한 종합 정보 사이트 </h2>  
