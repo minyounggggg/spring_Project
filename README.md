@@ -7,7 +7,7 @@
     <br/>
 </div>
 
-💙 [Enjoy With 사이트 둘러보기](http://49.142.157.251:9090/javaclassS15/)
+💙 [Enjoy With 사이트 링크 연결](http://49.142.157.251:9090/javaclassS15/)
 - Test ID :
 - Test P/W :
 <br/>
