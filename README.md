@@ -8,8 +8,8 @@
 </div>
 
 💙 [Enjoy With 사이트 링크 연결](http://49.142.157.251:9090/javaclassS15/)
-- Test ID :
-- Test P/W :
+- Test ID : test5
+- Test P/W : test123
 <br/>
 <div style="text-align: left;">
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 🛠️ Use Stacks </h2>
