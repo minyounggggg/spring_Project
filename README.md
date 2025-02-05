@@ -42,6 +42,7 @@
 > ### 회원가입
 - 아이디, 비밀번호, 닉네임, 이메일 유효성 검사
 - Spring Security(BCryptPasswordEncoder)를 활용한 비밀번호 암호화
+- Jsoup 방식 크롤링을 활용하여 활동지역 동네만 입력 후 주소검색 클릭시 네이버검색창에서 검색되어 플레이스 부분의 정보(시, 구, 동 등)를 가져와 입력 처리한다.
 
 <img width="340" src="https://github.com/user-attachments/assets/d2728ff0-550a-427f-9b29-be23d25bd736" />
 <img width="350" src="https://github.com/user-attachments/assets/2e530569-f928-4a53-9401-0f2859988723" />
@@ -84,6 +85,7 @@
 <img width="700" src="https://github.com/user-attachments/assets/0cf689ea-b868-47b9-a6cb-ebba8df09c7f" />
 
 > ### 제품후기 메뉴
+- 비회원도 열람가능, 해당 제품 상세 리뷰는 회원만 열람 가능
 - 사용자들이 등록한 제품후기 전체보기 (카테고리별로 보기 가능)
 - 카드섹션 클릭시 해당 제품 리뷰로 이동
 - 간단한 내용 노출, 좋아요 수, 댓글 수, 조회수 노출
@@ -115,8 +117,17 @@
 
 <br/>
 <br/>
+<br/>
 
-- 우측 네비게이션 메뉴의 제품후기 글쓰기
+> ### 온동네병원, 카페 메뉴 (카페, 병원 정보 및 리뷰 메뉴)
+- 비회원도 열람 및 검색 사용 가능, 해당 카페, 병원 상세 리뷰는 회원만 열람 가능
+- 카카오 지도 API 사용
+- 내 정보에 등록되어있는 주소를 기본값으로하여 그 주변의 맵이 뜨도록 한다.
+- 비회원일경우 관리자가 임의로 성정해논 위도, 경도 값의 위치가 기본으로 뜨게 되어있다.
+- 원하는 위치의 마커를 클릭시 이벤트를 발생시켜 해당 정보를 출력
 
-<img width="360" src="https://github.com/user-attachments/assets/4036632a-f4b9-4107-9e1b-30a947693333" />
+<img width="700" src="https://github.com/user-attachments/assets/c1f913dc-25bc-471f-b58d-56a8c7e16d3c" />
+
+
+
 
