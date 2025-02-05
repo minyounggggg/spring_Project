@@ -128,6 +128,30 @@
 
 <img width="700" src="https://github.com/user-attachments/assets/c1f913dc-25bc-471f-b58d-56a8c7e16d3c" />
 
+<br/>
+<br/>
 
+- 리뷰 쓰기, ckeditor 활용
+
+<img width="700" src="https://github.com/user-attachments/assets/dc585ac6-e972-4faa-af1e-fb6806a3caee" />
+<img width="700" src="https://github.com/user-attachments/assets/7c51742a-a2dc-4fa1-9dc2-757cbcaa55fe" />
+
+<br/>
+<br/>
+<br/>
+
+> ### 관리자 메뉴
+- 관리자 로그인시 상단 네비에 관리자페이지 메뉴 활성화
+- 일주일간 항목별 업로드 수 차트로 구현, Bootstrap chart 사용
+
+<img width="700" src="https://github.com/user-attachments/assets/a57a786c-fa5a-43f5-ae93-838b83700454" />
+
+<br/>
+<br/>
+
+- 신고리스트
+- 관리자가 해당 글로 이동하여 확인할 수 있으며, 강제로 삭제 처리 가능
+
+<img width="700" src="https://github.com/user-attachments/assets/229b54a6-4d32-4ae5-addb-76b311913ee2" />
 
 
