@@ -26,7 +26,97 @@
         <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white">
     </div>
 </div>
+<br/>
+<br/>
 
-<!--
-<img width="709" alt="Image" src="https://github.com/user-attachments/assets/faf129b8-88a1-4f86-b4ce-d6b075c538e5" />
--->
+---
+
+<br/>
+<h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;"> 💻 기능 및 화면 구성 </h2>
+
+> ### 메인화면
+
+<img width="709" src="https://github.com/user-attachments/assets/e03d5a4c-7d29-4ebb-a2a4-dfd7a8c5eed3" />
+
+
+> ### 회원가입
+- 아이디, 비밀번호, 닉네임, 이메일 유효성 검사
+- Spring Security(BCryptPasswordEncoder)를 활용한 비밀번호 암호화
+
+<img width="340" src="https://github.com/user-attachments/assets/d2728ff0-550a-427f-9b29-be23d25bd736" />
+<img width="350" src="https://github.com/user-attachments/assets/2e530569-f928-4a53-9401-0f2859988723" />
+
+
+> ### 로그인
+- 등록된 아이디, 비밀번호 입력시 로그인되어 상단 네비에 닉네임, 회원메뉴 노출
+
+<img width="709" src="https://github.com/user-attachments/assets/b2a0f1df-9c13-460c-b742-10f2234abe36" />
+<img width="709" src="https://github.com/user-attachments/assets/ad2c9424-68a0-4734-bcc9-8232c1016a81" />
+
+
+> ### 마이페이지
+- 회원 정보 확인
+
+<img width="709" src="https://github.com/user-attachments/assets/5324b400-b676-4a0a-980b-5638b44df35d" />
+<br/>
+
+- 회원 정보 수정
+
+<img width="500" src="https://github.com/user-attachments/assets/1c9fc310-e3aa-4958-b45f-8663d9804c96" />
+<br/>
+<br/>
+
+- 반려동물 등록
+
+<img width="340" src="https://github.com/user-attachments/assets/de560a44-48a9-424b-8ba1-575782561ef8" />
+<img width="350" src="https://github.com/user-attachments/assets/1b65c6b3-551d-48d1-930f-87ef6df13620" />
+<br/>
+<br/>
+
+- 반려동물 정보 수정 및 삭제
+
+<img width="500" src="https://github.com/user-attachments/assets/6f7376ce-0574-4042-a09b-030472215b96" />
+<br/>
+<br/>
+
+- 찜한장소 리스트
+
+<img width="700" src="https://github.com/user-attachments/assets/0cf689ea-b868-47b9-a6cb-ebba8df09c7f" />
+
+> ### 제품후기 메뉴
+- 사용자들이 등록한 제품후기 전체보기 (카테고리별로 보기 가능)
+- 카드섹션 클릭시 해당 제품 리뷰로 이동
+- 간단한 내용 노출, 좋아요 수, 댓글 수, 조회수 노출
+- 한 화면당 6개의 후기만 노출, 페이징 처리
+
+<img width="700" src="https://github.com/user-attachments/assets/6460e7e7-7238-45ac-af8e-4582d0ab8b77" />
+<img width="700" src="https://github.com/user-attachments/assets/4ca3beb0-c5ba-4586-9410-276a1a5fabe2" />
+
+<br/>
+<br/>
+
+- 제품 후기 상세보기
+- 등록된 다수의 사진을 스와이퍼로 슬라이딩 노출
+
+<img width="700" src="https://github.com/user-attachments/assets/75539294-d7cb-46e2-80d0-9ce3ab22c045" />
+
+<br/>
+<br/>
+
+- 우측 네비게이션 메뉴의 제품후기 글쓰기
+- 모달창으로 내용을 받아 DB에 등록
+- 공용제품 가능성으로 사용 반려동물은 중복선택 가능, 제품종류, 재구매의사는 중복선택 불가능
+- 모든 항목은 필수입력, 사진 첨부의 경우는 제품인증을 위해 한장 이상 필수 등록하도록 설정
+- 본인 글에서만 수정,  삭제 메뉴 노출
+
+<img width="360" src="https://github.com/user-attachments/assets/c85061b4-9d63-4b84-8bd5-05e699046904" />
+<img width="350" src="https://github.com/user-attachments/assets/7dd9cdec-80f8-4e8b-9c19-b667ea0816a3" />
+<img width="360" src="https://github.com/user-attachments/assets/4036632a-f4b9-4107-9e1b-30a947693333" />
+
+<br/>
+<br/>
+
+- 우측 네비게이션 메뉴의 제품후기 글쓰기
+
+<img width="360" src="https://github.com/user-attachments/assets/4036632a-f4b9-4107-9e1b-30a947693333" />
+
