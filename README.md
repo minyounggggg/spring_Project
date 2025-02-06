@@ -38,6 +38,8 @@
 
 <img width="709" src="https://github.com/user-attachments/assets/e03d5a4c-7d29-4ebb-a2a4-dfd7a8c5eed3" />
 
+<br/>
+<br/>
 
 > ### 회원가입
 - 아이디, 비밀번호, 닉네임, 이메일 유효성 검사
@@ -47,6 +49,8 @@
 <img width="340" src="https://github.com/user-attachments/assets/d2728ff0-550a-427f-9b29-be23d25bd736" />
 <img width="350" src="https://github.com/user-attachments/assets/2e530569-f928-4a53-9401-0f2859988723" />
 
+<br/>
+<br/>
 
 > ### 로그인
 - 등록된 아이디, 비밀번호 입력시 로그인되어 상단 네비에 닉네임, 회원메뉴 노출
@@ -54,6 +58,8 @@
 <img width="709" src="https://github.com/user-attachments/assets/b2a0f1df-9c13-460c-b742-10f2234abe36" />
 <img width="709" src="https://github.com/user-attachments/assets/ad2c9424-68a0-4734-bcc9-8232c1016a81" />
 
+<br/>
+<br/>
 
 > ### 마이페이지
 - 회원 정보 확인
@@ -83,6 +89,9 @@
 - 찜한장소 리스트
 
 <img width="700" src="https://github.com/user-attachments/assets/0cf689ea-b868-47b9-a6cb-ebba8df09c7f" />
+
+<br/>
+<br/>
 
 > ### 제품후기 메뉴
 - 비회원도 열람가능, 해당 제품 상세 리뷰는 회원만 열람 가능
